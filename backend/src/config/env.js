@@ -1,0 +1,29 @@
+import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Load .env from backend root
+dotenv.config({ path: path.resolve(__dirname, '../../.env') });
+
+export const env = {
+  PORT: process.env.PORT || 5001,
+  MONGO_URI: process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/bis_sahayak',
+  JWT_SECRET: process.env.JWT_SECRET || 'bis_sahayak_jwt_secure_secret_2026',
+  JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN || '7d',
+  RAG_API_URL: process.env.RAG_API_URL || 'http://127.0.0.1:8000',
+  NODE_ENV: process.env.NODE_ENV || 'development',
+  SUPABASE_URL: process.env.SUPABASE_URL || 'https://cramrpbgdkqbwxxmwoxz.supabase.co',
+  SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY || 'sb_publishable_vTDFhoG3OeAfwki4ziw8fA_VbMThOJQ',
+  CORS_ORIGIN: process.env.CORS_ORIGIN || process.env.FRONTEND_URL || '*',
+  GEMINI_API_KEY: process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY || '',
+  GEMINI_MODEL: process.env.GEMINI_MODEL || 'gemini-flash-lite-latest',
+  GROQ_API_KEY: process.env.GROQ_API_KEY || '',
+  GROQ_MODEL: process.env.GROQ_MODEL || 'qwen/qwen3.8-27b',
+  BHASHINI_API_KEY: process.env.BHASHINI_API_KEY || '',
+  BHASHINI_USER_ID: process.env.BHASHINI_USER_ID || '',
+  LLM_MODEL: process.env.LLM_MODEL || process.env.GEMINI_MODEL || 'gemini-flash-lite-latest',
+  LLM_TEMPERATURE: parseFloat(process.env.LLM_TEMPERATURE || '0.2')
+};

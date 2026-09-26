@@ -1,0 +1,96 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-[#f8f9fb] text-[#0f172a] antialiased selection:bg-[#0062d2]/15 selection:text-[#0062d2];
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Plus Jakarta Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    letter-spacing: -0.015em;
+  }
+
+  /* High contrast accessible focus indicator */
+  :focus-visible {
+    @apply outline-none ring-2 ring-[#0062d2] ring-offset-2 ring-offset-[#f8f9fb];
+  }
+}
+
+/* ========================================================================= */
+/* MANAKOS DESIGN SYSTEM: RESTRAINED ARCHITECTURAL SURFACES                 */
+/* ========================================================================= */
+
+/* Architectural Clean Canvas (No decorative blur or cosmic gradients) */
+.manak-canvas {
+  background-color: #f8f9fb;
+  background-image: 
+    linear-gradient(rgba(15, 23, 42, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 23, 42, 0.02) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* Precision Elevated Panel */
+.manak-panel {
+  background-color: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.09);
+  border-radius: 1.25rem;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03), 0 6px 16px -4px rgba(15, 23, 42, 0.03);
+}
+
+.manak-panel-inset {
+  background-color: #f1f4f8;
+  border: 1px solid rgba(15, 23, 42, 0.06);
+  border-radius: 0.875rem;
+}
+
+/* Precision Header & Floating Toolbar */
+.manak-header {
+  background-color: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.manak-sidebar {
+  background-color: #ffffff;
+  border-right: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+/* Custom crisp scrollbars */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(15, 23, 42, 0.16);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(15, 23, 42, 0.28);
+}
+
+/* Reduced transparency fallback */
+@media (prefers-reduced-transparency: reduce) {
+  .manak-header {
+    background-color: #ffffff !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+}
+
+/* Reduced motion fallback */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

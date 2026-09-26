@@ -1,0 +1,1874 @@
+[
+  {
+    "id": "IS 302 (Part 2/Sec 21):2024",
+    "title": "Stationary Storage Type Electric Water Heaters - Specification",
+    "sector": "Household Electrical & Electronics",
+    "year": "2024",
+    "status": "Current / Mandatory under QCO 2025",
+    "effective_date": "2025-01-01",
+    "superseded_status": "Active (Complies alongside IS 2082:2018)",
+    "amendments": [
+      {
+        "number": "Product Manual Revision 2025",
+        "date": "2025-01",
+        "summary": "Mandatory QCO enforcement; BIS certification under IS 2082:2018 is required, with IS 302 Part 2/Sec 21 safety requirements deemed complied with."
+      }
+    ],
+    "applicable_products": [
+      "electric water heater",
+      "storage geyser",
+      "water geyser",
+      "domestic electric geyser",
+      "stationary water heater",
+      "pressurized storage geyser",
+      "hot water storage tank"
+    ],
+    "characteristics": [
+      "Stationary pressurized water storage vessel (up to 0.8 MPa operating pressure)",
+      "Mineral insulated electric heating element (1 kW to 6 kW)",
+      "Automatic adjustable thermostat and non-self-resetting thermal cut-out",
+      "Pressure relief safety valve and vacuum relief valve"
+    ],
+    "intended_use": [
+      "Safe domestic heating and pressurized storage of potable water for sanitary purposes",
+      "Residential and commercial bathroom and kitchen hot water supply"
+    ],
+    "source_url": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/Indian_standards/isdetails/?std_id=IS302_2_21",
+    "key_clauses": [
+      {
+        "clause_id": "8.1",
+        "section": "Clause 8.1",
+        "title": "Protection Against Access to Live Electrical Components",
+        "page": "4",
+        "category": "Electrical Safety",
+        "requirement_text": "Enclosure and terminal covers must prevent contact with live electrical parts using test probe B under 20 N force. Earthing continuity must be lower than 0.1 ohm.",
+        "test_method": "Standard IEC test finger probe B insertion and earthing milliohm resistance check",
+        "required_evidence": "Electrical Safety & Earthing Continuity Test Report",
+        "mandatory_qco": true
+      },
+      {
+        "clause_id": "13.2",
+        "section": "Clause 13.2",
+        "title": "Leakage Current and Dielectric High Voltage Strength at Operating Temperature",
+        "page": "6",
+        "category": "Electrical Safety",
+        "requirement_text": "At operating water temperature, leakage current must not exceed 0.75 mA for Class I appliances. Dielectric strength must withstand 1250V AC for 60 seconds without flashover.",
+        "test_method": "Calibrated leakage current transducer and 1250V AC high voltage hipot tester",
+        "required_evidence": "NABL High Voltage Dielectric Strength & Leakage Log Report",
+        "mandatory_qco": true
+      },
+      {
+        "clause_id": "19.1",
+        "section": "Clause 19.1",
+        "title": "Abnormal Operation and Boil-Dry Protection",
+        "page": "9",
+        "category": "Safety & Performance test",
+        "requirement_text": "When energised without water in tank (boil-dry condition), the thermal cut-out must trip safely without flame, molten metal emission, or tank rupture.",
+        "test_method": "Simulated dry-run energized burn test with thermal sensors at 1.15 rated power",
+        "required_evidence": "Abnormal Dry Boiling Safety Trip Test Report",
+        "mandatory_qco": true
+      },
+      {
+        "clause_id": "22.101",
+        "section": "Clause 22.101",
+        "title": "Pressure Vessel Hydrostatic Strength & Pressure Relief Valve Operation",
+        "page": "12",
+        "category": "Mechanical & Pressure",
+        "requirement_text": "Tank must withstand 1.5 times rated working pressure (min 1.2 MPa for a 0.8 MPa tank) for 15 minutes with zero water leak, seam rupture, or permanent deformation. Pressure relief valve must open at rated limit.",
+        "test_method": "Hydrostatic test bench with calibrated hydraulic gauge and leak detector",
+        "required_evidence": "Hydrostatic Pressure Test Certificate & Relief Valve Calibration Log",
+        "mandatory_qco": true
+      },
+      {
+        "clause_id": "24.1",
+        "section": "Clause 24.1",
+        "title": "Component Endurance for Thermostat and Thermal Cut-Out",
+        "page": "15",
+        "category": "Safety & Performance test",
+        "requirement_text": "Thermostatic controller must complete 10,000 switching cycles and thermal cut-out 1,000 cycles under electrical load without contact welding or calibration drift greater than 3°C.",
+        "test_method": "Automated electrical endurance test rig cycling at 6 operations per minute",
+        "required_evidence": "Thermostatic Switch Endurance Cycle Test Report",
+        "mandatory_qco": true
+      }
+    ]
+  },
+  {
+    "id": "IS 18739:2024",
+    "title": "Textiles – Bedsheets, Pillow Cover and Blanket Cover - Specification",
+    "sector": "Textiles & Apparels",
+    "year": "2024",
+    "status": "Current / High Consumer Quality",
+    "effective_date": "2024-06-01",
+    "superseded_status": "Active",
+    "amendments": [],
+    "applicable_products": [
+      "bedsheet",
+      "cotton bedsheet",
+      "pillow cover",
+      "pillowcase",
+      "blanket cover",
+      "hospital bedsheet",
+      "hotel linen",
+      "quilt cover"
+    ],
+    "characteristics": [
+      "100% woven cotton, polyester-cotton blend, or regenerated cellulosic fiber",
+      "Prescribed minimum thread count, yarn count, and grams per square meter (GSM)",
+      "Skin-contact friendly with strict pH control and absence of hazardous azo colorants",
+      "Color fastness against perspiration, rubbing, and industrial laundering"
+    ],
+    "intended_use": [
+      "Domestic bedding, institutional hospital linens, hospitality and hotel bedding",
+      "Direct human skin contact during sleep and rest"
+    ],
+    "source_url": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/Indian_standards/isdetails/?std_id=IS18739",
+    "key_clauses": [
+      {
+        "clause_id": "4.2",
+        "section": "Clause 4.2",
+        "title": "pH Value of Aqueous Extract for Skin Safety",
+        "page": "3",
+        "category": "Material specification",
+        "requirement_text": "The pH value of aqueous extract of bedsheet fabric shall be strictly between 5.5 and 7.5 to prevent dermatological skin irritation and allergic reactions.",
+        "test_method": "Aqueous extraction pH potentiometric determination conforming to IS 1390",
+        "required_evidence": "Aqueous Extract pH Test Certificate",
+        "mandatory_qco": true
+      },
+      {
+        "clause_id": "5.1",
+        "section": "Clause 5.1",
+        "title": "Colour Fastness to Washing, Perspiration and Rubbing",
+        "page": "4",
+        "category": "Performance test",
+        "requirement_text": "Color fastness to domestic washing (IS 687) minimum rating 4, perspiration (IS 971) minimum rating 4, and dry rubbing minimum rating 4 on ISO Grey Scale.",
+        "test_method": "Launder-Ometer wash cycle and Crockmeter rubbing fastness test",
+        "required_evidence": "NABL Color Fastness Grey Scale Evaluation Report",
+        "mandatory_qco": true
+      },
+      {
+        "clause_id": "6.3",
+        "section": "Clause 6.3",
+        "title": "Dimensional Stability (Shrinkage Limits on Washing)",
+        "page": "6",
+        "category": "Performance test",
+        "requirement_text": "Maximum allowable shrinkage after 3 cycles of standard laundering shall not exceed 3.0% in warp and 2.0% in weft direction for cotton fabric.",
+        "test_method": "Calibrated washing shrinkage template measuring bench under IS 2977",
+        "required_evidence": "Dimensional Stability Wash Shrinkage Log",
+        "mandatory_qco": true
+      },
+      {
+        "clause_id": "7.1",
+        "section": "Clause 7.1",
+        "title": "Antimicrobial Activity and Freedom from Banned Azo Dyes",
+        "page": "7",
+        "category": "Material specification",
+        "requirement_text": "Total prohibited aromatic amine dyes (carcinogenic azo dyes) must not exceed 20 mg/kg. Antibacterial efficacy (>90% reduction) if claimed as treated bed linen.",
+        "test_method": "GC-MS spectrometry extraction conforming to IS 15570",
+        "required_evidence": "Chemical Spectrometry Azo-Free Test Certificate",
+        "mandatory_qco": true
+      }
+    ]
+  },
+  {
+    "id": "IS 80601 (Part 2/Sec 30):2018",
+    "title": "Medical Electrical Equipment - Basic Safety & Essential Performance of Automated Non-Invasive Sphygmomanometers",
+    "sector": "Medical & Healthcare Devices",
+    "year": "2018",
+    "status": "Current / Very High Medical Safety Relevance",
+    "effective_date": "2018-09-15",
+    "superseded_status": "Active (Harmonized with IEC 80601-2-30)",
+    "amendments": [],
+    "applicable_products": [
+      "blood pressure monitor",
+      "digital bp apparatus",
+      "automated sphygmomanometer",
+      "electronic blood pressure monitor",
+      "arm cuff bp monitor",
+      "wrist bp monitor"
+    ],
+    "characteristics": [
+      "Inflatable brachial/wrist cuff with electric pump and controlled release solenoid",
+      "Oscillometric digital pressure transducer with systolic, diastolic, and heart rate computation",
+      "Type BF applied part with patient electrical isolation",
+      "Dual mechanical and software overpressure limiters"
+    ],
+    "intended_use": [
+      "Clinical and domestic non-invasive diagnostic monitoring of human arterial blood pressure",
+      "Hypertension tracking in hospitals, clinics, and home health care"
+    ],
+    "source_url": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/Indian_standards/isdetails/?std_id=IS80601_2_30",
+    "key_clauses": [
+      {
+        "clause_id": "201.12.1.101",
+        "section": "Clause 201.12.1.101",
+        "title": "Maximum Permissible Error of Cuff Pressure Indication",
+        "page": "8",
+        "category": "Metrology & Accuracy",
+        "requirement_text": "For both increasing and decreasing pressure across the measurement range (0 to 260 mmHg), the error in cuff pressure indication shall not exceed ±3 mmHg (±0.4 kPa).",
+        "test_method": "Comparison against calibrated digital mercury-free reference manometer",
+        "required_evidence": "NABL Certified Pressure Metrology Calibration Certificate",
+        "mandatory_qco": true
+      },
+      {
+        "clause_id": "201.12.1.102",
+        "section": "Clause 201.12.1.102",
+        "title": "Clinical Investigation and Overall Blood Pressure Determination Accuracy",
+        "page": "11",
+        "category": "Clinical Accuracy",
+        "requirement_text": "Clinical determination validation across 85 subjects: mean difference between automated device and auscultatory reference shall not exceed ±5 mmHg with standard deviation <= 8 mmHg.",
+        "test_method": "ISO 81060-2 clinical validation protocol with dual-observer auscultation",
+        "required_evidence": "Clinical Accuracy Evaluation & Subject Validation Dossier",
+        "mandatory_qco": true
+      },
+      {
+        "clause_id": "201.8.8.3",
+        "section": "Clause 201.8.8.3",
+        "title": "Patient Electrical Leakage Current and Dielectric Isolation (Type BF)",
+        "page": "14",
+        "category": "Electrical Safety",
+        "requirement_text": "Patient leakage current from cuff to ground under single fault condition must not exceed 500 uA AC / 50 uA DC. Dielectric insulation must withstand 1500V AC test voltage.",
+        "test_method": "Medical electrical safety analyzer test conforming to IS 13450 / IEC 60601-1",
+        "required_evidence": "Medical Electrical Safety & Patient Leakage Test Report",
+        "mandatory_qco": true
+      },
+      {
+        "clause_id": "201.11.8.101",
+        "section": "Clause 201.11.8.101",
+        "title": "Overpressure Safety Cut-Off Protection",
+        "page": "18",
+        "category": "Patient Safety",
+        "requirement_text": "The equipment shall incorporate independent secondary overpressure protection that immediately vents the cuff to ambient if pressure exceeds 300 mmHg (adult) or 150 mmHg (neonatal).",
+        "test_method": "Simulated pneumatic pump runaway test measuring instantaneous venting time (< 1s)",
+        "required_evidence": "Overpressure Pneumatic Safety Venting Log",
+        "mandatory_qco": true
+      }
+    ]
+  },
+  {
+    "id": "IS 4658:2019",
+    "title": "Coated Paper and Board (Art and Chromo) - Specification",
+    "sector": "Paper & Packaging",
+    "year": "2019",
+    "status": "Current / Quality Specification",
+    "effective_date": "2019-08-01",
+    "superseded_status": "Active",
+    "amendments": [],
+    "applicable_products": [
+      "coated paper",
+      "art paper",
+      "chromo paper",
+      "art board",
+      "gloss coated paper",
+      "matt art paper",
+      "printing paper"
+    ],
+    "characteristics": [
+      "High chemical bleached wood pulp base sheet with mineral pigment coating (clay/calcium carbonate)",
+      "Uniform surface smoothness, opacity, and gloss suitable for multi-colour halftone printing",
+      "Grammage range from 70 g/m² to 350 g/m²"
+    ],
+    "intended_use": [
+      "High-definition commercial printing, art books, annual reports, calendars, and premium carton packaging"
+    ],
+    "source_url": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/Indian_standards/isdetails/?std_id=IS4658",
+    "key_clauses": [
+      {
+        "clause_id": "4.1",
+        "section": "Clause 4.1",
+        "title": "Grammage (Mass per Unit Area) and Thickness Tolerances",
+        "page": "2",
+        "category": "Physical Properties",
+        "requirement_text": "Grammage tolerance shall not deviate by more than ±2.5% from declared nominal g/m². Caliper thickness must be uniform across web width.",
+        "test_method": "Standard gravimetric area balance test under IS 1060 (Part 1)",
+        "required_evidence": "Grammage and Caliper Uniformity Inspection Sheet",
+        "mandatory_qco": false
+      },
+      {
+        "clause_id": "5.2",
+        "section": "Clause 5.2",
+        "title": "Surface Smoothness (Bekk / Bendtsen Method)",
+        "page": "3",
+        "category": "Printability",
+        "requirement_text": "Gloss art paper must have minimum Bekk smoothness of 600 seconds on wire side and 800 seconds on felt side to ensure dot fidelity without pinholing.",
+        "test_method": "Bekk air-leak smoothness tester under IS 1060",
+        "required_evidence": "Surface Smoothness & Porosity Test Log",
+        "mandatory_qco": false
+      },
+      {
+        "clause_id": "6.1",
+        "section": "Clause 6.1",
+        "title": "Brightness (ISO) and Diffuse Opacity",
+        "page": "4",
+        "category": "Optical Properties",
+        "requirement_text": "ISO brightness shall be minimum 88.0% for Grade 1 art paper. Opacity must be minimum 92.0% for 130 g/m² sheet to prevent show-through.",
+        "test_method": "Diffuse blue reflectance photometer at 457 nm under ISO 2470",
+        "required_evidence": "Spectrophotometric Brightness & Opacity Certificate",
+        "mandatory_qco": false
+      },
+      {
+        "clause_id": "7.3",
+        "section": "Clause 7.3",
+        "title": "Surface Pick Strength (Dennison Wax / IGT)",
+        "page": "5",
+        "category": "Printability",
+        "requirement_text": "Minimum Dennison wax pick rating shall be 10A without surface coating rupture or fibre lifting under high tack printing inks.",
+        "test_method": "Standard Dennison wax pick kit and IGT printability oil test",
+        "required_evidence": "Surface Pick Resistance Test Sheet",
+        "mandatory_qco": false
+      }
+    ]
+  },
+  {
+    "id": "IS 3652:2024",
+    "title": "Crop Protection Equipment – Foot Sprayer - Specification",
+    "sector": "Agriculture & Mechanical",
+    "year": "2024",
+    "status": "Current / High Agricultural Safety Relevance",
+    "effective_date": "2024-04-15",
+    "superseded_status": "Active",
+    "amendments": [],
+    "applicable_products": [
+      "foot sprayer",
+      "pedal agricultural sprayer",
+      "crop protection foot pump",
+      "pesticide foot sprayer",
+      "plant protection sprayer",
+      "insecticide pump"
+    ],
+    "characteristics": [
+      "Pedal operated reciprocating plunger pump mounted on steady base frame",
+      "Corrosion-resistant brass or stainless steel hydraulic pressure vessel",
+      "Suction hose with strainer and discharge hose with cut-off lance and brass nozzle",
+      "Operating pressure capability from 0.6 MPa to 1.4 MPa"
+    ],
+    "intended_use": [
+      "Spraying chemical insecticides, pesticides, and liquid agrochemicals in orchards, field crops, and tea plantations"
+    ],
+    "source_url": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/Indian_standards/isdetails/?std_id=IS3652",
+    "key_clauses": [
+      {
+        "clause_id": "5.1",
+        "section": "Clause 5.1",
+        "title": "Corrosion Resistance of Chemical Contact Components",
+        "page": "3",
+        "category": "Material specification",
+        "requirement_text": "Pump cylinder, valve balls, seats, and pressure vessel must be fabricated from brass Grade CW604N or austenitic stainless steel SS 304 resistant to agrochemicals.",
+        "test_method": "Chemical immersion in pesticide solution for 72 hours and microscopic corrosion check",
+        "required_evidence": "Material Spectrometry & Chemical Immersion Test Report",
+        "mandatory_qco": true
+      },
+      {
+        "clause_id": "6.2",
+        "section": "Clause 6.2",
+        "title": "Hydrostatic Proof Pressure Test of Pressure Chamber",
+        "page": "4",
+        "category": "Safety & Performance test",
+        "requirement_text": "The pressure vessel must withstand internal hydraulic pressure of 2.0 MPa for 5 minutes without any leakage, permanent deformation, or weld failure.",
+        "test_method": "Hydraulic pressure pump bench with calibrated master gauge",
+        "required_evidence": "Hydrostatic Proof Pressure Test Certificate",
+        "mandatory_qco": true
+      },
+      {
+        "clause_id": "7.1",
+        "section": "Clause 7.1",
+        "title": "Discharge Capacity and Spray Cone Angle",
+        "page": "6",
+        "category": "Performance test",
+        "requirement_text": "At 40 pedal strokes per minute, liquid discharge shall be minimum 1200 ml/min at 0.7 MPa pressure. Nozzle spray cone angle must be 60° ± 5°.",
+        "test_method": "Flow collection volumetric beaker test with spray pattern laser scanner",
+        "required_evidence": "Volumetric Discharge Flow Rate Calibration Report",
+        "mandatory_qco": true
+      },
+      {
+        "clause_id": "8.4",
+        "section": "Clause 8.4",
+        "title": "Fatigue Endurance Cycling Test",
+        "page": "7",
+        "category": "Durability",
+        "requirement_text": "The complete sprayer assembly must complete 100,000 continuous pedal strokes at rated pressure with liquid agrochemical without valve failure or pump leakage.",
+        "test_method": "Automated pneumatic mechanical pedal cycling machine",
+        "required_evidence": "100,000 Cycle Endurance Test Report",
+        "mandatory_qco": true
+      }
+    ]
+  },
+  {
+    "id": "IS 2347:2017",
+    "title": "Domestic Pressure Cookers - Specification",
+    "sector": "Consumer Goods & Utensils",
+    "year": "2017",
+    "status": "Current / Mandatory QCO 2020 / Extremely High Safety",
+    "effective_date": "2020-08-01",
+    "superseded_status": "Active",
+    "amendments": [
+      {
+        "number": "Amendment No. 1",
+        "date": "2021-03",
+        "summary": "Mandatory QCO enforcement by DPIIT. Mandatory ISI mark required before sale, import, or distribution in India."
+      }
+    ],
+    "applicable_products": [
+      "pressure cooker",
+      "aluminium pressure cooker",
+      "stainless steel pressure cooker",
+      "hard anodized pressure cooker",
+      "induction pressure cooker",
+      "handi pressure cooker"
+    ],
+    "characteristics": [
+      "Heavy gauge food-grade wrought aluminium alloy (IS 21) or SS 304 austenitic steel (IS 6911)",
+      "Steam pressure cooking lid with silicone sealing gasket and locking lugs",
+      "Weight-type pressure regulating vent weight (operating at 100 kPa)",
+      "Fusible safety relief plug and secondary gasket release safety mechanism"
+    ],
+    "intended_use": [
+      "Rapid steam pressure boiling and cooking of domestic food items in households"
+    ],
+    "source_url": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/Indian_standards/isdetails/?std_id=IS2347",
+    "key_clauses": [
+      {
+        "clause_id": "4.1",
+        "section": "Clause 4.1",
+        "title": "Food Contact Raw Material Compliance",
+        "page": "3",
+        "category": "Material specification",
+        "requirement_text": "Aluminium body must be min 99.0% pure conforming to IS 21 or stainless steel SS 304 conforming to IS 6911. Lead extraction must be below 0.01 mg/kg under IS 9845.",
+        "test_method": "Optical emission spectrometry and acid extraction food simulant test",
+        "required_evidence": "Raw Material MTC & Heavy Metal Migration Test Report",
+        "mandatory_qco": true
+      },
+      {
+        "clause_id": "5.4",
+        "section": "Clause 5.4",
+        "title": "Operating Pressure Regulation",
+        "page": "5",
+        "category": "Safety & Performance test",
+        "requirement_text": "The normal operating steam pressure regulated by weight valve must be between 90 kPa and 110 kPa (approximately 1.0 kgf/cm²).",
+        "test_method": "Calibrated digital steam pressure transducer recorder during boiling test",
+        "required_evidence": "Operating Pressure Venting Log Sheet",
+        "mandatory_qco": true
+      },
+      {
+        "clause_id": "6.1",
+        "section": "Clause 6.1",
+        "title": "Hydrostatic Bursting Pressure Test (Anti-Explosion Hazard)",
+        "page": "7",
+        "category": "Critical Life Safety",
+        "requirement_text": "Cooker must withstand hydrostatic pressure of not less than 3 times normal operating pressure (min 300 kPa) without body rupture or lid detachment.",
+        "test_method": "Water hydrostatic bursting rig with high-pressure pump until 300 kPa hold for 5 min",
+        "required_evidence": "Hydrostatic Bursting Safety Test Report",
+        "mandatory_qco": true
+      },
+      {
+        "clause_id": "7.2",
+        "section": "Clause 7.2",
+        "title": "Secondary Safety Device Operation (Fusible Plug / Gasket Release)",
+        "page": "9",
+        "category": "Critical Life Safety",
+        "requirement_text": "If vent pipe is blocked, secondary safety device (fusible plug or gasket release) must release internal pressure safely between 130 kPa and 200 kPa without projectile hazard.",
+        "test_method": "Deliberate vent blockage overpressurization test bench",
+        "required_evidence": "Secondary Pressure Relief Device Discharge Certificate",
+        "mandatory_qco": true
+      },
+      {
+        "clause_id": "8.3",
+        "section": "Clause 8.3",
+        "title": "Lid-Opening Safety Lock Mechanism",
+        "page": "11",
+        "category": "Critical Life Safety",
+        "requirement_text": "The cooker design must prevent user from opening lid whenever internal residual pressure exceeds 4 kPa, avoiding scalding steam expulsion.",
+        "test_method": "Residual pressure torque gauge opening resistance test",
+        "required_evidence": "Lid Interlock Residual Pressure Safety Evaluation",
+        "mandatory_qco": true
+      }
+    ]
+  },
+  {
+    "id": "IS 10500:2012",
+    "title": "Drinking Water - Specification",
+    "sector": "Food, Beverages & Public Health",
+    "year": "2012",
+    "status": "Current / Mandatory Public Health Standard",
+    "effective_date": "2012-06-01",
+    "superseded_status": "Active (Includes Amendments 1, 2, 3)",
+    "amendments": [
+      {
+        "number": "Amendment No. 3",
+        "date": "2021-09",
+        "summary": "Revised maximum permissible limits for pesticides and toxic polycyclic aromatic hydrocarbons."
+      }
+    ],
+    "applicable_products": [
+      "drinking water",
+      "potable water",
+      "piped water",
+      "tap water",
+      "community drinking water",
+      "treated water supply",
+      "well water"
+    ],
+    "characteristics": [
+      "Clear, colourless, odourless, palatable water free from pathogenic bacteria and viruses",
+      "Total Dissolved Solids (TDS) acceptable limit 500 mg/L (permissible up to 2000 mg/L in absence of alternate source)",
+      "Strict zero-tolerance for heavy metals (Arsenic, Lead, Mercury, Chromium)"
+    ],
+    "intended_use": [
+      "Human consumption, cooking, food preparation, and municipal public drinking water systems"
+    ],
+    "source_url": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/Indian_standards/isdetails/?std_id=IS10500",
+    "key_clauses": [
+      {
+        "clause_id": "4.1",
+        "section": "Clause 4.1",
+        "title": "Organoleptic and Physical Parameters",
+        "page": "2",
+        "category": "Physical Properties",
+        "requirement_text": "Colour max 5 Hazen units, Odour agreeable, Turbidity max 1 NTU, pH value 6.5 to 8.5, Total Dissolved Solids max 500 mg/L.",
+        "test_method": "Nephelometric turbidity meter, pH meter, and gravimetric TDS oven drying",
+        "required_evidence": "Comprehensive Physical Parameters Water Test Report",
+        "mandatory_qco": true
+      },
+      {
+        "clause_id": "4.2",
+        "section": "Clause 4.2",
+        "title": "Toxic Heavy Metal Concentration Limits",
+        "page": "4",
+        "category": "Chemical Toxicology",
+        "requirement_text": "Arsenic max 0.01 mg/L, Lead max 0.01 mg/L, Cadmium max 0.003 mg/L, Total Chromium max 0.05 mg/L, Mercury max 0.001 mg/L.",
+        "test_method": "Inductively Coupled Plasma Mass Spectrometry (ICP-MS) under IS 3025",
+        "required_evidence": "NABL ICP-MS Heavy Metal Spectrometry Analysis Report",
+        "mandatory_qco": true
+      },
+      {
+        "clause_id": "5.1",
+        "section": "Clause 5.1",
+        "title": "Microbiological Quality (Bacteriological Criteria)",
+        "page": "6",
+        "category": "Microbiological Safety",
+        "requirement_text": "E. coli and Total Coliform bacteria must be completely absent (zero count) in any 100 ml sample examined.",
+        "test_method": "Membrane filtration method or multiple tube fermentation under IS 1622",
+        "required_evidence": "Microbiological Colony Count Zero Detection Certificate",
+        "mandatory_qco": true
+      },
+      {
+        "clause_id": "6.2",
+        "section": "Clause 6.2",
+        "title": "Residual Free Chlorine Disinfection Limit",
+        "page": "7",
+        "category": "Chemical Treatment",
+        "requirement_text": "Minimum residual free chlorine of 0.2 mg/L must be present at consumer tap to guarantee ongoing biological disinfection (max 1.0 mg/L).",
+        "test_method": "DPD colorimetric titrimetric determination under IS 3025 (Part 26)",
+        "required_evidence": "Residual Chlorine Disinfection Monitoring Log",
+        "mandatory_qco": true
+      }
+    ]
+  },
+  {
+    "id": "IS 2557:2026",
+    "title": "Annatto Colour for Food Products - Specification",
+    "sector": "Food Additives & Ingredients",
+    "year": "2026",
+    "status": "Current / High Food Safety Relevance",
+    "effective_date": "2026-01-01",
+    "superseded_status": "Active",
+    "amendments": [],
+    "applicable_products": [
+      "annatto colour",
+      "bixin food colour",
+      "norbixin food colour",
+      "natural yellow orange food colour",
+      "dairy colour additive",
+      "butter colourant",
+      "cheese colour"
+    ],
+    "characteristics": [
+      "Natural carotenoid dye prepared from the pericarp of Bixa orellana L. seeds",
+      "Available as oil-soluble bixin solution or water-soluble norbixin alkaline formulation",
+      "Strict freedom from coal-tar synthetic dyes and toxic heavy metals"
+    ],
+    "intended_use": [
+      "Direct natural yellow-to-orange coloring agent in butter, cheese, confectionery, snacks, and edible oils"
+    ],
+    "source_url": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/Indian_standards/isdetails/?std_id=IS2557",
+    "key_clauses": [
+      {
+        "clause_id": "4.1",
+        "section": "Clause 4.1",
+        "title": "Total Carotenoid Pigment Content (Bixin / Norbixin)",
+        "page": "3",
+        "category": "Active Ingredient",
+        "requirement_text": "Total carotenoid content calculated as bixin shall not be less than 1.0% by mass in oil-soluble extract and 2.5% norbixin in water-soluble extract.",
+        "test_method": "UV-Visible spectrophotometric absorbance assay at 487 nm",
+        "required_evidence": "Spectrophotometric Carotenoid Content Certificate",
+        "mandatory_qco": true
+      },
+      {
+        "clause_id": "5.2",
+        "section": "Clause 5.2",
+        "title": "Heavy Metal Impurities (Lead, Arsenic, Mercury)",
+        "page": "4",
+        "category": "Toxicology",
+        "requirement_text": "Lead not more than 2.0 mg/kg, Arsenic not more than 1.0 mg/kg, Mercury not more than 1.0 mg/kg.",
+        "test_method": "Atomic Absorption Spectrophotometry (AAS)",
+        "required_evidence": "Heavy Metal Trace Impurity Analysis Report",
+        "mandatory_qco": true
+      },
+      {
+        "clause_id": "6.1",
+        "section": "Clause 6.1",
+        "title": "Absence of Synthetic Coal-Tar Dyes",
+        "page": "5",
+        "category": "Purity",
+        "requirement_text": "The product must be completely free from extraneous synthetic coal-tar food colours (tartrazine, sunset yellow, metanil yellow).",
+        "test_method": "High Performance Thin Layer Chromatography (HPTLC) / HPLC",
+        "required_evidence": "HPLC Chromatography Synthetic Dye Absence Certificate",
+        "mandatory_qco": true
+      }
+    ]
+  },
+  {
+    "id": "IS 4151:2015",
+    "title": "Protective Helmets for Two-Wheeler Riders - Specification",
+    "sector": "Automotive Safety & Personal Protection",
+    "year": "2015",
+    "status": "Current / Mandatory Road Transport QCO / Critical Life Safety",
+    "effective_date": "2021-03-01",
+    "superseded_status": "Active",
+    "amendments": [
+      {
+        "number": "Amendment No. 2",
+        "date": "2020-11",
+        "summary": "Mandatory QCO enforcement; strict maximum weight limit reduced to 1500g and mandatory BIS ISI certification."
+      }
+    ],
+    "applicable_products": [
+      "protective helmet",
+      "two-wheeler helmet",
+      "motorcycle helmet",
+      "crash helmet",
+      "full face helmet",
+      "open face helmet",
+      "scooter helmet"
+    ],
+    "characteristics": [
+      "Rigid outer shell molded from virgin impact-grade ABS / polycarbonate / composite fibers",
+      "Protective expanded polystyrene (EPS) shock-absorbing liner of high density",
+      "Comfort interior padding, retention chinstrap with micrometric / D-ring fastener",
+      "Maximum total helmet weight shall not exceed 1500 grams"
+    ],
+    "intended_use": [
+      "Head injury mitigation and shock absorption for operators and pillion riders of two-wheel motor vehicles"
+    ],
+    "source_url": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/Indian_standards/isdetails/?std_id=IS4151",
+    "key_clauses": [
+      {
+        "clause_id": "4.1",
+        "section": "Clause 4.1",
+        "title": "Helmet Shell Construction and Maximum Mass",
+        "page": "3",
+        "category": "Physical specification",
+        "requirement_text": "Outer shell must be smooth, free from dangerous sharp projections, and total helmet mass including all accessories shall not exceed 1500 grams.",
+        "test_method": "Precision gravimetric balance and surface profile inspection",
+        "required_evidence": "Mass Verification & Shell Construction Inspection Sheet",
+        "mandatory_qco": true
+      },
+      {
+        "clause_id": "7.1",
+        "section": "Clause 7.1",
+        "title": "Impact Absorption Attenuation Test (Head Injury Criterion)",
+        "page": "6",
+        "category": "Critical Life Safety",
+        "requirement_text": "Helmet subjected to guided drop impact on flat and hemispherical steel anvils at 7.5 m/s velocity must transmit peak deceleration <= 300g to instrumented headform.",
+        "test_method": "Calibrated triaxial accelerometer drop test apparatus conditioned at -10°C, +50°C, and water spray",
+        "required_evidence": "Drop Impact Shock Attenuation Oscillograph Test Report",
+        "mandatory_qco": true
+      },
+      {
+        "clause_id": "7.2",
+        "section": "Clause 7.2",
+        "title": "Retention System Dynamic Strength and Slippage Test",
+        "page": "9",
+        "category": "Critical Life Safety",
+        "requirement_text": "Chinstrap under dynamic drop weight of 10 kg from 750 mm height must not stretch more than 25 mm, and buckle must release under 100 N manual force after test.",
+        "test_method": "Dynamic tensile drop test rig on simulated jaw fixture",
+        "required_evidence": "Retention Chinstrap Dynamic Tensile Test Report",
+        "mandatory_qco": true
+      },
+      {
+        "clause_id": "7.3",
+        "section": "Clause 7.3",
+        "title": "Penetration Resistance Test",
+        "page": "11",
+        "category": "Critical Life Safety",
+        "requirement_text": "A 3.0 kg conical steel striker dropped from 3.0 meters onto the shell must not make electrical contact with the metallic headform inside.",
+        "test_method": "Guided vertical penetration tube and electrical contact circuit sensor",
+        "required_evidence": "Shell Penetration Resistance Test Certificate",
+        "mandatory_qco": true
+      },
+      {
+        "clause_id": "8.1",
+        "section": "Clause 8.1",
+        "title": "Visor Optical Quality and Luminous Transmittance",
+        "page": "13",
+        "category": "Visual Safety",
+        "requirement_text": "Clear transparent visor must have luminous transmittance >= 85%, zero optical distortion, and withstand scratch abrasion test without haze > 10%.",
+        "test_method": "Spectrophotometer transmission bench and Taber abrasion tester",
+        "required_evidence": "Visor Optical Clarity & Transmittance Test Certificate",
+        "mandatory_qco": true
+      }
+    ]
+  },
+  {
+    "id": "IS 302 (Part 2/Sec 7):2024",
+    "title": "Household and Similar Electrical Appliances – Particular Requirements for Washing Machines",
+    "sector": "Household Electrical & Electronics",
+    "year": "2024",
+    "status": "Current / Mandatory QCO 2024 / High Consumer Safety",
+    "effective_date": "2024-10-01",
+    "superseded_status": "Active",
+    "amendments": [],
+    "applicable_products": [
+      "washing machine",
+      "automatic washing machine",
+      "semi automatic washing machine",
+      "front load washing machine",
+      "top load washing machine",
+      "clothes washer"
+    ],
+    "characteristics": [
+      "Motorized wash agitator/pulsator/drum with water filling valves and drain pump",
+      "High-speed spin centrifugal water extraction basket (> 800 RPM)",
+      "IPX4 water splash-proof electrical enclosure rating",
+      "Electromechanical door/lid interlock preventing access during spin"
+    ],
+    "intended_use": [
+      "Washing and centrifugal spin-drying of domestic clothes, garments, and home textiles"
+    ],
+    "source_url": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/Indian_standards/isdetails/?std_id=IS302_2_7",
+    "key_clauses": [
+      {
+        "clause_id": "8.1",
+        "section": "Clause 8.1",
+        "title": "Protection Against Access to Live Parts",
+        "page": "4",
+        "category": "Electrical Safety",
+        "requirement_text": "Accessible surfaces, motor compartments, and drain valves must prevent accidental contact with live electrical wiring even when user reaches underneath.",
+        "test_method": "Standard IEC unjointed test probe and rigid test finger",
+        "required_evidence": "Electrical Ingress & Live Part Safety Inspection Sheet",
+        "mandatory_qco": true
+      },
+      {
+        "clause_id": "15.2",
+        "section": "Clause 15.2",
+        "title": "Moisture Resistance & Water Spillage Test (IPX4)",
+        "page": "6",
+        "category": "Electrical Safety",
+        "requirement_text": "Appliance subjected to 0.5 L water overflow on top lid and oscillating spray nozzle IPX4 test for 10 minutes must show zero insulation breakdown (dielectric 1250V).",
+        "test_method": "IPX4 oscillating spray water chamber followed by high voltage test",
+        "required_evidence": "IPX4 Water Ingress & Post-Spray Insulation Test Report",
+        "mandatory_qco": true
+      },
+      {
+        "clause_id": "20.101",
+        "section": "Clause 20.101",
+        "title": "Spin Lid Safety Interlock and Braking Time",
+        "page": "9",
+        "category": "Mechanical Hazard Safety",
+        "requirement_text": "When the lid or door of spin extraction drum is opened, drive power must automatically cut off and drum must brake to complete stop within 4 seconds.",
+        "test_method": "Optical tachometer stop-time recorder triggered by lid microswitch",
+        "required_evidence": "Spin Drum Brake Stop-Time Calibration Certificate",
+        "mandatory_qco": true
+      },
+      {
+        "clause_id": "22.102",
+        "section": "Clause 22.102",
+        "title": "Water Hose Pressure and Flooding Resistance",
+        "page": "12",
+        "category": "Plumbing Safety",
+        "requirement_text": "Inlet water hoses must withstand 1.0 MPa hydrostatic pressure for 10 minutes without bursting or connection slip.",
+        "test_method": "Hydraulic water hose pressure burst bench",
+        "required_evidence": "Hose Hydrostatic Pressure Burst Log",
+        "mandatory_qco": true
+      }
+    ]
+  },
+  {
+    "id": "IS 302 (Part 1):2024",
+    "title": "Household and Similar Electrical Appliances – General Safety Requirements",
+    "sector": "Household Electrical & Electronics",
+    "year": "2024",
+    "status": "Current / Mandatory Base Safety Standard",
+    "effective_date": "2024-06-01",
+    "superseded_status": "Active (Core Reference for all Part 2 Standards)",
+    "amendments": [],
+    "applicable_products": [
+      "household electrical appliances",
+      "kitchen appliances",
+      "electric mixer grinder",
+      "toaster",
+      "immersion heater",
+      "hair dryer",
+      "vacuum cleaner"
+    ],
+    "characteristics": [
+      "Overarching horizontal safety standard for domestic single-phase appliances up to 250V",
+      "Class I (earthed), Class II (double insulated), and Class III (SELV) specifications",
+      "Clearance and creepage distances, flame-retardant plastic housings, thermal cutoff"
+    ],
+    "intended_use": [
+      "Comprehensive baseline safety conformity for all household and commercial electrical appliances"
+    ],
+    "source_url": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/Indian_standards/isdetails/?std_id=IS302_1",
+    "key_clauses": [
+      {
+        "clause_id": "8.1",
+        "section": "Clause 8.1",
+        "title": "Protection Against Electric Shock",
+        "page": "5",
+        "category": "Electrical Safety",
+        "requirement_text": "Adequate protection against contact with live parts under normal use, including during user servicing, bulb replacement, and filter cleaning.",
+        "test_method": "Standard articulated test probe B and test pin under 10 N force",
+        "required_evidence": "Baseline Shock Protection Verification Report",
+        "mandatory_qco": true
+      },
+      {
+        "clause_id": "11.8",
+        "section": "Clause 11.8",
+        "title": "Heating and Temperature Rise Limits",
+        "page": "9",
+        "category": "Thermal Safety",
+        "requirement_text": "During normal continuous operation, temperature rise of external operating handles must not exceed 35K (metal) / 50K (plastic); motor windings must not exceed insulation thermal class.",
+        "test_method": "Multi-channel thermocouple data logger during continuous duty run",
+        "required_evidence": "Temperature Rise Thermal Mapping Test Report",
+        "mandatory_qco": true
+      },
+      {
+        "clause_id": "13.2",
+        "section": "Clause 13.2",
+        "title": "Dielectric High-Voltage Strength and Leakage Current",
+        "page": "13",
+        "category": "Electrical Safety",
+        "requirement_text": "Insulation must withstand 1000V AC (Class I) / 2500V AC (Class II) for 1 minute without puncture. Leakage current must remain below 0.75 mA.",
+        "test_method": "High-voltage breakdown tester and leakage current millivoltmeter",
+        "required_evidence": "Hipot Dielectric Flashover & Leakage Test Certificate",
+        "mandatory_qco": true
+      },
+      {
+        "clause_id": "30.1",
+        "section": "Clause 30.1",
+        "title": "Resistance to Fire, Glowing Heat and Tracking (Glow-Wire Test)",
+        "page": "22",
+        "category": "Fire Safety",
+        "requirement_text": "Non-metallic insulating materials supporting live connections must resist glow-wire test at 750°C (unattended appliances 850°C) with flames extinguishing within 30 seconds.",
+        "test_method": "Standard glow-wire flammability test apparatus under IEC 60695-2-11",
+        "required_evidence": "Glow-Wire Flammability & Fire Resistance Report",
+        "mandatory_qco": true
+      }
+    ]
+  },
+  {
+    "id": "IS 302 (Part 2/Sec 3):2024",
+    "title": "Household and Similar Electrical Appliances – Particular Requirements for Electric Irons",
+    "sector": "Household Electrical & Electronics",
+    "year": "2024",
+    "status": "Current / Mandatory QCO 2024 / High Safety Relevance",
+    "effective_date": "2024-09-01",
+    "superseded_status": "Active",
+    "amendments": [],
+    "applicable_products": [
+      "electric iron",
+      "dry iron",
+      "steam iron",
+      "cordless iron",
+      "travel iron",
+      "heavy weight iron",
+      "clothes iron"
+    ],
+    "characteristics": [
+      "Die-cast aluminium soleplate with non-stick PTFE or ceramic coating",
+      "Thermostatic bimetallic temperature controller with fabric selector dial",
+      "Thermal fuse fail-safe cut-off in thermal contact with soleplate",
+      "Flexible braided or rubberized power cord with swiveling strain relief"
+    ],
+    "intended_use": [
+      "Smoothing and pressing of domestic garments, fabrics, and household textiles"
+    ],
+    "source_url": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/Indian_standards/isdetails/?std_id=IS302_2_3",
+    "key_clauses": [
+      {
+        "clause_id": "8.1",
+        "section": "Clause 8.1",
+        "title": "Earthing Continuity & Shock Protection",
+        "page": "4",
+        "category": "Electrical Safety",
+        "requirement_text": "Soleplate and all accessible metallic parts must be securely bonded to earthing terminal. Earthing resistance must not exceed 0.1 ohm at 25A current.",
+        "test_method": "High current ground bond test bench (25A AC for 60 seconds)",
+        "required_evidence": "Ground Bond Earthing Resistance Test Certificate",
+        "mandatory_qco": true
+      },
+      {
+        "clause_id": "11.2",
+        "section": "Clause 11.2",
+        "title": "Soleplate Maximum Temperature and Handle Touch Safety",
+        "page": "6",
+        "category": "Thermal Safety",
+        "requirement_text": "Soleplate temperature on linen setting must not exceed 250°C. Temperature rise of user handle grip must not exceed 30K for plastic during continuous operation.",
+        "test_method": "Calibrated contact thermocouples mounted on soleplate and handle grip",
+        "required_evidence": "Soleplate & Handle Grip Thermal Safety Test Report",
+        "mandatory_qco": true
+      },
+      {
+        "clause_id": "19.101",
+        "section": "Clause 19.101",
+        "title": "Mechanical Drop Endurance Test",
+        "page": "8",
+        "category": "Mechanical Durability",
+        "requirement_text": "The iron dropped from a height of 150 mm onto a rigid steel plate 100 times on its soleplate must not show electrical breakdown, loosening, or live part exposure.",
+        "test_method": "Automated mechanical lift-and-drop mechanism cycling 100 times",
+        "required_evidence": "Mechanical Soleplate Drop Endurance Test Sheet",
+        "mandatory_qco": true
+      },
+      {
+        "clause_id": "25.14",
+        "section": "Clause 25.14",
+        "title": "Supply Cord Flexing Durability Test",
+        "page": "11",
+        "category": "Cord Durability",
+        "requirement_text": "Supply cord entry must withstand 20,000 flexing cycles under 10 N load at 90° angle without conductor wire strand rupture or jacket damage.",
+        "test_method": "Reciprocating cord flexing machine operating at 60 flexes/minute",
+        "required_evidence": "Power Cord Flexing Endurance Test Certificate",
+        "mandatory_qco": true
+      }
+    ]
+  },
+  {
+    "id": "IS 18266:2023",
+    "title": "Medical Respirator - Specification",
+    "sector": "Medical & Healthcare Devices",
+    "year": "2023",
+    "status": "Current / Extremely High Medical & Public Health Relevance",
+    "effective_date": "2023-08-01",
+    "superseded_status": "Active",
+    "amendments": [],
+    "applicable_products": [
+      "medical respirator",
+      "N95 respirator",
+      "FFP2 respirator",
+      "healthcare surgical respirator",
+      "particulate filter respirator",
+      "medical anti-viral mask"
+    ],
+    "characteristics": [
+      "Multi-layer non-woven polypropylene composite with electrostatically charged meltblown filter",
+      "Cup-shaped, flat-fold, or duckbill construction with airtight facial contour seal",
+      "Elastic headbands (not earloops) providing >= 10 N clamping tension",
+      "Fluid splash resistance against high-pressure synthetic blood"
+    ],
+    "intended_use": [
+      "Respiratory barrier protection for healthcare workers against airborne pathogenic aerosols, viruses, bacteria, and droplets"
+    ],
+    "source_url": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/Indian_standards/isdetails/?std_id=IS18266",
+    "key_clauses": [
+      {
+        "clause_id": "5.1",
+        "section": "Clause 5.1",
+        "title": "Particulate Filtration Efficiency (PFE >= 95%)",
+        "page": "4",
+        "category": "Filtration Efficiency",
+        "requirement_text": "Filtration efficiency against neutralizing sodium chloride (NaCl) aerosol (particle size 0.3 micron) at 95 L/min air flow must be >= 95.0% (Class FFP2/N95).",
+        "test_method": "Automated filter tester (TSI 8130A) with photometer aerosol detection",
+        "required_evidence": "NABL Certified Particulate Filtration Efficiency (PFE) Report",
+        "mandatory_qco": true
+      },
+      {
+        "clause_id": "5.2",
+        "section": "Clause 5.2",
+        "title": "Bacterial Filtration Efficiency (BFE >= 98%)",
+        "page": "6",
+        "category": "Biological Barrier",
+        "requirement_text": "Bacterial filtration efficiency tested using Staphylococcus aureus aerosol at 28.3 L/min air flow must be >= 98.0%.",
+        "test_method": "Andersen 6-stage biological cascade impactor under EN 14683",
+        "required_evidence": "Bacterial Filtration Efficiency (BFE) Laboratory Certificate",
+        "mandatory_qco": true
+      },
+      {
+        "clause_id": "6.1",
+        "section": "Clause 6.1",
+        "title": "Total Inward Leakage (TIL) of Face Seal",
+        "page": "8",
+        "category": "Facial Seal Fit",
+        "requirement_text": "Total inward leakage measured on 10 human test subjects performing standard exercises in NaCl test chamber shall not exceed 8.0% of ambient aerosol concentration.",
+        "test_method": "Human subject test chamber with photometer probe inside mask cavity",
+        "required_evidence": "Total Inward Leakage (TIL) Human Subject Fit Test Report",
+        "mandatory_qco": true
+      },
+      {
+        "clause_id": "7.2",
+        "section": "Clause 7.2",
+        "title": "Breathing Resistance (Inhalation & Exhalation)",
+        "page": "10",
+        "category": "Breathability",
+        "requirement_text": "Inhalation airflow resistance shall not exceed 240 Pa at 95 L/min air flow; exhalation resistance shall not exceed 300 Pa at 160 L/min air flow.",
+        "test_method": "Calibrated breathing resistance test bench with differential pressure transducer",
+        "required_evidence": "Breathing Airflow Resistance Delta-P Log Sheet",
+        "mandatory_qco": true
+      },
+      {
+        "clause_id": "8.3",
+        "section": "Clause 8.3",
+        "title": "Synthetic Blood Splash Penetration Resistance",
+        "page": "12",
+        "category": "Fluid Barrier",
+        "requirement_text": "Outer surface must resist penetration of 2 ml synthetic blood discharged at a velocity corresponding to 120 mmHg (16.0 kPa) pressure without strike-through.",
+        "test_method": "Pneumatic synthetic blood jet apparatus under ASTM F1862",
+        "required_evidence": "Synthetic Blood Fluid Splash Penetration Test Certificate",
+        "mandatory_qco": true
+      }
+    ]
+  },
+  {
+    "id": "IS 10086:2021",
+    "title": "Moulds for Use in Tests of Cement, Concrete and Pozzolana - Specification",
+    "sector": "Construction Testing & Metrology",
+    "year": "2021",
+    "status": "Current / Metrology Equipment Specification",
+    "effective_date": "2021-07-01",
+    "superseded_status": "Active",
+    "amendments": [],
+    "applicable_products": [
+      "cube mould",
+      "concrete test mould",
+      "cement cube mould 70.6mm",
+      "concrete cube mould 150mm",
+      "cylindrical concrete mould",
+      "beam flexural mould",
+      "briquette mould"
+    ],
+    "characteristics": [
+      "Machined close-grained cast iron (IS 210) or carbon steel plates with precision milled joint faces",
+      "Interior faces machined plane to within 0.02 mm tolerance; angles strictly 90° ± 0.5°",
+      "Rigid detachable base plate with quick-release clamping bolts preventing slurry leakage"
+    ],
+    "intended_use": [
+      "Precision casting of standardized mortar, cement, and concrete test specimens for laboratory compressive and tensile testing"
+    ],
+    "source_url": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/Indian_standards/isdetails/?std_id=IS10086",
+    "key_clauses": [
+      {
+        "clause_id": "4.1",
+        "section": "Clause 4.1",
+        "title": "Material and Minimum Wall Thickness",
+        "page": "2",
+        "category": "Material specification",
+        "requirement_text": "Mould bodies shall be cast iron Grade FG 200 of IS 210 or structural steel IS 2062. Wall thickness shall not be less than 8.0 mm for 70.6 mm moulds and 12.0 mm for 150 mm moulds.",
+        "test_method": "Ultrasonic thickness gauge and chemical spectrometry of casting",
+        "required_evidence": "Cast Iron Metallurgical Grade & Wall Thickness Certificate",
+        "mandatory_qco": false
+      },
+      {
+        "clause_id": "5.2",
+        "section": "Clause 5.2",
+        "title": "Internal Dimensions and Angle Squareness",
+        "page": "3",
+        "category": "Dimensional Metrology",
+        "requirement_text": "Internal nominal distance between opposite faces shall be within ±0.15 mm. The angle between adjacent interior faces shall be 90° ± 0.5°.",
+        "test_method": "Coordinate Measuring Machine (CMM) or precision dial micrometer",
+        "required_evidence": "CMM Dimensional Metrology Calibration Sheet",
+        "mandatory_qco": false
+      },
+      {
+        "clause_id": "6.1",
+        "section": "Clause 6.1",
+        "title": "Flatness and Planeness of Interior Working Faces",
+        "page": "4",
+        "category": "Surface Metrology",
+        "requirement_text": "Each interior face shall be plane to within 0.02 mm over its entire area. Base plate top surface flatness shall not exceed 0.03 mm.",
+        "test_method": "Optical flat / precision straightedge with 0.02 mm feeler gauge",
+        "required_evidence": "Surface Planeness & Flatness Metrology Report",
+        "mandatory_qco": false
+      }
+    ]
+  },
+  {
+    "id": "IS 269:2015",
+    "title": "Ordinary Portland Cement (33, 43 and 53 Grade) - Specification",
+    "sector": "Civil Engineering & Construction",
+    "year": "2015",
+    "status": "Current / Mandatory Cement QCO / Critical Infrastructure",
+    "effective_date": "2016-01-01",
+    "superseded_status": "Active (Amalgamating IS 269, IS 8112, IS 12269)",
+    "amendments": [
+      {
+        "number": "Amendment No. 2",
+        "date": "2020-04",
+        "summary": "Mandatory QCO enforcement; strict compressive strength limits at 72 hours and autoclave soundness criteria."
+      }
+    ],
+    "applicable_products": [
+      "ordinary portland cement",
+      "opc cement",
+      "opc 43 grade cement",
+      "opc 53 grade cement",
+      "structural cement",
+      "construction cement",
+      "portland cement"
+    ],
+    "characteristics": [
+      "Hydraulic binder produced by pulverizing Portland clinker with calcium sulphate gypsum",
+      "Minimum 28-day compressive strength: 33 MPa (33 Grade), 43 MPa (43 Grade), 53 MPa (53 Grade)",
+      "Strict control over Lime Saturation Factor, Tricalcium Aluminate (C3A), and Magnesia content"
+    ],
+    "intended_use": [
+      "Reinforced concrete structures (RCC), high-rise buildings, bridges, highways, precast railway sleepers, and prestressed concrete"
+    ],
+    "source_url": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/Indian_standards/isdetails/?std_id=IS269",
+    "key_clauses": [
+      {
+        "clause_id": "5.1",
+        "section": "Clause 5.1",
+        "title": "Chemical Composition & Mineral Ratios",
+        "page": "3",
+        "category": "Chemical specification",
+        "requirement_text": "Lime Saturation Factor (LSF) must be between 0.66 and 1.02. Insoluble residue max 5.0%, Magnesia (MgO) max 6.0%, Total Sulphur (SO3) max 3.5%, Loss on Ignition max 5.0%.",
+        "test_method": "X-ray fluorescence (XRF) and wet chemical analysis conforming to IS 4032",
+        "required_evidence": "Chemical Composition & Mineralogical Analysis Certificate",
+        "mandatory_qco": true
+      },
+      {
+        "clause_id": "6.1",
+        "section": "Clause 6.1",
+        "title": "Fineness by Blaine Air Permeability Method",
+        "page": "5",
+        "category": "Physical Properties",
+        "requirement_text": "Specific surface area determined by Blaine air permeability apparatus shall not be less than 225 m²/kg.",
+        "test_method": "Blaine air permeability fineness test under IS 4031 (Part 2)",
+        "required_evidence": "Blaine Specific Surface Fineness Log",
+        "mandatory_qco": true
+      },
+      {
+        "clause_id": "6.2",
+        "section": "Clause 6.2",
+        "title": "Soundness by Le-Chatelier and Autoclave Methods",
+        "page": "6",
+        "category": "Physical Safety",
+        "requirement_text": "Expansion by Le-Chatelier method shall not exceed 10 mm. Expansion by Autoclave method shall not exceed 0.8%.",
+        "test_method": "Le-Chatelier water bath expansion and high-pressure steam autoclave under IS 4031 (Part 3)",
+        "required_evidence": "Le-Chatelier & Autoclave Soundness Test Certificate",
+        "mandatory_qco": true
+      },
+      {
+        "clause_id": "6.3",
+        "section": "Clause 6.3",
+        "title": "Setting Time (Initial and Final)",
+        "page": "7",
+        "category": "Physical Properties",
+        "requirement_text": "Initial setting time shall not be less than 30 minutes; final setting time shall not be more than 600 minutes (10 hours).",
+        "test_method": "Vicat needle penetration apparatus under IS 4031 (Part 5)",
+        "required_evidence": "Vicat Needle Setting Time Test Sheet",
+        "mandatory_qco": true
+      },
+      {
+        "clause_id": "6.4",
+        "section": "Clause 6.4",
+        "title": "Compressive Strength (72h, 168h, 672h)",
+        "page": "8",
+        "category": "Structural Performance",
+        "requirement_text": "For OPC 53 Grade: 72 hours strength >= 27.0 MPa; 168 hours (7 days) strength >= 37.0 MPa; 672 hours (28 days) strength >= 53.0 MPa.",
+        "test_method": "Standard 70.6 mm mortar cube compressive load testing machine under IS 4031 (Part 6)",
+        "required_evidence": "28-Day Mortar Cube Compressive Strength Test Report",
+        "mandatory_qco": true
+      }
+    ]
+  },
+  {
+    "id": "IS 13688:2020",
+    "title": "Packaged Pasteurized Milk - Specification",
+    "sector": "Food, Dairy & Public Health",
+    "year": "2020",
+    "status": "Current / Mandatory Food Safety Standard / High Public Health",
+    "effective_date": "2020-07-01",
+    "superseded_status": "Active",
+    "amendments": [],
+    "applicable_products": [
+      "pasteurized milk",
+      "packaged milk",
+      "pouch milk",
+      "toned milk",
+      "double toned milk",
+      "standardized milk",
+      "full cream milk",
+      "cow milk",
+      "buffalo milk"
+    ],
+    "characteristics": [
+      "Pure bovine liquid milk subjected to High-Temperature Short-Time (HTST) pasteurization (72°C for 15s) and immediately chilled < 4°C",
+      "Guaranteed minimum milk fat and Solids-Not-Fat (SNF) percentages",
+      "Strict negative phosphatase verification and zero chemical preservatives or neutralizers"
+    ],
+    "intended_use": [
+      "Direct human fluid consumption, infant and maternal nutrition, tea, coffee, and culinary preparation"
+    ],
+    "source_url": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/Indian_standards/isdetails/?std_id=IS13688",
+    "key_clauses": [
+      {
+        "clause_id": "4.1",
+        "section": "Clause 4.1",
+        "title": "Milk Fat and Solids-Not-Fat (SNF) Content",
+        "page": "2",
+        "category": "Composition",
+        "requirement_text": "Toned milk: Fat >= 3.0%, SNF >= 8.5%. Standardized milk: Fat >= 4.5%, SNF >= 8.5%. Full cream milk: Fat >= 6.0%, SNF >= 9.0%.",
+        "test_method": "Gerber butyrometer centrifuge fat test and lactometer SNF calculation",
+        "required_evidence": "Milk Compositional Analysis Certificate (Fat & SNF)",
+        "mandatory_qco": true
+      },
+      {
+        "clause_id": "5.2",
+        "section": "Clause 5.2",
+        "title": "Alkaline Phosphatase Pasteurization Efficacy Test",
+        "page": "3",
+        "category": "Food Safety",
+        "requirement_text": "Phosphatase enzyme test must be completely negative (conforming to complete inactivation of pathogenic bacteria during heat treatment).",
+        "test_method": "Spectrophotometric p-nitrophenyl phosphate assay under IS 1479",
+        "required_evidence": "Phosphatase Activity Negative Certificate",
+        "mandatory_qco": true
+      },
+      {
+        "clause_id": "6.1",
+        "section": "Clause 6.1",
+        "title": "Microbiological Colony Limits (Total Plate & Coliform)",
+        "page": "4",
+        "category": "Microbiological Safety",
+        "requirement_text": "Total plate count shall not exceed 30,000 cfu/ml; Coliform count shall not exceed 10 cfu/ml in packaged milk at dispatch.",
+        "test_method": "Standard agar plate incubation at 37°C under IS 5402 and IS 5401",
+        "required_evidence": "Bacteriological Colony Count Laboratory Report",
+        "mandatory_qco": true
+      },
+      {
+        "clause_id": "7.1",
+        "section": "Clause 7.1",
+        "title": "Zero Tolerance for Adulterants (Urea, Starch, Detergent, Neutralizers)",
+        "page": "6",
+        "category": "Purity & Adulteration",
+        "requirement_text": "Milk must test completely negative for added chemical neutralizers (sodium hydroxide, carbonates), urea, detergent, hydrogen peroxide, and starch.",
+        "test_method": "Chemical strip testing and chromogenic reagent assays under FSSAI / BIS methods",
+        "required_evidence": "Adulterant-Free Comprehensive Chemical Screen Certificate",
+        "mandatory_qco": true
+      }
+    ]
+  },
+  {
+    "id": "IS 18189:2023",
+    "title": "Portland Calcined Clay Limestone Cement - Specification",
+    "sector": "Civil Engineering & Construction",
+    "year": "2023",
+    "status": "Current / Sustainable Low-Carbon Cement Standard",
+    "effective_date": "2023-09-01",
+    "superseded_status": "Active",
+    "amendments": [],
+    "applicable_products": [
+      "calcined clay cement",
+      "LC3 cement",
+      "low carbon cement",
+      "limestone calcined clay cement",
+      "green cement",
+      "portland calcined clay cement"
+    ],
+    "characteristics": [
+      "Low carbon footprint ternary cement binder: 50% clinker, 30% calcined kaolinitic clay, 15% limestone, 5% gypsum",
+      "Reduces CO2 emissions by up to 40% compared to traditional OPC cement",
+      "Exceptional resistance to chloride penetration, sulphate attack, and alkali-silica reaction"
+    ],
+    "intended_use": [
+      "Sustainable concrete infrastructure, coastal and marine structures, bridges, dams, and mass residential housing"
+    ],
+    "source_url": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/Indian_standards/isdetails/?std_id=IS18189",
+    "key_clauses": [
+      {
+        "clause_id": "4.1",
+        "section": "Clause 4.1",
+        "title": "Mineral Constituent Proportions and Clay Reactivity",
+        "page": "3",
+        "category": "Composition",
+        "requirement_text": "Portland clinker content 45% to 55%, calcined clay 25% to 35%, limestone 10% to 20%. Calcined clay reactive silica + alumina must be >= 60%.",
+        "test_method": "Quantitative X-ray diffraction (Rietveld refinement) and chemical analysis",
+        "required_evidence": "Constituent Mineral Phase Quantification Report",
+        "mandatory_qco": true
+      },
+      {
+        "clause_id": "5.2",
+        "section": "Clause 5.2",
+        "title": "Chloride Content and Loss on Ignition",
+        "page": "4",
+        "category": "Chemical specification",
+        "requirement_text": "Chloride content shall not exceed 0.10% by mass. Loss on ignition (LOI) must be between 4.0% and 8.0% due to controlled limestone decarbonation.",
+        "test_method": "Potentiometric titration and muffle furnace ignition at 950°C",
+        "required_evidence": "Chloride & LOI Chemical Test Certificate",
+        "mandatory_qco": true
+      },
+      {
+        "clause_id": "6.2",
+        "section": "Clause 6.2",
+        "title": "Compressive Strength (72h, 168h, 672h)",
+        "page": "6",
+        "category": "Structural Performance",
+        "requirement_text": "Standard mortar cube compressive strength: 72 hours >= 16.0 MPa, 168 hours >= 27.0 MPa, 672 hours (28 days) >= 43.0 MPa.",
+        "test_method": "Standard 70.6 mm mortar cube compressive load testing machine under IS 4031",
+        "required_evidence": "28-Day Compressive Strength Development Log",
+        "mandatory_qco": true
+      },
+      {
+        "clause_id": "7.1",
+        "section": "Clause 7.1",
+        "title": "Resistance to Chloride Ion Penetration",
+        "page": "8",
+        "category": "Durability in Marine Environment",
+        "requirement_text": "Rapid Chloride Penetration Test (RCPT) charge passed at 28 days must be < 1000 Coulombs (Very Low permeability rating).",
+        "test_method": "RCPT apparatus under ASTM C1202 / IS 516 (Part 5)",
+        "required_evidence": "Rapid Chloride Ion Penetration (RCPT) Test Report",
+        "mandatory_qco": true
+      }
+    ]
+  },
+  {
+    "id": "IS 9131:2026",
+    "title": "Rim Locks and Latches - Specification",
+    "sector": "Building Hardware & Security",
+    "year": "2026",
+    "status": "Current / Safety & Security Hardware Relevance",
+    "effective_date": "2026-01-01",
+    "superseded_status": "Active",
+    "amendments": [],
+    "applicable_products": [
+      "rim lock",
+      "rim latch",
+      "night latch",
+      "door rim lock",
+      "main door lock",
+      "deadbolt rim lock",
+      "security rim lock",
+      "cylinder rim latch"
+    ],
+    "characteristics": [
+      "Surface-mounted lock case with bevelled spring latch bolt and square security deadbolt",
+      "Key-operated pin-tumbler cylinder from exterior with brass cylinder core",
+      "Heavy duty strike plate with reinforced anchoring for forced entry resistance"
+    ],
+    "intended_use": [
+      "Securing wooden and metal doors against unauthorized entry in residential and commercial premises"
+    ],
+    "source_url": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/Indian_standards/isdetails/?std_id=IS9131",
+    "key_clauses": [
+      {
+        "clause_id": "5.1",
+        "section": "Clause 5.1",
+        "title": "Material Specifications and Cylinder Pin Tumblers",
+        "page": "3",
+        "category": "Material specification",
+        "requirement_text": "Lock case shall be cold rolled mild steel sheet min 1.6 mm thick or brass casting. Key cylinder must have minimum 5 brass pin tumblers with anti-pick spool pins.",
+        "test_method": "Metallurgical spark spectrometry and dimensional caliper verification",
+        "required_evidence": "Material Grade & Key Cylinder Disassembly Inspection Report",
+        "mandatory_qco": false
+      },
+      {
+        "clause_id": "6.2",
+        "section": "Clause 6.2",
+        "title": "Deadbolt Throw and Latch Projection",
+        "page": "4",
+        "category": "Security Dimensions",
+        "requirement_text": "Minimum deadbolt throw shall not be less than 15.0 mm when fully engaged. Spring latch projection shall not be less than 10.0 mm.",
+        "test_method": "Precision vernier depth gauge measuring bolt projection",
+        "required_evidence": "Bolt Throw Dimensional Verification Certificate",
+        "mandatory_qco": false
+      },
+      {
+        "clause_id": "7.1",
+        "section": "Clause 7.1",
+        "title": "Mechanical Operating Endurance (100,000 Cycles)",
+        "page": "6",
+        "category": "Durability",
+        "requirement_text": "The lock mechanism must complete 100,000 full operating cycles of key rotation and latch retraction without spring breakage, deadbolt jamming, or key binding.",
+        "test_method": "Automated pneumatic robotic key rotation testing fixture",
+        "required_evidence": "100,000 Cycle Mechanical Endurance Test Certificate",
+        "mandatory_qco": false
+      },
+      {
+        "clause_id": "7.3",
+        "section": "Clause 7.3",
+        "title": "Resistance to End Load Force (Forced Entry Attack)",
+        "page": "7",
+        "category": "Security & Strength",
+        "requirement_text": "The engaged deadbolt must withstand a static end-load force of 5000 N applied against the bolt head without collapsing into the case or shearing off.",
+        "test_method": "Hydraulic static compression load tester applied directly to deadbolt head",
+        "required_evidence": "5000 N Forced Entry End-Load Attack Certificate",
+        "mandatory_qco": false
+      }
+    ]
+  },
+  {
+    "id": "IS 13422:2024 / ISO 10282:2023",
+    "title": "Single-Use Sterile Rubber Surgical Gloves - Specification",
+    "sector": "Medical & Healthcare Devices",
+    "year": "2024",
+    "status": "Current / Mandatory Medical Device Safety Standard",
+    "effective_date": "2024-04-01",
+    "superseded_status": "Active (Harmonized with ISO 10282:2023)",
+    "amendments": [],
+    "applicable_products": [
+      "surgical gloves",
+      "sterile rubber gloves",
+      "latex surgical gloves",
+      "nitrile surgical gloves",
+      "powder-free surgical gloves",
+      "disposable surgical gloves",
+      "surgeon gloves"
+    ],
+    "characteristics": [
+      "Natural rubber latex or synthetic polyisoprene / nitrile elastomer compounded glove",
+      "Anatomically curved fingers with palm textured grip and beaded cuff",
+      "Pre-sterilized by ethylene oxide (EtO) or gamma irradiation in individual peel-open pouches"
+    ],
+    "intended_use": [
+      "Worn on the hands of operating personnel to prevent microbiological cross-contamination between patient and surgeon during surgical procedures"
+    ],
+    "source_url": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/Indian_standards/isdetails/?std_id=IS13422",
+    "key_clauses": [
+      {
+        "clause_id": "5.1",
+        "section": "Clause 5.1",
+        "title": "Freedom from Holes (Water Tightness Test AQL 0.65)",
+        "page": "3",
+        "category": "Barrier Integrity",
+        "requirement_text": "Gloves tested by water leak test (1000 ml water suspended for 2 minutes) must meet Acceptable Quality Limit (AQL) of 0.65 conforming to ISO 2859-1.",
+        "test_method": "1000 ml vertical water suspension leak test apparatus",
+        "required_evidence": "NABL Certified Water Tightness AQL 0.65 Report",
+        "mandatory_qco": true
+      },
+      {
+        "clause_id": "6.2",
+        "section": "Clause 6.2",
+        "title": "Tensile Strength and Ultimate Elongation (Before and After Aging)",
+        "page": "5",
+        "category": "Physical Properties",
+        "requirement_text": "Before aging: Tensile strength >= 24.0 MPa, Elongation >= 750%. After accelerated oven aging (70°C for 168h): Tensile strength >= 18.0 MPa, Elongation >= 560%.",
+        "test_method": "Universal tensile testing machine with optical extensometer under ISO 37",
+        "required_evidence": "Tensile Properties Before & After Aging Certificate",
+        "mandatory_qco": true
+      },
+      {
+        "clause_id": "7.1",
+        "section": "Clause 7.1",
+        "title": "Sterility Assurance Level (SAL 10^-6)",
+        "page": "7",
+        "category": "Sterility",
+        "requirement_text": "Gloves must comply with sterility assurance level (SAL) of 10^-6 validated under ISO 11135 (EtO) or ISO 11137 (Radiation). Zero microbial growth after 14 days incubation.",
+        "test_method": "Direct inoculation sterility test in Fluid Thioglycollate and Soybean Casein Digest media",
+        "required_evidence": "14-Day Sterility Validation & Biological Indicator Certificate",
+        "mandatory_qco": true
+      },
+      {
+        "clause_id": "8.2",
+        "section": "Clause 8.2",
+        "title": "Biocompatibility: Dermal Irritation and Extractable Protein",
+        "page": "8",
+        "category": "Biocompatibility",
+        "requirement_text": "Extractable protein content for latex gloves must be < 50 ug/dm². Zero primary skin irritation and sensitization under ISO 10993.",
+        "test_method": "Modified Lowry protein assay conforming to ASTM D5712",
+        "required_evidence": "Biocompatibility & Extractable Protein Test Report",
+        "mandatory_qco": true
+      }
+    ]
+  },
+  {
+    "id": "IS 15844 (Part 3):2024",
+    "title": "Sports Footwear – Part 3 Professional Sports Footwear - Specification",
+    "sector": "Footwear & Sports Goods",
+    "year": "2024",
+    "status": "Current / Medium Consumer Safety & High Performance",
+    "effective_date": "2024-07-01",
+    "superseded_status": "Active",
+    "amendments": [],
+    "applicable_products": [
+      "professional sports footwear",
+      "running shoes",
+      "athletics shoes",
+      "marathon shoes",
+      "football boots",
+      "badminton court shoes",
+      "basketball shoes"
+    ],
+    "characteristics": [
+      "Engineered athletic footwear with anatomical biomechanical support and rigid torsion plate",
+      "High-energy return midsole (supercritical nitrogen-infused EVA / PEBAX foam)",
+      "High-abrasion molded rubber outsole with sport-specific stud/tread pattern"
+    ],
+    "intended_use": [
+      "Competitive athletics, high-intensity professional sports, court games, and athletic injury reduction"
+    ],
+    "source_url": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/Indian_standards/isdetails/?std_id=IS15844_3",
+    "key_clauses": [
+      {
+        "clause_id": "4.1",
+        "section": "Clause 4.1",
+        "title": "Heel Energy Absorption and Impact Attenuation",
+        "page": "4",
+        "category": "Impact Attenuation",
+        "requirement_text": "Energy absorption of the heel seat under dynamic impact loading must not be less than 25.0 Joules. Peak transmitted force must not exceed 2.5 kN.",
+        "test_method": "Dynamic impactor apparatus dropping 8.5 kg mass on heel section",
+        "required_evidence": "Dynamic Heel Impact Attenuation Test Certificate",
+        "mandatory_qco": false
+      },
+      {
+        "clause_id": "5.2",
+        "section": "Clause 5.2",
+        "title": "Dynamic Sole Flexing Durability (150,000 Cycles)",
+        "page": "6",
+        "category": "Flexing Endurance",
+        "requirement_text": "Sole assembly must withstand 150,000 flexing cycles on Bennewart flexing machine at 90° angle without crack initiation exceeding 3 mm.",
+        "test_method": "Bennewart sole flexing machine under ISO 16177",
+        "required_evidence": "150,000 Cycle Dynamic Sole Flexing Log",
+        "mandatory_qco": false
+      },
+      {
+        "clause_id": "6.1",
+        "section": "Clause 6.1",
+        "title": "Slip Resistance and Dynamic Coefficient of Friction",
+        "page": "8",
+        "category": "Traction & Safety",
+        "requirement_text": "Coefficient of friction on wet ceramic tile with sodium lauryl sulphate lubricant shall not be less than 0.45 (heel) and 0.40 (flat).",
+        "test_method": "Mechanical footwear slip resistance tester under ISO 13287",
+        "required_evidence": "NABL Footwear Slip Resistance Friction Report",
+        "mandatory_qco": false
+      },
+      {
+        "clause_id": "7.3",
+        "section": "Clause 7.3",
+        "title": "Upper-to-Sole Bond Peeling Strength",
+        "page": "9",
+        "category": "Bonding Integrity",
+        "requirement_text": "Adhesion peel strength between upper and outsole shall not be less than 4.0 N/mm along the entire perimeter.",
+        "test_method": "Tensile bond testing machine under ISO 17708",
+        "required_evidence": "Upper-to-Sole Adhesive Peel Strength Report",
+        "mandatory_qco": false
+      }
+    ]
+  },
+  {
+    "id": "IS 15844 (Part 1):2023",
+    "title": "Sports Footwear – Part 1 General Purpose - Specification",
+    "sector": "Footwear & Sports Goods",
+    "year": "2023",
+    "status": "Current / Mandatory Footwear QCO 2024 / High Safety Relevance",
+    "effective_date": "2024-01-01",
+    "superseded_status": "Active",
+    "amendments": [
+      {
+        "number": "Amendment No. 1",
+        "date": "2023-11",
+        "summary": "Mandatory Quality Control Order (QCO) enforcement by DPIIT for all general purpose sports footwear."
+      }
+    ],
+    "applicable_products": [
+      "sports footwear",
+      "sports shoes",
+      "training shoes",
+      "gym sneakers",
+      "walking shoes",
+      "jogging shoes",
+      "casual sneakers"
+    ],
+    "characteristics": [
+      "General recreation sports footwear with synthetic leather, mesh textile, or leather upper",
+      "Molded polyurethane (PU), ethylene vinyl acetate (EVA), or vulcanized rubber outsole",
+      "Harmlessness compliance: zero toxic phthalates, lead, or banned aromatic azo dyes"
+    ],
+    "intended_use": [
+      "General fitness, walking, school sports, gym training, and everyday active recreational use"
+    ],
+    "source_url": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/Indian_standards/isdetails/?std_id=IS15844_1",
+    "key_clauses": [
+      {
+        "clause_id": "4.1",
+        "section": "Clause 4.1",
+        "title": "Chemical Harmlessness (Banned Azo Dyes & Heavy Metals)",
+        "page": "3",
+        "category": "Material safety",
+        "requirement_text": "Total lead content in all components must not exceed 90 mg/kg. Prohibited carcinogenic aromatic amines (azo dyes) must not exceed 30 mg/kg.",
+        "test_method": "ICP-OES spectrometry and GC-MS gas chromatography",
+        "required_evidence": "Chemical Harmlessness & Toxic Metal Screen Certificate",
+        "mandatory_qco": true
+      },
+      {
+        "clause_id": "5.1",
+        "section": "Clause 5.1",
+        "title": "Outsole Abrasion Resistance",
+        "page": "5",
+        "category": "Durability",
+        "requirement_text": "Relative volume loss of outsole material under abrasive friction shall not exceed 250 mm³ for density <= 0.9 g/cm³ on DIN rotary drum.",
+        "test_method": "DIN rotary drum abrader under ISO 4649",
+        "required_evidence": "Sole Abrasion Volume Loss Test Certificate",
+        "mandatory_qco": true
+      },
+      {
+        "clause_id": "5.3",
+        "section": "Clause 5.3",
+        "title": "Outsole Flexing Resistance (50,000 Cycles)",
+        "page": "6",
+        "category": "Durability",
+        "requirement_text": "After 50,000 continuous flex cycles on Ross flexing machine, crack growth shall not exceed 4.0 mm.",
+        "test_method": "Ross flex tester cycling at 100 flexes per minute under ISO 5423",
+        "required_evidence": "Ross Outsole Flexing Endurance Test Sheet",
+        "mandatory_qco": true
+      },
+      {
+        "clause_id": "6.2",
+        "section": "Clause 6.2",
+        "title": "Upper-to-Sole Adhesion Bond Strength",
+        "page": "8",
+        "category": "Bonding Integrity",
+        "requirement_text": "Minimum peeling strength between upper and sole must not be less than 3.0 N/mm.",
+        "test_method": "Tensile bond testing machine under ISO 17708",
+        "required_evidence": "Adhesion Peeling Strength Test Report",
+        "mandatory_qco": true
+      }
+    ]
+  },
+  {
+    "id": "IS 2791:2022",
+    "title": "Soluble Coffee Powder - Specification",
+    "sector": "Food, Beverages & Agricultural",
+    "year": "2022",
+    "status": "Current / High Food Safety Relevance",
+    "effective_date": "2022-09-01",
+    "superseded_status": "Active",
+    "amendments": [],
+    "applicable_products": [
+      "soluble coffee powder",
+      "instant coffee",
+      "instant coffee powder",
+      "spray dried coffee",
+      "freeze dried coffee",
+      "pure soluble coffee"
+    ],
+    "characteristics": [
+      "Free-flowing brown powder or agglomerated granules obtained exclusively by aqueous extraction of roasted coffee beans",
+      "100% pure coffee solids without added chicory, starch, or artificial flavors",
+      "Immediate full solubility in hot water without residue"
+    ],
+    "intended_use": [
+      "Instant beverage preparation by dissolution in hot or cold water or milk"
+    ],
+    "source_url": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/Indian_standards/isdetails/?std_id=IS2791",
+    "key_clauses": [
+      {
+        "clause_id": "4.1",
+        "section": "Clause 4.1",
+        "title": "Moisture Content Limits",
+        "page": "2",
+        "category": "Composition",
+        "requirement_text": "Moisture content shall not exceed 4.0% by mass for spray-dried coffee and 5.0% by mass for freeze-dried coffee granules.",
+        "test_method": "Vacuum oven drying at 70°C conforming to IS 2791",
+        "required_evidence": "Moisture Content Gravimetric Analysis Report",
+        "mandatory_qco": false
+      },
+      {
+        "clause_id": "4.2",
+        "section": "Clause 4.2",
+        "title": "Total Caffeine Content on Dry Basis",
+        "page": "3",
+        "category": "Active Ingredient",
+        "requirement_text": "Total caffeine content on dry matter basis shall not be less than 2.8% by mass for pure soluble coffee.",
+        "test_method": "High Performance Liquid Chromatography (HPLC) / Spectrophotometric method",
+        "required_evidence": "HPLC Caffeine Content Assay Certificate",
+        "mandatory_qco": false
+      },
+      {
+        "clause_id": "5.1",
+        "section": "Clause 5.1",
+        "title": "Total Ash and Acid-Insoluble Ash",
+        "page": "4",
+        "category": "Purity",
+        "requirement_text": "Total ash shall be between 7.0% and 14.0% by mass on dry basis. Acid-insoluble ash must not exceed 0.1% by mass.",
+        "test_method": "Muffle furnace incineration at 550°C and hydrochloric acid digestion",
+        "required_evidence": "Total Ash & Acid Insoluble Ash Report",
+        "mandatory_qco": false
+      },
+      {
+        "clause_id": "5.3",
+        "section": "Clause 5.3",
+        "title": "Solubility Rate in Hot and Cold Water",
+        "page": "5",
+        "category": "Physical Performance",
+        "requirement_text": "Must dissolve completely in boiling water within 30 seconds with moderate stirring, and in cold water (20°C) within 3 minutes without leaving insoluble sediment.",
+        "test_method": "Standard volumetric dissolution visual inspection test",
+        "required_evidence": "Solubility Dissolution Rate Observation Sheet",
+        "mandatory_qco": false
+      },
+      {
+        "clause_id": "6.2",
+        "section": "Clause 6.2",
+        "title": "Toxic Metal Contaminant Thresholds (Lead, Arsenic, Copper)",
+        "page": "6",
+        "category": "Toxicology",
+        "requirement_text": "Lead shall not exceed 0.5 mg/kg, Arsenic max 0.2 mg/kg, Copper max 30.0 mg/kg.",
+        "test_method": "Atomic Absorption Spectrophotometry (AAS) under FSSAI methods",
+        "required_evidence": "Heavy Metal Trace Purity Certificate",
+        "mandatory_qco": false
+      }
+    ]
+  },
+  {
+    "id": "IS 15787:2025",
+    "title": "Switched Socket-Outlets without Interlock for Fixed Installations - Specification",
+    "sector": "Electrical Accessories & Home Safety",
+    "year": "2025",
+    "status": "Current / Mandatory Electrical QCO 2023 / Very High Safety",
+    "effective_date": "2025-01-01",
+    "superseded_status": "Active",
+    "amendments": [
+      {
+        "number": "Amendment No. 1",
+        "date": "2023-08",
+        "summary": "Mandatory Electrical Accessories QCO order. Automatic safety shutter verification made mandatory."
+      }
+    ],
+    "applicable_products": [
+      "switched socket",
+      "modular switch socket",
+      "switch socket combo",
+      "power socket outlet",
+      "6A switch socket",
+      "16A switch socket",
+      "3 pin switched socket"
+    ],
+    "characteristics": [
+      "Modular combined 1-way rocker switch and 3-pin shuttered socket unit",
+      "Rated voltage up to 250V AC, current 6A / 16A, for domestic fixed wiring",
+      "Flame-retardant virgin polycarbonate molding with phosphor bronze contacts",
+      "Automatic safety shutters over live and neutral socket apertures"
+    ],
+    "intended_use": [
+      "Fixed domestic and commercial electrical installations for safe plugging of appliances"
+    ],
+    "source_url": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/Indian_standards/isdetails/?std_id=IS15787",
+    "key_clauses": [
+      {
+        "clause_id": "8.1",
+        "section": "Clause 8.1",
+        "title": "Safety Child-Proof Shutters Operation",
+        "page": "4",
+        "category": "Child Safety",
+        "requirement_text": "Live and neutral socket apertures must be automatically blocked by internal shutters. Shutters must not open when 1.0 mm probe is inserted under 20 N force, opening only upon simultaneous earthing pin entry.",
+        "test_method": "Calibrated 1.0 mm steel probe insertion test under 20 N load",
+        "required_evidence": "Safety Shutter Child Ingress Protection Report",
+        "mandatory_qco": true
+      },
+      {
+        "clause_id": "10.1",
+        "section": "Clause 10.1",
+        "title": "Plug Withdrawal Force Limits",
+        "page": "6",
+        "category": "Mechanical Safety",
+        "requirement_text": "Withdrawal force for removing test plug from 16A socket must not be less than 5.0 N (preventing loose arcing contact) and not more than 54.0 N.",
+        "test_method": "Precision tensile force gauge measuring plug separation force",
+        "required_evidence": "Plug Withdrawal Retention Force Calibration Report",
+        "mandatory_qco": true
+      },
+      {
+        "clause_id": "17.1",
+        "section": "Clause 17.1",
+        "title": "Temperature Rise Under 1.1x Rated Current",
+        "page": "9",
+        "category": "Thermal Safety",
+        "requirement_text": "Terminals and contacts carrying 1.1 times rated current (17.6 A for 16A socket) continuously for 1 hour must not exhibit temperature rise exceeding 45K.",
+        "test_method": "Thermocouple temperature data logger during current injection",
+        "required_evidence": "Current Overload Temperature Rise Test Report",
+        "mandatory_qco": true
+      },
+      {
+        "clause_id": "24.1",
+        "section": "Clause 24.1",
+        "title": "Resistance to Abnormal Heat and Fire (Glow-Wire 850°C)",
+        "page": "13",
+        "category": "Fire Safety",
+        "requirement_text": "Insulating material holding current-carrying parts must withstand glow-wire test at 850°C with flames extinguishing within 30 seconds of removal.",
+        "test_method": "Glow-wire test apparatus under IEC 60695-2-11",
+        "required_evidence": "850°C Glow-Wire Flammability Test Certificate",
+        "mandatory_qco": true
+      }
+    ]
+  },
+  {
+    "id": "IS 411:2026",
+    "title": "Titanium Dioxide for Pigmentary Applications - Specification",
+    "sector": "Chemicals, Paints & Industrial",
+    "year": "2026",
+    "status": "Current / Industrial Quality Relevance",
+    "effective_date": "2026-01-01",
+    "superseded_status": "Active",
+    "amendments": [],
+    "applicable_products": [
+      "titanium dioxide",
+      "tio2 pigment",
+      "rutile titanium dioxide",
+      "anatase titanium dioxide",
+      "white pigment",
+      "paint pigment",
+      "plastic masterbatch pigment"
+    ],
+    "characteristics": [
+      "Synthetic inorganic white pigment available in Rutile (Type R) or Anatase (Type A) crystal forms",
+      "Alumina, silica, or zirconia inorganic surface treatment for weatherability",
+      "High refractive index, exceptional opacity, and tinting strength"
+    ],
+    "intended_use": [
+      "White opacifying pigment in architectural paints, industrial coatings, plastics, printing inks, and paper"
+    ],
+    "source_url": "https://www.services.bis.gov.in/php/BIS_2.0/bisconnect/knowyourstandards/Indian_standards/isdetails/?std_id=IS411",
+    "key_clauses": [
+      {
+        "clause_id": "4.1",
+        "section": "Clause 4.1",
+        "title": "Titanium Dioxide (TiO2) Purity Content",
+        "page": "3",
+        "category": "Chemical specification",
+        "requirement_text": "Titanium dioxide content shall not be less than 92.0% by mass for Rutile pigment and 98.0% by mass for untreated Anatase pigment.",
+        "test_method": "Aluminium reduction titrimetric method conforming to IS 411",
+        "required_evidence": "TiO2 Chemical Purity Titration Analysis Report",
+        "mandatory_qco": false
+      },
+      {
+        "clause_id": "5.2",
+        "section": "Clause 5.2",
+        "title": "Volatile Matter at 105°C and Moisture",
+        "page": "4",
+        "category": "Physical Properties",
+        "requirement_text": "Loss on drying at 105°C for 2 hours shall not exceed 0.5% by mass.",
+        "test_method": "Gravimetric drying oven test under IS 33",
+        "required_evidence": "Volatile Matter Gravimetric Loss Sheet",
+        "mandatory_qco": false
+      },
+      {
+        "clause_id": "6.1",
+        "section": "Clause 6.1",
+        "title": "Water Soluble Matter and pH of Aqueous Suspension",
+        "page": "5",
+        "category": "Chemical Properties",
+        "requirement_text": "Matter soluble in water shall not exceed 0.5% by mass. pH of 10% aqueous suspension shall be within 6.5 to 8.5.",
+        "test_method": "Conductivity cell and calibrated pH meter",
+        "required_evidence": "Water Soluble Salts & pH Test Certificate",
+        "mandatory_qco": false
+      },
+      {
+        "clause_id": "7.3",
+        "section": "Clause 7.3",
+        "title": "Oil Absorption and Relative Tinting Strength",
+        "page": "6",
+        "category": "Optical & Dispersion",
+        "requirement_text": "Oil absorption value shall be between 16 and 26 g per 100 g pigment. Relative tinting strength shall not be less than 100% of reference standard.",
+        "test_method": "Spatula rub-out oil absorption method with refined linseed oil",
+        "required_evidence": "Oil Absorption & Tinting Strength Test Report",
+        "mandatory_qco": false
+      }
+    ]
+  }
+]

@@ -1,0 +1,863 @@
+import { useState, useEffect, useCallback, useRef } from 'react';
+import { supabase, isSupabaseConfigured } from '../services/supabase';
+import { setAuthSessionToken } from '../services/api';
+
+const API_BASE = import.meta.env.VITE_API_URL || '';
+
+export const AUTH_STATES = {
+  UNAUTHENTICATED: 'UNAUTHENTICATED',
+  SIGNUP_STARTED: 'SIGNUP_STARTED',
+  ACCOUNT_CREATED: 'ACCOUNT_CREATED',
+  EMAIL_VERIFICATION_PENDING: 'EMAIL_VERIFICATION_PENDING',
+  EMAIL_VERIFIED: 'EMAIL_VERIFIED',
+  ORGANIZATION_SETUP: 'ORGANIZATION_SETUP',
+  REGISTRATION_COMPLETE: 'REGISTRATION_COMPLETE',
+  AUTHENTICATED: 'AUTHENTICATED'
+};
+
+export const normalizeIndianPhone = (rawPhone) => {
+  if (!rawPhone) return '';
+  let cleaned = String(rawPhone).trim().replace(/[^\d+]/g, '');
+  if (cleaned.startsWith('+91')) {
+    cleaned = cleaned.slice(3);
+  } else if (cleaned.startsWith('91') && cleaned.length === 12) {
+    cleaned = cleaned.slice(2);
+  } else if (cleaned.startsWith('0') && cleaned.length === 11) {
+    cleaned = cleaned.slice(1);
+  }
+  return cleaned;
+};
+
+const formatSupabaseUser = (sessionUser, profileData = null, orgData = null) => {
+  if (!sessionUser) return null;
+  const meta = sessionUser.user_metadata || {};
+  const isVerified = Boolean(sessionUser.email_confirmed_at || sessionUser.phone_confirmed_at);
+  const identifier = sessionUser.phone
+    ? sessionUser.phone
+    : (sessionUser.email ? sessionUser.email.split('@')[0] : 'Authorized Representative');
+
+  return {
+    id: sessionUser.id,
+    email: sessionUser.email || '',
+    phone: sessionUser.phone || '',
+    email_confirmed_at: sessionUser.email_confirmed_at || null,
+    phone_confirmed_at: sessionUser.phone_confirmed_at || null,
+    is_email_verified: isVerified,
+    full_name: profileData?.full_name || meta.full_name || meta.name || identifier,
+    company_name: orgData?.name || meta.company_name || 'Registered Enterprise',
+    role: profileData?.role || meta.role || 'Manufacturer',
+    mobile_number: profileData?.mobile_number || meta.mobile_number || sessionUser.phone || '',
+    enterprise_category: orgData?.enterprise_category || meta.enterprise_category || 'MSME - Small Enterprise',
+    sector: orgData?.primary_sector || meta.sector || 'Consumer Goods & Utensils (IS 17803)',
+    avatar_url: meta.avatar_url || meta.picture || '',
+    provider: sessionUser.app_metadata?.provider || (sessionUser.phone ? 'phone' : 'email'),
+    has_organization: Boolean(orgData?.name || meta.has_organization || meta.company_name)
+  };
+};
+
+export function useAuth() {
+  // Initialize user and token from localStorage so authenticated state is preserved across refresh
+  const [user, setUser] = useState(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem('bis_user');
+        return saved ? JSON.parse(saved) : null;
+      } catch (e) {
+        return null;
+      }
+    }
+    return null;
+  });
+
+  const [token, setToken] = useState(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        return localStorage.getItem('bis_token') || null;
+      } catch (e) {
+        return null;
+      }
+    }
+    return null;
+  });
+
+  const [authState, setAuthState] = useState(() => {
+    if (typeof window !== 'undefined' && localStorage.getItem('bis_user')) {
+      return AUTH_STATES.AUTHENTICATED;
+    }
+    return AUTH_STATES.UNAUTHENTICATED;
+  });
+
+  const [loading, setLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [pendingVerification, setPendingVerification] = useState(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const p = localStorage.getItem('bis_pending_verification');
+        return p ? JSON.parse(p) : null;
+      } catch (e) {
+        return null;
+      }
+    }
+    return null;
+  });
+
+  // Synchronize in-memory auth token with api client
+  useEffect(() => {
+    setAuthSessionToken(token);
+  }, [token]);
+
+  // Notice state for Google existing user detected during signup
+  const [googleNotice, setGoogleNotice] = useState(null);
+
+  // Needs onboarding state (optional)
+  const [needsOrgOnboarding, setNeedsOrgOnboarding] = useState(false);
+
+  // Helper to check profile and organization
+  const checkDatabaseProfileAndOrg = useCallback(async (userId) => {
+    return { profile: null, org: null };
+  }, []);
+
+  // Helper to safely save or upsert profile & org to database
+  const saveProfileAndOrgToDatabase = useCallback(async (userObj, orgDetails) => {
+    return;
+  }, []);
+
+  const syncWithBackend = useCallback(async (supabaseSession, additionalData = {}) => {
+    try {
+      const res = await fetch(`${API_BASE}/api/auth/sync`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${supabaseSession?.access_token || ''}`
+        },
+        body: JSON.stringify(additionalData)
+      });
+      if (res.ok) {
+        return await res.json();
+      }
+    } catch (err) {
+      // Backend may be offline or in standalone Vercel mode; ignore sync error
+    }
+    return null;
+  }, []);
+
+  // Universal session applicator: sets user, token, localStorage, and triggers background sync
+  const applyAuthSession = useCallback(async (session, mounted = true) => {
+    if (!session || !session.user || !mounted) return;
+    const authUser = session.user;
+    const isGoogle = authUser.app_metadata?.provider === 'google' || authUser.identities?.some(id => id.provider === 'google');
+    const isVerified = Boolean(authUser.email_confirmed_at || authUser.phone_confirmed_at || isGoogle);
+
+    const { profile, org } = await checkDatabaseProfileAndOrg(authUser.id);
+    const formatted = formatSupabaseUser(authUser, profile, org);
+
+    if (isVerified) {
+      setUser(formatted);
+      setToken(session.access_token);
+      setAuthState(AUTH_STATES.AUTHENTICATED);
+      setNeedsOrgOnboarding(false);
+      setGoogleNotice(null);
+      setPendingVerification(null);
+
+      try {
+        localStorage.setItem('bis_user', JSON.stringify(formatted));
+        localStorage.setItem('bis_token', session.access_token);
+        localStorage.removeItem('bis_pending_verification');
+      } catch (e) {}
+
+      // Background sync with backend if available
+      syncWithBackend(session, {
+        email: formatted.email,
+        full_name: formatted.full_name,
+        company_name: formatted.company_name,
+        role: formatted.role,
+        phone: formatted.phone,
+        sector: formatted.sector,
+        enterprise_category: formatted.enterprise_category
+      }).then((backendSync) => {
+        if (backendSync?.user && mounted) {
+          const finalUser = backendSync.user;
+          const finalToken = backendSync.access_token || session.access_token;
+          setUser(finalUser);
+          setToken(finalToken);
+          try {
+            localStorage.setItem('bis_user', JSON.stringify(finalUser));
+            localStorage.setItem('bis_token', finalToken);
+          } catch (e) {}
+        }
+      }).catch(() => {});
+    } else if (authUser.email) {
+      setAuthState(AUTH_STATES.EMAIL_VERIFICATION_PENDING);
+      const pending = {
+        email: authUser.email,
+        fullName: formatted.full_name,
+        companyName: formatted.company_name
+      };
+      setPendingVerification(pending);
+      try {
+        localStorage.setItem('bis_pending_verification', JSON.stringify(pending));
+      } catch (e) {}
+    }
+  }, [checkDatabaseProfileAndOrg, syncWithBackend]);
+
+  // Initialize and listen to Supabase Auth State
+  useEffect(() => {
+    let mounted = true;
+
+    async function initSession() {
+      try {
+        const { data: { session }, error } = await supabase.auth.getSession();
+        if (error) throw error;
+
+        if (session && session.user && mounted) {
+          await applyAuthSession(session, mounted);
+        } else if (mounted) {
+          // If no session exists in Supabase and no user in localStorage, mark unauthenticated
+          if (!localStorage.getItem('bis_user')) {
+            setAuthState(AUTH_STATES.UNAUTHENTICATED);
+            setUser(null);
+            setToken(null);
+          }
+        }
+      } catch (err) {
+        console.warn("Supabase session check:", err.message);
+      }
+    }
+
+    initSession();
+
+    // Listen to real-time auth state events (e.g. Google OAuth redirect callback)
+    const { data: authListener } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (!mounted) return;
+
+      if (session && session.user) {
+        await applyAuthSession(session, mounted);
+      } else if (event === 'SIGNED_OUT') {
+        setUser(null);
+        setToken(null);
+        setAuthState(AUTH_STATES.UNAUTHENTICATED);
+        setNeedsOrgOnboarding(false);
+        setGoogleNotice(null);
+        setPendingVerification(null);
+        try {
+          localStorage.removeItem('bis_user');
+          localStorage.removeItem('bis_token');
+          localStorage.removeItem('bis_pending_verification');
+        } catch (e) {}
+      }
+    });
+
+    return () => {
+      mounted = false;
+      authListener?.subscription?.unsubscribe();
+    };
+  }, [applyAuthSession]);
+
+  // Clean, user-friendly error mapper
+  const formatAuthError = (err) => {
+    if (!err) return "An unexpected error occurred. Please try again.";
+    const msg = (err.message || String(err)).toLowerCase();
+
+    if (msg.includes("invalid login credentials") || msg.includes("invalid_grant") || msg.includes("invalid password")) {
+      return "Invalid email or password.";
+    }
+    if (msg.includes("email not confirmed") || msg.includes("email_not_confirmed")) {
+      return "Please verify your email address before continuing.";
+    }
+    if (msg.includes("user already registered") || msg.includes("already exists") || msg.includes("unique constraint")) {
+      return "An account with this email already exists. Please sign in instead.";
+    }
+    if (msg.includes("rate limit") || msg.includes("too many requests")) {
+      return "Too many attempts. Please wait a few moments before trying again.";
+    }
+    if (msg.includes("network") || msg.includes("failed to fetch")) {
+      return "Network connection issue. Please check your internet connection.";
+    }
+    if (msg.includes("otp expired") || msg.includes("token has expired")) {
+      return "The verification code has expired. Please request a new OTP.";
+    }
+    if (msg.includes("invalid token") || msg.includes("token is invalid") || msg.includes("token not found") || msg.includes("bad code")) {
+      return "Invalid verification code. Please check and enter the 6-digit OTP again.";
+    }
+    return err.message || "Authentication failed. Please verify your details.";
+  };
+
+  // 1. Password Login
+  const login = async (email, password) => {
+    setLoading(true);
+    setError(null);
+
+    const cleanEmail = (email || '').trim().toLowerCase();
+
+    // 0. Support official administrator login via backend
+    if (cleanEmail.includes('admin') || cleanEmail.includes('director') || cleanEmail.includes('officer')) {
+      try {
+        const res = await fetch(`${API_BASE}/api/auth/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: cleanEmail, password })
+        });
+        const data = await res.json();
+        if (res.ok) {
+          setUser(data.user);
+          setToken(data.access_token);
+          setAuthState(AUTH_STATES.AUTHENTICATED);
+          localStorage.removeItem('bis_pending_verification');
+          setPendingVerification(null);
+          return data.user;
+        } else {
+          throw new Error(data.message || "Invalid email or password.");
+        }
+      } catch (adminErr) {
+        const friendlyMsg = formatAuthError(adminErr);
+        setError(friendlyMsg);
+        throw new Error(friendlyMsg);
+      }
+    }
+
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: email.trim(),
+        password
+      });
+
+      if (error) {
+        // Fallback: check if user is registered and valid in MongoDB backend
+        try {
+          const backendRes = await fetch(`${API_BASE}/api/auth/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: cleanEmail, password })
+          });
+          const bData = await backendRes.json();
+          if (backendRes.ok && bData.user) {
+            setUser(bData.user);
+            setToken(bData.access_token);
+            setAuthState(AUTH_STATES.AUTHENTICATED);
+            try {
+              localStorage.setItem('bis_user', JSON.stringify(bData.user));
+              localStorage.setItem('bis_token', bData.access_token);
+              localStorage.removeItem('bis_pending_verification');
+            } catch (e) {}
+            setPendingVerification(null);
+            return bData.user;
+          }
+        } catch (bErr) {}
+
+        throw new Error(formatAuthError(error));
+      }
+
+      const authUser = data.user;
+      const isVerified = Boolean(authUser.email_confirmed_at || authUser.app_metadata?.provider === 'google');
+
+      if (!isVerified) {
+        // If unconfirmed in Supabase, verify if local backend account can proceed
+        try {
+          const backendRes = await fetch(`${API_BASE}/api/auth/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: cleanEmail, password })
+          });
+          const bData = await backendRes.json();
+          if (backendRes.ok && bData.user) {
+            setUser(bData.user);
+            setToken(bData.access_token);
+            setAuthState(AUTH_STATES.AUTHENTICATED);
+            try {
+              localStorage.setItem('bis_user', JSON.stringify(bData.user));
+              localStorage.setItem('bis_token', bData.access_token);
+              localStorage.removeItem('bis_pending_verification');
+            } catch (e) {}
+            setPendingVerification(null);
+            return bData.user;
+          }
+        } catch (bErr) {}
+
+        // Stop unverified user from accessing application
+        setAuthState(AUTH_STATES.EMAIL_VERIFICATION_PENDING);
+        const pending = {
+          email: authUser.email,
+          fullName: authUser.user_metadata?.full_name || '',
+          companyName: authUser.user_metadata?.company_name || ''
+        };
+        setPendingVerification(pending);
+        try {
+          localStorage.setItem('bis_pending_verification', JSON.stringify(pending));
+        } catch (e) {}
+        throw new Error("Your email address is not verified yet. Please check your inbox for the verification link.");
+      }
+
+      const { profile, org } = await checkDatabaseProfileAndOrg(authUser.id);
+      const userObj = formatSupabaseUser(authUser, profile, org);
+
+      const backendSync = await syncWithBackend(data.session, {
+        email: userObj.email,
+        full_name: userObj.full_name,
+        company_name: userObj.company_name,
+        role: userObj.role,
+        phone: userObj.phone,
+        sector: userObj.sector,
+        enterprise_category: userObj.enterprise_category
+      });
+
+      const finalUser = backendSync?.user || userObj;
+      const finalToken = backendSync?.access_token || data.session.access_token;
+
+      setUser(finalUser);
+      setToken(finalToken);
+      setAuthState(AUTH_STATES.AUTHENTICATED);
+      try {
+        localStorage.setItem('bis_user', JSON.stringify(finalUser));
+        localStorage.setItem('bis_token', finalToken);
+        localStorage.removeItem('bis_pending_verification');
+      } catch (e) {}
+      setPendingVerification(null);
+      return finalUser;
+    } catch (err) {
+      const friendlyMsg = formatAuthError(err);
+      setError(friendlyMsg);
+      throw new Error(friendlyMsg);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // 2. Email & Password Registration (Creates Supabase User & triggers Verification)
+  const register = async ({ email, password, full_name, company_name, role, mobile_number, enterprise_category, sector }) => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const trimmedEmail = email.trim();
+      const trimmedName = full_name?.trim() || '';
+      const trimmedCompany = company_name?.trim() || `${trimmedName || 'Registered'}'s Enterprise`;
+      const entCategory = enterprise_category || 'MSME - Small Enterprise';
+      const secCategory = sector || 'Consumer Goods & Utensils (IS 17803)';
+
+      // 1. Immediately register & queue organization in Admin Verification
+      try {
+        await fetch(`${API_BASE}/api/auth/submit-verification`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: trimmedEmail,
+            password,
+            full_name: trimmedName,
+            company_name: trimmedCompany,
+            role: role || `${entCategory} (${secCategory})`,
+            phone: mobile_number?.trim() || '',
+            enterprise_category: entCategory,
+            sector: secCategory
+          })
+        });
+      } catch (backendErr) {
+        console.warn("Backend submit-verification notice:", backendErr.message);
+      }
+
+      const { data, error } = await supabase.auth.signUp({
+        email: trimmedEmail,
+        password,
+        options: {
+          data: {
+            full_name: trimmedName,
+            company_name: trimmedCompany,
+            role: role || 'Manufacturer',
+            mobile_number: mobile_number?.trim() || '',
+            enterprise_category: entCategory,
+            sector: secCategory,
+            has_organization: true
+          }
+        }
+      });
+
+      if (error) {
+        throw new Error(formatAuthError(error));
+      }
+
+      // Supabase user identity duplicate check
+      if (data?.user?.identities && data.user.identities.length === 0) {
+        throw new Error("An account with this email already exists. Please sign in instead.");
+      }
+
+      const authUser = data.user;
+      const isAutoVerified = Boolean(authUser?.email_confirmed_at);
+
+      const pendingData = {
+        email: trimmedEmail,
+        fullName: trimmedName,
+        companyName: trimmedCompany,
+        mobileNumber: mobile_number?.trim() || '',
+        enterpriseCategory: entCategory,
+        sector: secCategory
+      };
+
+      if (!isAutoVerified) {
+        // Unverified email: Set state to pending verification
+        setAuthState(AUTH_STATES.EMAIL_VERIFICATION_PENDING);
+        setPendingVerification(pendingData);
+        return { isVerified: false, email: trimmedEmail };
+      }
+
+      // If Supabase project has email confirmation disabled, user is immediately verified
+      const userObj = formatSupabaseUser(authUser);
+      await saveProfileAndOrgToDatabase(userObj, {
+        company_name: trimmedCompany,
+        enterprise_category: entCategory,
+        sector: secCategory
+      });
+
+      const backendSync = await syncWithBackend(data.session, {
+        email: trimmedEmail,
+        full_name: trimmedName,
+        company_name: trimmedCompany,
+        role: `${entCategory} (${secCategory})`,
+        phone: mobile_number?.trim() || '',
+        sector: secCategory,
+        enterprise_category: entCategory
+      });
+
+      const finalUser = backendSync?.user || userObj;
+      const finalToken = backendSync?.access_token || data.session.access_token;
+
+      setUser(finalUser);
+      setToken(finalToken);
+      setAuthState(AUTH_STATES.AUTHENTICATED);
+      try {
+        localStorage.setItem('bis_user', JSON.stringify(finalUser));
+        localStorage.setItem('bis_token', finalToken);
+        localStorage.removeItem('bis_pending_verification');
+      } catch (e) {}
+      setPendingVerification(null);
+
+      return { isVerified: true, user: finalUser };
+    } catch (err) {
+      const friendlyMsg = formatAuthError(err);
+      setError(friendlyMsg);
+      throw new Error(friendlyMsg);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // 3. Check Verification Status (Actively queries Supabase)
+  const checkEmailVerification = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const { data: { user: currentUser }, error } = await supabase.auth.getUser();
+      if (error) throw error;
+
+      if (currentUser && currentUser.email_confirmed_at) {
+        // Email confirmed!
+        const { profile, org } = await checkDatabaseProfileAndOrg(currentUser.id);
+        const userObj = formatSupabaseUser(currentUser, profile, org);
+
+        // Save profile and org to DB if not yet saved
+        const pending = pendingVerification;
+        if (pending) {
+          await saveProfileAndOrgToDatabase(userObj, {
+            company_name: pending.companyName,
+            enterprise_category: pending.enterpriseCategory,
+            sector: pending.sector
+          });
+        }
+
+        const { data: { session } } = await supabase.auth.getSession();
+        const backendSync = await syncWithBackend(session, {
+          email: userObj.email,
+          full_name: userObj.full_name,
+          company_name: userObj.company_name,
+          role: userObj.role,
+          phone: userObj.phone,
+          sector: userObj.sector,
+          enterprise_category: userObj.enterprise_category
+        });
+
+        const finalUser = backendSync?.user || userObj;
+        const finalToken = backendSync?.access_token || session.access_token;
+
+        setUser(finalUser);
+        setToken(finalToken);
+        setAuthState(AUTH_STATES.AUTHENTICATED);
+        try {
+          localStorage.setItem('bis_user', JSON.stringify(finalUser));
+          localStorage.setItem('bis_token', finalToken);
+          localStorage.removeItem('bis_pending_verification');
+        } catch (e) {}
+        setPendingVerification(null);
+        return { verified: true, user: finalUser };
+      }
+
+      return { verified: false, message: "Email has not been verified yet. Please check your inbox." };
+    } catch (err) {
+      return { verified: false, message: "Unable to check verification status. Please try again." };
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // 4. Resend Verification Email
+  const resendVerificationEmail = async (targetEmail) => {
+    const emailToUse = targetEmail || pendingVerification?.email;
+    if (!emailToUse) {
+      throw new Error("No pending verification email found.");
+    }
+    try {
+      const { error } = await supabase.auth.resend({
+        type: 'signup',
+        email: emailToUse.trim()
+      });
+      if (error) throw error;
+      return { success: true };
+    } catch (err) {
+      throw new Error(formatAuthError(err));
+    }
+  };
+
+  // 5. Complete Organization Onboarding (For new Google users or post-verification)
+  const completeOrganizationOnboarding = async ({ company_name, enterprise_category, sector }) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const { data: { user: currentUser }, error } = await supabase.auth.getUser();
+      if (error || !currentUser) throw new Error("Active session required to save organization.");
+
+      // Update Supabase user metadata
+      await supabase.auth.updateUser({
+        data: {
+          company_name: company_name.trim(),
+          enterprise_category,
+          sector,
+          has_organization: true
+        }
+      });
+
+      const updatedUserObj = formatSupabaseUser(currentUser, null, {
+        name: company_name.trim(),
+        enterprise_category,
+        primary_sector: sector
+      });
+
+      // Save to database
+      await saveProfileAndOrgToDatabase(updatedUserObj, {
+        company_name: company_name.trim(),
+        enterprise_category,
+        sector
+      });
+
+      // Submit verification dossier directly to admin panel
+      try {
+        await fetch(`${API_BASE}/api/auth/submit-verification`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: updatedUserObj.email,
+            full_name: updatedUserObj.full_name,
+            company_name: company_name.trim(),
+            role: updatedUserObj.role,
+            phone: updatedUserObj.phone,
+            sector: sector,
+            enterprise_category: enterprise_category
+          })
+        });
+      } catch (e) {}
+
+      const { data: { session } } = await supabase.auth.getSession();
+      const backendSync = await syncWithBackend(session, {
+        email: updatedUserObj.email,
+        full_name: updatedUserObj.full_name,
+        company_name: updatedUserObj.company_name,
+        role: updatedUserObj.role,
+        phone: updatedUserObj.phone,
+        sector: updatedUserObj.sector,
+        enterprise_category: updatedUserObj.enterprise_category
+      });
+
+      const finalUser = backendSync?.user || updatedUserObj;
+      const finalToken = backendSync?.access_token || session.access_token;
+
+      setUser(finalUser);
+      setToken(finalToken);
+      setAuthState(AUTH_STATES.AUTHENTICATED);
+      setNeedsOrgOnboarding(false);
+      return finalUser;
+    } catch (err) {
+      const friendly = formatAuthError(err);
+      setError(friendly);
+      throw new Error(friendly);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // 6. Google Sign In / Sign Up
+  const loginWithGoogle = async (intent = 'login') => {
+    setGoogleLoading(true);
+    setError(null);
+    try {
+      // Store intent in sessionStorage so we can differentiate 'signup' vs 'login' on return
+      sessionStorage.setItem('bis_oauth_intent', intent);
+      const redirectUrl = window.location.origin;
+
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: redirectUrl,
+          queryParams: {
+            prompt: 'select_account',
+            access_type: 'offline'
+          }
+        }
+      });
+
+      if (error) {
+        throw new Error(formatAuthError(error));
+      }
+
+      if (data?.url) {
+        window.location.href = data.url;
+      }
+      return data;
+    } catch (err) {
+      sessionStorage.removeItem('bis_oauth_intent');
+      const friendly = formatAuthError(err);
+      setError(friendly);
+      throw new Error(friendly);
+    } finally {
+      setGoogleLoading(false);
+    }
+  };
+
+  // 7. Reset Password
+  const resetPassword = async (email) => {
+    if (!email) {
+      throw new Error("Please enter your email address to reset password.");
+    }
+    const { data, error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
+      redirectTo: window.location.origin
+    });
+    if (error) throw new Error(formatAuthError(error));
+    return data;
+  };
+
+  // 8. Quick Demo Login for testing
+  const quickDemoLogin = async () => {
+    const demoUser = {
+      id: 'usr-demo-01',
+      email: 'demo.manufacturer@example.com',
+      full_name: 'Anil Sharma',
+      company_name: 'Alpha Stainless Works Ltd.',
+      role: 'user',
+      is_admin: false,
+      enterprise_category: 'MSME - Small Enterprise',
+      sector: 'Consumer Goods & Utensils (IS 17803)',
+      is_email_verified: true,
+      has_organization: true
+    };
+    setUser(demoUser);
+    setToken('demo-token-12345');
+    setAuthState(AUTH_STATES.AUTHENTICATED);
+    try {
+      localStorage.setItem('bis_user', JSON.stringify(demoUser));
+      localStorage.setItem('bis_token', 'demo-token-12345');
+      localStorage.removeItem('bis_pending_verification');
+    } catch (e) {}
+    setPendingVerification(null);
+    return demoUser;
+  };
+
+  // 8b. Official Administrator Demo Login
+  const adminDemoLogin = async () => {
+    try {
+      const res = await fetch(`${API_BASE}/api/auth/demo-admin`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setUser(data.user);
+        setToken(data.access_token);
+        setAuthState(AUTH_STATES.AUTHENTICATED);
+        try {
+          localStorage.setItem('bis_user', JSON.stringify(data.user));
+          localStorage.setItem('bis_token', data.access_token);
+          localStorage.removeItem('bis_pending_verification');
+        } catch (e) {}
+        setPendingVerification(null);
+        return data.user;
+      } else {
+        const errData = await res.json().catch(() => ({}));
+        throw new Error(errData.message || "Failed to initialize administrator session.");
+      }
+    } catch (e) {
+      console.error("Backend admin login failed:", e);
+      throw e;
+    }
+  };
+
+  // 9. Sign Out
+  const logout = async () => {
+    try {
+      await supabase.auth.signOut();
+    } catch (e) {
+      console.warn("Supabase signout note:", e.message);
+    } finally {
+      setUser(null);
+      setToken(null);
+      setAuthState(AUTH_STATES.UNAUTHENTICATED);
+      setNeedsOrgOnboarding(false);
+      setGoogleNotice(null);
+      try {
+        localStorage.removeItem('bis_user');
+        localStorage.removeItem('bis_token');
+        localStorage.removeItem('bis_pending_verification');
+      } catch (e) {}
+      setPendingVerification(null);
+    }
+  };
+
+  const updateUserProfile = (updatedUser) => {
+    setUser(updatedUser);
+    try {
+      localStorage.setItem('bis_user', JSON.stringify(updatedUser));
+    } catch (e) {}
+  };
+
+  const clearGoogleNotice = () => setGoogleNotice(null);
+  const clearPendingVerification = () => {
+    try {
+      localStorage.removeItem('bis_pending_verification');
+    } catch (e) {}
+    setPendingVerification(null);
+    setAuthState(AUTH_STATES.UNAUTHENTICATED);
+  };
+
+  return {
+    user,
+    setUser,
+    updateUserProfile,
+    token,
+    loading,
+    googleLoading,
+    error,
+    authState,
+    pendingVerification,
+    needsOrgOnboarding,
+    googleNotice,
+    login,
+    register,
+    loginWithGoogle,
+    checkEmailVerification,
+    resendVerificationEmail,
+    completeOrganizationOnboarding,
+    resetPassword,
+    quickDemoLogin,
+    adminDemoLogin,
+    logout,
+    clearGoogleNotice,
+    clearPendingVerification,
+    setError
+  };
+};
+

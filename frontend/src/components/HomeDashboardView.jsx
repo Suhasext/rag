@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { Search, Mic, Sparkles, BookOpen, ShieldCheck, FileText, Scale, BadgeCheck, Eye, ChevronRight, CheckCircle2, AlertTriangle, XCircle, ArrowRight, Upload } from 'lucide-react';
+import { 
+  Search, Mic, Sparkles, BookOpen, ShieldCheck, FileText, Scale, 
+  BadgeCheck, Eye, CheckCircle2, AlertTriangle, 
+  Upload, Layers, Check, Database, Award, Landmark, 
+  TrendingUp, Clock, ExternalLink, ShieldAlert, Cpu, Shield,
+  FileCheck
+} from 'lucide-react';
 import Footer from './Footer';
 
 export default function HomeDashboardView({
@@ -15,7 +21,7 @@ export default function HomeDashboardView({
 
   const handleVoiceInput = () => {
     if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
-      alert("Voice input is not supported in this browser. Please use Chrome or Edge.");
+      alert("Voice input is not supported in this browser. Please use Chrome, Safari or Edge.");
       return;
     }
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -38,8 +44,8 @@ export default function HomeDashboardView({
     recognition.start();
   };
 
-  const handleRunSearch = () => {
-    const q = query.trim() || "I manufacture stainless steel water bottles for children";
+  const handleRunSearch = (searchQuery = query) => {
+    const q = searchQuery.trim() || "I manufacture domestic pressure cookers under IS 2347";
     if (onAskAI) {
       onAskAI(q);
     } else if (onStartSearch) {
@@ -47,537 +53,496 @@ export default function HomeDashboardView({
     }
   };
 
-  const topStandards = [
+  const quickPrompts = [
+    { label: "Domestic pressure cookers (IS 2347)", query: "I manufacture domestic pressure cookers under IS 2347" },
+    { label: "Electric storage water heaters (IS 302)", query: "Requirements for electric storage water heaters under IS 302" },
+    { label: "Sports footwear safety (IS 15844)", query: "Mandatory test clauses for sports footwear under IS 15844" },
+    { label: "Toy safety compliance (IS 9873)", query: "Toy export and domestic certification rules under IS 9873" }
+  ];
+
+  const technicalClauses = [
     {
-      id: 'IS 2347 : 2017',
-      title: 'Domestic Pressure Cookers - Specification',
-      relevance: 'High',
-      relevanceClass: 'bg-emerald-50 text-emerald-700 border-emerald-200',
-      status: 'Current / Mandatory QCO'
+      clause: "Clause 6.1",
+      title: "Hydrostatic bursting pressure",
+      parameter: "Minimum 0.35 MPa (3.5 bar) without deformation",
+      facility: "NABL or BIS lab required",
+      status: "action_needed",
+      statusText: "Report missing"
     },
     {
-      id: 'IS 302 (Part 2/Sec 21) : 2024',
-      title: 'Stationary Storage Type Electric Water Heaters',
-      relevance: 'High',
-      relevanceClass: 'bg-emerald-50 text-emerald-700 border-emerald-200',
-      status: 'Mandatory QCO 2025'
+      clause: "Clause 8.2",
+      title: "Thermal shock resistance",
+      parameter: "200°C ΔT water quench, 5 consecutive cycles",
+      facility: "In-house quality plan",
+      status: "verified",
+      statusText: "Verified"
     },
     {
-      id: 'IS 15844 (Part 1) : 2023',
-      title: 'Sports Footwear – Part 1 General Purpose',
-      relevance: 'Medium',
-      relevanceClass: 'bg-amber-50 text-amber-700 border-amber-200',
-      status: 'Mandatory QCO 2024'
+      clause: "Clause 10.1",
+      title: "Safety relief valve operation",
+      parameter: "Release pressure within 100 kPa to 140 kPa",
+      facility: "NABL calibration log",
+      status: "verified",
+      statusText: "Verified"
+    },
+    {
+      clause: "Clause 12.3",
+      title: "Handle temperature and mechanical strength",
+      parameter: "Maximum handle temperature 50°C at full pressure",
+      facility: "In-house inspection",
+      status: "verified",
+      statusText: "Verified"
     }
   ];
 
-  const announcements = [
+  const topStandards = [
     {
-      tag: 'NEW',
-      tagColor: 'bg-rose-100 text-rose-700 border-rose-200',
-      title: 'Amendment in IS 17803:2022',
-      date: 'Amendment No. 1 • 21 Apr 2025'
+      id: "IS 2347:2017",
+      title: "Domestic pressure cookers specification",
+      status: "Mandatory Quality Control Order",
+      statusClass: "text-amber-800 bg-amber-50 border-amber-200",
+      scope: "Kitchenware and pressure vessels",
+      qcoDate: "Enforced"
     },
     {
-      tag: 'GAZETTE',
-      tagColor: 'bg-blue-100 text-blue-700 border-blue-200',
-      title: 'Gazette Notification',
-      date: 'Mandatory Compliance • 10 Apr 2025'
+      id: "IS 302 (Part 2/Sec 21):2024",
+      title: "Stationary storage type electric water heaters",
+      status: "Mandatory Quality Control Order",
+      statusClass: "text-amber-800 bg-amber-50 border-amber-200",
+      scope: "Electrical appliances and thermal safety",
+      qcoDate: "Enforced"
     },
     {
-      tag: 'TRAINING',
-      tagColor: 'bg-teal-100 text-teal-700 border-teal-200',
-      title: 'BIS Training Program',
-      date: 'Registration Open • 05 Apr 2025'
+      id: "IS 15844 (Part 1):2023",
+      title: "Sports footwear, general purpose",
+      status: "Mandatory Quality Control Order",
+      statusClass: "text-amber-800 bg-amber-50 border-amber-200",
+      scope: "Footwear and personal protective gear",
+      qcoDate: "Enforced"
+    }
+  ];
+
+  const gazetteOrders = [
+    {
+      orderId: "S.O. 1823(E)",
+      title: "Quality Control Order for Domestic Utensils and Pressure Cookers",
+      ministry: "Ministry of Consumer Affairs",
+      date: "21 April 2025",
+      effect: "Compliance mandatory for all MSME domestic manufacturing units."
+    },
+    {
+      orderId: "S.O. 1402(E)",
+      title: "Electrical Appliances Safety Amendment Order",
+      ministry: "Ministry of Commerce and Industry",
+      date: "10 April 2025",
+      effect: "Enforces revised insulation resistance clauses for storage heaters."
     }
   ];
 
   return (
-    <div className="flex-1 overflow-y-auto bg-[#f8fafc] flex flex-col justify-between animate-fade-in font-sans">
-      <div className="p-4 sm:p-6 lg:p-8 space-y-6">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+    <div className="flex-1 overflow-y-auto manak-canvas flex flex-col justify-between animate-fade-in font-sans">
+      <div className="px-4 sm:px-6 lg:px-8 py-8 space-y-8 max-w-7xl mx-auto w-full">
 
-          {/* ================= LEFT 2 COLUMNS: MAIN WORKSPACE ================= */}
-          <div className="lg:col-span-2 space-y-6">
-
-            {/* 1. Hero Card with Dome Graphic & Search & 5 Action Cards */}
-            <div className="p-6 sm:p-7 rounded-3xl bg-white border border-slate-200/90 shadow-xs space-y-5 relative overflow-hidden">
-
-              {/* Background Parliament / Dome Silhouette Illustration */}
-              <div className="absolute right-3 top-2 opacity-10 pointer-events-none hidden sm:block">
-                <svg width="220" height="130" viewBox="0 0 220 130" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M110 10V25M110 10L125 18L110 25" stroke="#0b2545" strokeWidth="2" />
-                  <path d="M70 65C70 42.9 87.9 25 110 25C132.1 25 150 42.9 150 65H70Z" fill="#0b2545" />
-                  <rect x="50" y="65" width="120" height="12" fill="#0b2545" />
-                  <rect x="60" y="77" width="10" height="40" fill="#0b2545" />
-                  <rect x="80" y="77" width="10" height="40" fill="#0b2545" />
-                  <rect x="105" y="77" width="10" height="40" fill="#0b2545" />
-                  <rect x="130" y="77" width="10" height="40" fill="#0b2545" />
-                  <rect x="150" y="77" width="10" height="40" fill="#0b2545" />
-                  <rect x="40" y="117" width="140" height="12" fill="#0b2545" />
-                </svg>
-              </div>
-
-              <div className="space-y-1 relative z-10">
-                <span className="text-xs font-semibold text-slate-500">Welcome to BIS Sahayak</span>
-                <div className="space-y-1">
-                  <h1 className="text-2xl sm:text-3xl font-extrabold text-[#0b2545] tracking-tight">
-                    Understand. Comply. Grow.
-                  </h1>
-                  <div className="w-12 h-1 bg-orange-500 rounded-full"></div>
-                </div>
-                <p className="text-xs text-slate-600 pt-1">
-                  Your AI assistant for BIS standards, compliance guidance, and evidence-based recommendations.
-                </p>
-              </div>
-
-              {/* Search Input Bar */}
-              <div className="space-y-1.5 relative z-10">
-                <div className="relative flex items-center">
-                  <input
-                    type="text"
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    onKeyDown={(e) => e.key === 'Enter' && handleRunSearch()}
-                    placeholder="Describe your product, requirement or ask a BIS question..."
-                    className="w-full pl-4 pr-32 py-3 rounded-xl border border-slate-300 bg-slate-50 text-xs sm:text-sm text-slate-900 font-medium outline-none focus:border-[#0b2545] focus:bg-white transition-all placeholder:text-slate-400"
-                  />
-                  <div className="absolute right-2 flex items-center gap-1.5">
-                    <button
-                      type="button"
-                      onClick={handleVoiceInput}
-                      className={`p-1.5 rounded-lg text-slate-400 hover:text-orange-600 transition-colors ${isListening ? 'text-orange-600 bg-orange-50 animate-pulse' : ''
-                        }`}
-                      title="Voice Input"
-                    >
-                      <Mic size={16} />
-                    </button>
-                    <button
-                      type="button"
-                      onClick={handleRunSearch}
-                      className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#0b2545] hover:bg-[#133b68] text-white text-xs font-bold transition-colors shadow-xs"
-                    >
-                      <Sparkles size={13} />
-                      <span>Ask AI</span>
-                    </button>
-                  </div>
-                </div>
-                <p className="text-[11px] text-slate-400">
-                  <span className="font-semibold text-slate-500">Example:</span> I manufacture stainless steel water bottles for children.
-                </p>
-              </div>
-
-              {/* 5 Focused Action Cards Row */}
-              <div className="grid grid-cols-2 sm:grid-cols-5 gap-2.5 pt-1 relative z-10">
-
-                {/* 1. Find Applicable Standard */}
-                <button
-                  type="button"
-                  onClick={() => onNavigate('standards')}
-                  className="p-3 rounded-2xl bg-blue-50/50 hover:bg-blue-50 border border-blue-100 hover:border-blue-300 text-left transition-all space-y-1.5 group"
-                >
-                  <div className="w-8 h-8 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center">
-                    <BookOpen size={16} />
-                  </div>
-                  <p className="text-xs font-bold text-slate-900 group-hover:text-blue-700 leading-tight">
-                    Find Applicable Standard
-                  </p>
-                  <p className="text-[10px] text-slate-500 leading-tight">
-                    Discover relevant BIS standards
-                  </p>
-                </button>
-
-                {/* 2. Check Compliance */}
-                <button
-                  type="button"
-                  onClick={() => onNavigate('compliance')}
-                  className="p-3 rounded-2xl bg-emerald-50/50 hover:bg-emerald-50 border border-emerald-100 hover:border-emerald-300 text-left transition-all space-y-1.5 group"
-                >
-                  <div className="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center">
-                    <ShieldCheck size={16} />
-                  </div>
-                  <p className="text-xs font-bold text-slate-900 group-hover:text-emerald-700 leading-tight">
-                    Check Compliance
-                  </p>
-                  <p className="text-[10px] text-slate-500 leading-tight">
-                    Assess your compliance readiness
-                  </p>
-                </button>
-
-                {/* 3. Analyze Document */}
-                <button
-                  type="button"
-                  onClick={() => onNavigate('documents')}
-                  className="p-3 rounded-2xl bg-amber-50/50 hover:bg-amber-50 border border-amber-100 hover:border-amber-300 text-left transition-all space-y-1.5 group"
-                >
-                  <div className="w-8 h-8 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center">
-                    <FileText size={16} />
-                  </div>
-                  <p className="text-xs font-bold text-slate-900 group-hover:text-amber-700 leading-tight">
-                    Analyze Document
-                  </p>
-                  <p className="text-[10px] text-slate-500 leading-tight">
-                    Upload and analyze your documents
-                  </p>
-                </button>
-
-                {/* 4. Compare Standards */}
-                <button
-                  type="button"
-                  onClick={() => onNavigate('compare')}
-                  className="p-3 rounded-2xl bg-purple-50/50 hover:bg-purple-50 border border-purple-100 hover:border-purple-300 text-left transition-all space-y-1.5 group"
-                >
-                  <div className="w-8 h-8 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center">
-                    <Scale size={16} />
-                  </div>
-                  <p className="text-xs font-bold text-slate-900 group-hover:text-purple-700 leading-tight">
-                    Compare Standards
-                  </p>
-                  <p className="text-[10px] text-slate-500 leading-tight">
-                    Compare multiple standards
-                  </p>
-                </button>
-
-                {/* 5. Verify Information */}
-                <button
-                  type="button"
-                  onClick={() => onNavigate('verification')}
-                  className="p-3 rounded-2xl bg-teal-50/50 hover:bg-teal-50 border border-teal-100 hover:border-teal-300 text-left transition-all space-y-1.5 group col-span-2 sm:col-span-1"
-                >
-                  <div className="w-8 h-8 rounded-xl bg-teal-100 text-teal-700 flex items-center justify-center">
-                    <BadgeCheck size={16} />
-                  </div>
-                  <p className="text-xs font-bold text-slate-900 group-hover:text-teal-700 leading-tight">
-                    Verify Information
-                  </p>
-                  <p className="text-[10px] text-slate-500 leading-tight">
-                    Verify BIS licenses, labs and more
-                  </p>
-                </button>
-
-              </div>
-            </div>
-
-            {/* 2. Middle Row: Recent Compliance Assessment + Next Best Action */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-
-              {/* Recent Compliance Assessment Card */}
-              <div className="p-5 rounded-3xl bg-white border border-slate-200 shadow-xs flex flex-col justify-between space-y-3">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-xs font-bold text-slate-900">Recent Compliance Assessment</h3>
-                  <button
-                    type="button"
-                    onClick={() => onNavigate('compliance')}
-                    className="text-[11px] font-semibold text-[#0b2545] hover:underline"
-                  >
-                    View All
-                  </button>
-                </div>
-
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-14 bg-slate-100 rounded-xl border border-slate-200 flex items-center justify-center text-xl shrink-0">
-                    🍳
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <h4 className="text-xs font-bold text-slate-900 truncate">
-                      Domestic Pressure Cooker (Induction Base)
-                    </h4>
-                    <p className="text-[11px] font-semibold text-[#0b2545] mt-0.5">
-                      IS 2347 : 2017
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between pt-2 border-t border-slate-100">
-                  <div className="space-y-0.5">
-                    <span className="text-[10px] font-semibold text-slate-400">Compliance Readiness</span>
-                    <div className="text-2xl font-black text-emerald-600">68%</div>
-                    <div className="text-[10px] text-slate-500 font-medium space-y-0.2">
-                      <p className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-emerald-500" /> 5 Complete</p>
-                      <p className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-amber-500" /> 2 Needs Review</p>
-                      <p className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-rose-500" /> 1 Missing</p>
-                    </div>
-                  </div>
-
-                  {/* Circular Segmented Donut Chart SVG */}
-                  <div className="flex flex-col items-end">
-                    <div className="relative w-16 h-16">
-                      <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
-                        {/* Background circle */}
-                        <path
-                          className="text-slate-100"
-                          strokeWidth="4"
-                          stroke="currentColor"
-                          fill="none"
-                          d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                        />
-                        {/* Complete green segment */}
-                        <path
-                          className="text-emerald-500"
-                          strokeDasharray="68, 100"
-                          strokeWidth="4"
-                          strokeLinecap="round"
-                          stroke="currentColor"
-                          fill="none"
-                          d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                        />
-                        {/* Review amber segment */}
-                        <path
-                          className="text-amber-500"
-                          strokeDasharray="18, 100"
-                          strokeDashoffset="-68"
-                          strokeWidth="4"
-                          stroke="currentColor"
-                          fill="none"
-                          d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                        />
-                      </svg>
-                    </div>
-                    <span className="text-[10px] text-slate-400 mt-1">Last assessed: 2 May 2025</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Next Best Action Card with Illustrated Checklist Graphic */}
-              <div className="p-5 rounded-3xl bg-white border border-slate-200 shadow-xs flex flex-col justify-between space-y-3">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-xs font-bold text-slate-900">Next Best Action</h3>
-                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-orange-50 text-orange-700 border border-orange-200">
-                    High Priority
-                  </span>
-                </div>
-
-                <div className="flex items-start justify-between gap-3">
-                  <div className="space-y-1 flex-1">
-                    <h4 className="text-xs font-bold text-slate-900 leading-snug">
-                      Upload the required safety test report.
-                    </h4>
-                    <p className="text-[11px] text-slate-600 leading-relaxed">
-                      Why: Clause 6.1 of IS 2347:2017 requires hydrostatic bursting pressure test report from BIS-recognized lab.
-                    </p>
-                  </div>
-
-                  {/* Checklist Illustration */}
-                  <div className="w-12 h-14 bg-blue-50/70 border border-blue-200 rounded-xl flex flex-col items-center justify-center p-1 text-blue-700 shrink-0">
-                    <div className="w-4 h-1.5 bg-blue-400 rounded-xs mb-1" />
-                    <div className="space-y-1 w-full px-1">
-                      <div className="flex items-center gap-0.5 text-[8px] font-bold">✓ <div className="h-0.5 bg-blue-300 w-full" /></div>
-                      <div className="flex items-center gap-0.5 text-[8px] font-bold">✓ <div className="h-0.5 bg-blue-300 w-full" /></div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="pt-2 flex items-center justify-between">
-                  <button
-                    type="button"
-                    onClick={() => onNavigate('documents')}
-                    className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#0b2545] hover:bg-[#133b68] text-white text-xs font-bold transition-colors shadow-xs"
-                  >
-                    <Upload size={13} />
-                    <span>Upload Evidence</span>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => onNavigate('compliance')}
-                    className="text-xs font-bold text-[#0b2545] hover:underline"
-                  >
-                    View Requirement →
-                  </button>
-                </div>
-              </div>
-
-            </div>
-
-            {/* 3. Bottom Row: Applicable Standards Table + Announcements */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-
-              {/* Applicable Standards (Top Matches) - 2 Cols */}
-              <div className="sm:col-span-2 p-5 rounded-3xl bg-white border border-slate-200 shadow-xs space-y-3">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-xs font-bold text-slate-900">
-                    Applicable Standards <span className="text-slate-400 font-normal">(Top Matches)</span>
-                  </h3>
-                  <button
-                    type="button"
-                    onClick={() => onNavigate('standards')}
-                    className="text-[11px] font-semibold text-[#0b2545] hover:underline"
-                  >
-                    View All Standards
-                  </button>
-                </div>
-
-                <div className="overflow-x-auto">
-                  <table className="w-full text-left text-xs">
-                    <thead>
-                      <tr className="border-b border-slate-100 text-[10px] uppercase font-bold text-slate-400">
-                        <th className="pb-2">Standard Number</th>
-                        <th className="pb-2">Title</th>
-                        <th className="pb-2">Relevance</th>
-                        <th className="pb-2">Status</th>
-                        <th className="pb-2 text-right">Action</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-100 font-medium">
-                      {topStandards.map((std, idx) => (
-                        <tr key={idx} className="hover:bg-slate-50 transition-colors">
-                          <td className="py-2.5 font-bold text-slate-900 whitespace-nowrap">
-                            {std.id}
-                          </td>
-                          <td className="py-2.5 text-slate-600 max-w-[170px] truncate">
-                            {std.title}
-                          </td>
-                          <td className="py-2.5 whitespace-nowrap">
-                            <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${std.relevanceClass}`}>
-                              {std.relevance}
-                            </span>
-                          </td>
-                          <td className="py-2.5 whitespace-nowrap text-emerald-600 font-bold text-[11px]">
-                            {std.status}
-                          </td>
-                          <td className="py-2.5 text-right whitespace-nowrap">
-                            <button
-                              type="button"
-                              onClick={() => onNavigate('standards')}
-                              className="p-1 rounded-lg text-slate-400 hover:text-slate-700"
-                              title="View Standard"
-                            >
-                              <Eye size={14} />
-                            </button>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-
-              {/* Announcements - 1 Col */}
-              <div className="p-5 rounded-3xl bg-white border border-slate-200 shadow-xs flex flex-col justify-between space-y-3">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-xs font-bold text-slate-900">Announcements</h3>
-                  <button
-                    type="button"
-                    onClick={() => onNavigate('standards')}
-                    className="text-[11px] font-semibold text-[#0b2545] hover:underline"
-                  >
-                    View All
-                  </button>
-                </div>
-
-                <div className="space-y-2">
-                  {announcements.map((ann, idx) => (
-                    <div key={idx} className="p-2 rounded-xl bg-slate-50 hover:bg-slate-100 transition-colors flex items-center justify-between gap-2 cursor-pointer">
-                      <div className="min-w-0">
-                        <div className="flex items-center gap-1.5">
-                          <span className={`text-[9px] font-black px-1.5 py-0.2 rounded border ${ann.tagColor}`}>
-                            {ann.tag}
-                          </span>
-                          <p className="text-xs font-bold text-slate-900 truncate">
-                            {ann.title}
-                          </p>
-                        </div>
-                        <p className="text-[10px] text-slate-500 mt-0.5">
-                          {ann.date}
-                        </p>
-                      </div>
-                      <ChevronRight size={13} className="text-slate-400 shrink-0" />
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-            </div>
-
+        {/* ========================================================================= */}
+        {/* 1. ARCHITECTURAL SEARCH HEADER                                            */}
+        {/* ========================================================================= */}
+        <div className="space-y-4 max-w-3xl">
+          <div className="space-y-1">
+            <h1 className="text-3xl sm:text-4xl font-bold text-[#0F172A] tracking-tight leading-tight">
+              Indian Standards and Quality Compliance Intelligence
+            </h1>
+            <p className="text-sm text-slate-600 font-normal leading-relaxed max-w-2xl">
+              Map manufactured products to official Bureau of Indian Standards specifications, statutory Quality Control Orders, and required laboratory test clauses.
+            </p>
           </div>
 
-          {/* ================= RIGHT 1 COLUMN: YOUR COMPLIANCE JOURNEY ================= */}
-          <div className="p-6 rounded-3xl bg-white border border-slate-200 shadow-xs space-y-5">
-            <div className="space-y-1">
-              <h3 className="text-sm font-extrabold text-[#0b2545]">Your Compliance Journey</h3>
-              <p className="text-xs text-slate-500">6-stage guided compliance roadmap</p>
+          {/* Search Console */}
+          <div className="space-y-2.5 pt-2">
+            <div className="flex items-center gap-2 p-1.5 rounded-2xl bg-white border border-slate-300 shadow-xs focus-within:border-[#0062D2] focus-within:ring-2 focus-within:ring-[#0062D2]/15 transition-all">
+              <div className="pl-3 text-slate-400">
+                <Search size={18} />
+              </div>
+
+              <input
+                type="text"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && handleRunSearch()}
+                placeholder="Enter product description, IS code, or HS code"
+                className="w-full px-2 py-2 text-sm text-slate-900 font-normal outline-none bg-transparent placeholder:text-slate-400"
+              />
+
+              <button
+                type="button"
+                onClick={handleVoiceInput}
+                className={`p-2 rounded-xl text-slate-500 hover:text-slate-800 hover:bg-slate-100 transition-colors ${
+                  isListening ? 'text-amber-600 bg-amber-50' : ''
+                }`}
+                title="Voice input"
+                aria-label="Voice input"
+              >
+                <Mic size={17} />
+              </button>
+
+              <button
+                type="button"
+                onClick={() => handleRunSearch()}
+                className="px-5 py-2 rounded-xl bg-[#0062D2] hover:bg-[#0051AE] text-white text-xs font-semibold transition-all shadow-xs shrink-0 active:scale-95"
+              >
+                Analyze product
+              </button>
             </div>
 
-            <div className="space-y-4 text-xs">
-
-              {/* 1. Product */}
-              <div className="flex items-start gap-3 relative pb-4 border-l-2 border-slate-200 pl-4 ml-3">
-                <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-[#0b2545] text-white flex items-center justify-center text-[9px] font-black">
-                  1
-                </div>
-                <div>
-                  <h4 className="font-bold text-slate-900">Product</h4>
-                  <p className="text-[11px] text-slate-500">Describe your product</p>
-                </div>
-              </div>
-
-              {/* 2. Applicable Standard */}
-              <div className="flex items-start gap-3 relative pb-4 border-l-2 border-slate-200 pl-4 ml-3">
-                <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-blue-600 text-white flex items-center justify-center text-[9px] font-black">
-                  2
-                </div>
-                <div>
-                  <h4 className="font-bold text-slate-900">Applicable Standard</h4>
-                  <p className="text-[11px] text-slate-500">AI suggests relevant BIS standards</p>
-                </div>
-              </div>
-
-              {/* 3. Requirements */}
-              <div className="flex items-start gap-3 relative pb-4 border-l-2 border-slate-200 pl-4 ml-3">
-                <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-emerald-600 text-white flex items-center justify-center text-[9px] font-black">
-                  3
-                </div>
-                <div>
-                  <h4 className="font-bold text-slate-900">Requirements</h4>
-                  <p className="text-[11px] text-slate-500">AI extracts key requirements</p>
-                </div>
-              </div>
-
-              {/* 4. Evidence */}
-              <div className="flex items-start gap-3 relative pb-4 border-l-2 border-slate-200 pl-4 ml-3">
-                <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-orange-500 text-white flex items-center justify-center text-[9px] font-black">
-                  4
-                </div>
-                <div>
-                  <h4 className="font-bold text-slate-900">Evidence</h4>
-                  <p className="text-[11px] text-slate-500">Upload documents and reports</p>
-                </div>
-              </div>
-
-              {/* 5. Compliance Readiness */}
-              <div className="flex items-start gap-3 relative pb-4 border-l-2 border-slate-200 pl-4 ml-3">
-                <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-purple-600 text-white flex items-center justify-center text-[9px] font-black">
-                  5
-                </div>
-                <div>
-                  <h4 className="font-bold text-slate-900">Compliance Readiness</h4>
-                  <p className="text-[11px] text-slate-500">Get your compliance score</p>
-                </div>
-              </div>
-
-              {/* 6. Next Best Action */}
-              <div className="flex items-start gap-3 relative pl-4 ml-3">
-                <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-[#0b2545] text-white flex items-center justify-center text-[9px] font-black">
-                  6
-                </div>
-                <div>
-                  <h4 className="font-bold text-slate-900">Next Best Action</h4>
-                  <p className="text-[11px] text-slate-500">AI recommends next steps</p>
-                </div>
-              </div>
-
+            {/* Practical Prompt Buttons */}
+            <div className="flex flex-wrap items-center gap-2 text-xs">
+              <span className="text-slate-400">Examples:</span>
+              {quickPrompts.map((p, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => {
+                    setQuery(p.query);
+                    handleRunSearch(p.query);
+                  }}
+                  className="px-3 py-1 rounded-lg bg-white border border-slate-200 text-slate-600 hover:text-slate-900 hover:border-slate-300 transition-colors text-xs"
+                >
+                  {p.label}
+                </button>
+              ))}
             </div>
-
-            <button
-              type="button"
-              onClick={() => onNavigate('compliance')}
-              className="w-full py-2.5 rounded-xl border border-[#0b2545] text-[#0b2545] hover:bg-[#0b2545] hover:text-white text-xs font-bold transition-all shadow-xs flex items-center justify-center gap-1.5"
-            >
-              <span>Start Full Assessment</span>
-              <ArrowRight size={13} />
-            </button>
           </div>
         </div>
+
+        {/* ========================================================================= */}
+        {/* 2. SIGNATURE MOMENT: TECHNICAL CLAUSE & AUDIT TELEMETRY CONSOLE            */}
+        {/* ========================================================================= */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+          {/* Left: Active Standard Technical Specification Sheet (8 cols) */}
+          <div className="lg:col-span-8 manak-panel p-6 space-y-5">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100">
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-semibold text-[#0062D2]">IS 2347:2017</span>
+                  <span className="px-2 py-0.5 rounded text-[11px] font-medium bg-amber-50 text-amber-800 border border-amber-200">
+                    Mandatory Quality Control Order
+                  </span>
+                </div>
+                <h2 className="text-base sm:text-lg font-bold text-slate-900 mt-1">
+                  Domestic Pressure Cookers (Induction and Gas Compatible)
+                </h2>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => onNavigate('compliance')}
+                className="text-xs font-medium text-[#0062D2] hover:underline self-start sm:self-auto"
+              >
+                Open full audit studio
+              </button>
+            </div>
+
+            {/* Mandatory Testing Clauses Table */}
+            <div className="space-y-3">
+              <div className="flex items-center justify-between text-xs font-medium text-slate-500">
+                <span>Mandatory statutory testing clauses</span>
+                <span>4 of 8 clauses shown</span>
+              </div>
+
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs">
+                  <thead>
+                    <tr className="border-b border-slate-200 text-slate-500 font-medium">
+                      <th className="pb-2.5 font-medium">Clause reference</th>
+                      <th className="pb-2.5 font-medium">Test parameter</th>
+                      <th className="pb-2.5 font-medium">Testing facility requirement</th>
+                      <th className="pb-2.5 font-medium text-right">Audit status</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100">
+                    {technicalClauses.map((item, idx) => (
+                      <tr key={idx} className="hover:bg-slate-50/70 transition-colors">
+                        <td className="py-3 font-semibold text-slate-900 whitespace-nowrap">
+                          {item.clause}
+                          <span className="block text-[11px] font-normal text-slate-500">
+                            {item.title}
+                          </span>
+                        </td>
+                        <td className="py-3 text-slate-600 max-w-xs pr-4">
+                          {item.parameter}
+                        </td>
+                        <td className="py-3 text-slate-500 whitespace-nowrap">
+                          {item.facility}
+                        </td>
+                        <td className="py-3 text-right whitespace-nowrap">
+                          {item.status === 'verified' ? (
+                            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[11px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+                              <Check size={12} />
+                              <span>Verified</span>
+                            </span>
+                          ) : (
+                            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[11px] font-medium bg-rose-50 text-rose-700 border border-rose-200">
+                              <AlertTriangle size={12} />
+                              <span>Action required</span>
+                            </span>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          {/* Right: Statutory Readiness & Immediate Action Directive (4 cols) */}
+          <div className="lg:col-span-4 manak-panel p-6 flex flex-col justify-between space-y-5">
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-medium text-slate-500">Compliance readiness</span>
+                <span className="text-xs font-semibold text-slate-900">5 of 8 clauses verified</span>
+              </div>
+
+              {/* Precise Engineering Progress Bar */}
+              <div className="space-y-1.5">
+                <div className="flex items-baseline justify-between">
+                  <span className="text-2xl font-bold text-slate-900">62.5%</span>
+                  <span className="text-xs font-medium text-slate-500">Passing threshold: 100%</span>
+                </div>
+                <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
+                  <div className="h-full bg-[#0062D2] rounded-full" style={{ width: '62.5%' }} />
+                </div>
+              </div>
+
+              {/* High Priority Action Required Box */}
+              <div className="p-4 rounded-xl bg-amber-50/60 border border-amber-200 space-y-2">
+                <div className="flex items-center gap-2">
+                  <AlertTriangle size={15} className="text-amber-700 shrink-0" />
+                  <span className="text-xs font-semibold text-amber-900">
+                    Immediate action required
+                  </span>
+                </div>
+                <p className="text-xs text-amber-800 leading-relaxed font-normal">
+                  Clause 6.1 requires hydrostatic bursting pressure test certificate from an accredited NABL testing facility prior to Form V filing.
+                </p>
+              </div>
+            </div>
+
+            <div className="pt-2 space-y-2">
+              <button
+                type="button"
+                onClick={() => onNavigate('documents')}
+                className="w-full h-10 rounded-xl bg-[#0062D2] hover:bg-[#0051AE] text-white text-xs font-semibold transition-all shadow-xs flex items-center justify-center gap-2 active:scale-95"
+              >
+                <Upload size={14} />
+                <span>Upload laboratory test certificate</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => onNavigate('compliance')}
+                className="w-full h-9 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-medium transition-colors"
+              >
+                Review complete checklist
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        {/* ========================================================================= */}
+        {/* 3. PURPOSE-BUILT APPLICATION TOOLS                                        */}
+        {/* ========================================================================= */}
+        <div className="space-y-3">
+          <h2 className="text-sm font-semibold text-slate-900">
+            Compliance tools and registries
+          </h2>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            
+            {/* Tool 1 */}
+            <div 
+              onClick={() => onNavigate('standards')}
+              className="manak-panel p-5 cursor-pointer hover:border-slate-300 transition-all space-y-2.5 text-left"
+            >
+              <div className="w-9 h-9 rounded-lg bg-blue-50 text-[#0062D2] flex items-center justify-center">
+                <BookOpen size={18} />
+              </div>
+              <div>
+                <h3 className="text-xs font-semibold text-slate-900">Standards directory</h3>
+                <p className="text-[11px] text-slate-500 mt-0.5 leading-relaxed">
+                  Search 24,000+ Indian Standards with clause breakdowns and applicable products.
+                </p>
+              </div>
+              <span className="text-[11px] font-medium text-[#0062D2] block pt-1">
+                Explore directory
+              </span>
+            </div>
+
+            {/* Tool 2 */}
+            <div 
+              onClick={() => onNavigate('documents')}
+              className="manak-panel p-5 cursor-pointer hover:border-slate-300 transition-all space-y-2.5 text-left"
+            >
+              <div className="w-9 h-9 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center">
+                <FileCheck size={18} />
+              </div>
+              <div>
+                <h3 className="text-xs font-semibold text-slate-900">Document analyzer</h3>
+                <p className="text-[11px] text-slate-500 mt-0.5 leading-relaxed">
+                  Verify NABL test certificates against mandated clause tolerances automatically.
+                </p>
+              </div>
+              <span className="text-[11px] font-medium text-[#0062D2] block pt-1">
+                Analyze test report
+              </span>
+            </div>
+
+            {/* Tool 3 */}
+            <div 
+              onClick={() => onNavigate('verification')}
+              className="manak-panel p-5 cursor-pointer hover:border-slate-300 transition-all space-y-2.5 text-left"
+            >
+              <div className="w-9 h-9 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center">
+                <BadgeCheck size={18} />
+              </div>
+              <div>
+                <h3 className="text-xs font-semibold text-slate-900">Licence and lab verifier</h3>
+                <p className="text-[11px] text-slate-500 mt-0.5 leading-relaxed">
+                  Check validity of active CM/L licences and accredited laboratory test capabilities.
+                </p>
+              </div>
+              <span className="text-[11px] font-medium text-[#0062D2] block pt-1">
+                Verify credentials
+              </span>
+            </div>
+
+            {/* Tool 4 */}
+            <div 
+              onClick={() => onNavigate('compare')}
+              className="manak-panel p-5 cursor-pointer hover:border-slate-300 transition-all space-y-2.5 text-left"
+            >
+              <div className="w-9 h-9 rounded-lg bg-purple-50 text-purple-700 flex items-center justify-center">
+                <Scale size={18} />
+              </div>
+              <div>
+                <h3 className="text-xs font-semibold text-slate-900">Clause comparator</h3>
+                <p className="text-[11px] text-slate-500 mt-0.5 leading-relaxed">
+                  Side-by-side comparison of standard amendments, scope updates, and test limits.
+                </p>
+              </div>
+              <span className="text-[11px] font-medium text-[#0062D2] block pt-1">
+                Compare revisions
+              </span>
+            </div>
+
+          </div>
+        </div>
+
+        {/* ========================================================================= */}
+        {/* 4. STATUTORY REPOSITORY & GAZETTE RADAR                                   */}
+        {/* ========================================================================= */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+          {/* Left: Active Standards Repository (8 cols) */}
+          <div className="lg:col-span-8 manak-panel p-6 space-y-4">
+            <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+              <h3 className="text-sm font-semibold text-slate-900">
+                Frequently consulted statutory standards
+              </h3>
+              <button
+                type="button"
+                onClick={() => onNavigate('standards')}
+                className="text-xs font-medium text-[#0062D2] hover:underline"
+              >
+                View all standards
+              </button>
+            </div>
+
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs">
+                <thead>
+                  <tr className="border-b border-slate-200 text-slate-500 font-medium">
+                    <th className="pb-2.5">Standard code</th>
+                    <th className="pb-2.5">Scope</th>
+                    <th className="pb-2.5">Statutory status</th>
+                    <th className="pb-2.5 text-right">Action</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100">
+                  {topStandards.map((std, idx) => (
+                    <tr key={idx} className="hover:bg-slate-50/70 transition-colors">
+                      <td className="py-3 font-semibold text-slate-900 whitespace-nowrap">
+                        {std.id}
+                        <span className="block text-[11px] font-normal text-slate-500 max-w-xs truncate">
+                          {std.title}
+                        </span>
+                      </td>
+                      <td className="py-3 text-slate-600 whitespace-nowrap">
+                        {std.scope}
+                      </td>
+                      <td className="py-3 whitespace-nowrap">
+                        <span className={`px-2 py-0.5 rounded text-[11px] font-medium border ${std.statusClass}`}>
+                          {std.status}
+                        </span>
+                      </td>
+                      <td className="py-3 text-right whitespace-nowrap">
+                        <button
+                          type="button"
+                          onClick={() => onNavigate('standards')}
+                          className="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-medium transition-colors"
+                        >
+                          View details
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* Right: Gazette Notifications Feed (4 cols) */}
+          <div className="lg:col-span-4 manak-panel p-6 space-y-4">
+            <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+              <h3 className="text-sm font-semibold text-slate-900">
+                Official Gazette notifications
+              </h3>
+              <button
+                type="button"
+                onClick={() => onNavigate('notifications')}
+                className="text-xs font-medium text-[#0062D2] hover:underline"
+              >
+                All orders
+              </button>
+            </div>
+
+            <div className="space-y-3">
+              {gazetteOrders.map((ord, idx) => (
+                <div
+                  key={idx}
+                  onClick={() => onNavigate('notifications')}
+                  className="p-3.5 rounded-xl bg-slate-50 hover:bg-slate-100/80 border border-slate-200 cursor-pointer transition-colors space-y-1 text-left"
+                >
+                  <div className="flex items-center justify-between text-[11px]">
+                    <span className="font-semibold text-slate-700">{ord.orderId}</span>
+                    <span className="text-slate-500">{ord.date}</span>
+                  </div>
+                  <h4 className="text-xs font-semibold text-slate-900 leading-snug">
+                    {ord.title}
+                  </h4>
+                  <p className="text-[11px] text-slate-500 leading-relaxed">
+                    {ord.effect}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+        </div>
+
       </div>
+
       <Footer onNavigate={onNavigate} />
     </div>
   );

@@ -21,11 +21,11 @@ class ErrorBoundary extends React.Component {
     if (this.state.hasError) {
       return (
         <div style={{ padding: 40, fontFamily: 'sans-serif', maxWidth: 600, margin: '60px auto', textAlign: 'center', background: 'white', borderRadius: 16, border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)' }}>
-          <h2 style={{ color: '#0b2545', fontSize: '20px', fontWeight: 'bold' }}>BIS Sahayak — Reload Required</h2>
+          <h2 style={{ color: '#0071e3', fontSize: '20px', fontWeight: 'bold' }}>ManakOS — Reload Required</h2>
           <p style={{ color: '#64748b', fontSize: '14px', marginTop: '8px' }}>{this.state.error?.message || 'An unexpected error occurred during rendering.'}</p>
           <button
             onClick={() => { localStorage.clear(); window.location.reload(); }}
-            style={{ marginTop: '20px', padding: '10px 24px', background: '#0b2545', color: 'white', border: 'none', borderRadius: 10, cursor: 'pointer', fontWeight: 'bold', fontSize: '13px' }}
+            style={{ marginTop: '20px', padding: '10px 24px', background: '#0071e3', color: 'white', border: 'none', borderRadius: 12, cursor: 'pointer', fontWeight: 'bold', fontSize: '13px' }}
           >
             Reset Session & Reload
           </button>

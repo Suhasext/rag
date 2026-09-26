@@ -17,11 +17,11 @@ export default function HelpModal({ isOpen, onClose }) {
               ?
             </div>
             <div>
-              <h2 className="text-sm sm:text-base font-black text-[#0b2545] tracking-tight">
-                BIS Sahayak User Guide & Platform Information
+              <h2 className="text-sm sm:text-base font-black text-[#1d1d1f] tracking-tight">
+                ManakOS User Guide & Platform Information
               </h2>
-              <p className="text-[11px] text-slate-500 font-medium">
-                AI-Powered BIS Compliance Decision Navigator
+              <p className="text-[11px] text-[#86868b] font-medium">
+                National Standards & Quality Intelligence Operating System
               </p>
             </div>
           </div>
@@ -51,7 +51,7 @@ export default function HelpModal({ isOpen, onClose }) {
                 Core Platform Positioning
               </h3>
               <p className="text-slate-600 text-[11px] sm:text-xs leading-relaxed">
-                <b>Bureau of Indian Standards (BIS)</b> provides the official standards, gazette notifications, and certification rules. <b>BIS Sahayak</b> is an AI-powered assistant designed to help manufacturers, MSMEs, and quality managers understand how those standards apply to their specific product and determine the next best action.
+                <b>Bureau of Indian Standards (BIS)</b> provides the official standards, gazette notifications, and certification rules. <b>ManakOS</b> is an Apple-grade intelligent operating system designed to help manufacturers, MSMEs, and quality managers navigate standards, test lab requirements, and statutory QCO compliance with evidence-grounded confidence.
               </p>
             </div>
           </div>
@@ -167,7 +167,7 @@ export default function HelpModal({ isOpen, onClose }) {
                 Evidence-Backed Grounding & Zero Hallucinations
               </h4>
               <p className="text-emerald-800 text-[11px] leading-relaxed">
-                Every factual requirement and clause citation in BIS Sahayak is directly grounded in official BIS specifications. Clicking any citation opens the official clause text and page number.
+                Every factual requirement and clause citation in ManakOS is directly grounded in official BIS specifications. Clicking any citation opens the official clause text and page number.
               </p>
             </div>
           </div>
@@ -178,7 +178,7 @@ export default function HelpModal({ isOpen, onClose }) {
               i
             </div>
             <p className="leading-relaxed">
-              <b>Regulatory Notice:</b> BIS Sahayak is an independent decision-support tool built for Smart India Hackathon (SIH) 2026. Always verify final certification submissions on the official Manakonline portal (<a href="https://www.manakonline.in" target="_blank" rel="noopener noreferrer" className="text-blue-900 font-bold hover:underline">manakonline.in</a>).
+              <b>Regulatory Notice:</b> ManakOS is an independent decision-support platform designed for Indian manufacturing compliance. Always verify final certification submissions on the official Manakonline portal (<a href="https://www.manakonline.in" target="_blank" rel="noopener noreferrer" className="text-blue-900 font-bold hover:underline">manakonline.in</a>).
             </p>
           </div>
 

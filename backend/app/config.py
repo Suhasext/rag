@@ -7,9 +7,9 @@ from pydantic_settings import BaseSettings  # type: ignore
 # Load .env from backend directory or parent directories
 env_path = Path(__file__).resolve().parent.parent / ".env"
 if env_path.exists():
-    load_dotenv(dotenv_path=env_path)
+    load_dotenv(dotenv_path=env_path, override=True)
 else:
-    load_dotenv()
+    load_dotenv(override=True)
 
 class Settings(BaseSettings):
     APP_NAME: str = "BIS Sahayak V2"
@@ -20,14 +20,17 @@ class Settings(BaseSettings):
     JWT_ALGORITHM: str = "HS256"
     JWT_EXPIRE_MINUTES: int = 60 * 24 * 7  # 7 days
     
-    # LLM Configuration (Google Gemini and Groq)
+    # LLM Configuration (Google Gemini, Groq, NVIDIA NIM)
     GEMINI_API_KEY: str = os.getenv("GEMINI_API_KEY", "")
     LLM_MODEL: str = os.getenv("LLM_MODEL", "gemini-3.6-flash")
     LLM_TEMPERATURE: float = 0.2
     LLM_MAX_TOKENS: int = 1024
     
     GROQ_API_KEY: str = os.getenv("GROQ_API_KEY", "")
-    GROQ_MODEL: str = os.getenv("GROQ_MODEL", "qwen/qwen3.8-27b")
+    GROQ_MODEL: str = os.getenv("GROQ_MODEL", "meta/llama-3.2-11b-vision-instruct")
+
+    NVIDIA_API_KEY: str = os.getenv("NVIDIA_API_KEY", "")
+    NVIDIA_MODEL: str = os.getenv("NVIDIA_MODEL", "meta/llama-3.2-11b-vision-instruct")
 
     
     # Bhashini Indic Translation Configuration

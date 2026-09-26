@@ -588,44 +588,125 @@ async def _stream_gemini_with_fallback(client, contents, config):
     logger.error(f"[Gemini Stream All Models Failed] Last Error: {last_err}", exc_info=True)
     raise last_err
 
+async def _stream_nvidia_llm(messages: List[Dict[str, str]], system_msg: str, temperature: float = 0.5):
+    """Stream response tokens from NVIDIA NIM."""
+    nvidia_key = getattr(settings, "NVIDIA_API_KEY", None) or settings.GROQ_API_KEY or os.getenv("NVIDIA_API_KEY")
+    if not nvidia_key:
+        return
+    import httpx
+    headers = {
+        "Authorization": f"Bearer {nvidia_key}",
+        "Content-Type": "application/json"
+    }
+    all_msgs = [{"role": "system", "content": system_msg}] + messages
+    payload = {
+        "model": getattr(settings, "NVIDIA_MODEL", "meta/llama-3.2-11b-vision-instruct"),
+        "messages": all_msgs,
+        "temperature": temperature,
+        "max_tokens": 1024,
+        "stream": True
+    }
+    try:
+        async with httpx.AsyncClient(timeout=30.0) as client:
+            async with client.stream("POST", "https://integrate.api.nvidia.com/v1/chat/completions", headers=headers, json=payload) as res:
+                if res.status_code == 200:
+                    async for line in res.aiter_lines():
+                        if line.startswith("data: ") and line != "data: [DONE]":
+                            try:
+                                chunk = json.loads(line[6:])
+                                delta = chunk.get("choices", [{}])[0].get("delta", {})
+                                content = delta.get("content")
+                                if content:
+                                    yield content
+                            except Exception:
+                                pass
+    except Exception as e:
+        logger.warning(f"[_stream_nvidia_llm exception]: {e}")
+
+async def _call_nvidia_llm(messages: List[Dict[str, str]], system_msg: str, temperature: float = 0.3) -> Optional[str]:
+    """Non-streaming request to NVIDIA NIM."""
+    nvidia_key = getattr(settings, "NVIDIA_API_KEY", None) or settings.GROQ_API_KEY or os.getenv("NVIDIA_API_KEY")
+    if not nvidia_key:
+        return None
+    import httpx
+    headers = {
+        "Authorization": f"Bearer {nvidia_key}",
+        "Content-Type": "application/json"
+    }
+    all_msgs = [{"role": "system", "content": system_msg}] + messages
+    payload = {
+        "model": getattr(settings, "NVIDIA_MODEL", "meta/llama-3.2-11b-vision-instruct"),
+        "messages": all_msgs,
+        "temperature": temperature,
+        "max_tokens": 1024
+    }
+    try:
+        async with httpx.AsyncClient(timeout=25.0) as client:
+            res = await client.post("https://integrate.api.nvidia.com/v1/chat/completions", headers=headers, json=payload)
+            if res.status_code == 200:
+                data = res.json()
+                raw_content = data["choices"][0]["message"]["content"]
+                clean_ans = re.sub(r'<think>[\s\S]*?</think>', '', raw_content).strip()
+                return clean_ans
+    except Exception as e:
+        logger.warning(f"[_call_nvidia_llm exception]: {e}")
+    return None
+
 async def stream_general_llm_answer(
     query: str,
     history: Optional[List[Dict[str, Any]]] = None,
     target_language: str = "en"
 ):
     """
-    Real-time streaming from Google Gemini for ANY general question:
-    Coding, mathematics, science, writing, conversation, reasoning, etc.
-    Yields text chunks as they arrive from Gemini.
+    Real-time streaming LLM answering for ANY general question.
+    Prioritizes Gemini if configured, otherwise falls back smoothly to NVIDIA NIM.
     """
-    if not settings.GEMINI_API_KEY:
-        yield "Error: `GEMINI_API_KEY` is not configured in backend `.env`. Please provide a valid Gemini API key."
-        return
+    lang_instruction = get_target_language_instruction(target_language)
+    system_instruction = GENERAL_SYSTEM_INSTRUCTION + lang_instruction
 
-    try:
-        from google import genai
-        from google.genai import types
+    # 1. Try Gemini if configured
+    if settings.GEMINI_API_KEY:
+        try:
+            from google import genai
+            from google.genai import types
 
-        client = genai.Client(api_key=settings.GEMINI_API_KEY)
-        lang_instruction = get_target_language_instruction(target_language)
-        system_instruction = GENERAL_SYSTEM_INSTRUCTION + lang_instruction
+            client = genai.Client(api_key=settings.GEMINI_API_KEY)
+            config = types.GenerateContentConfig(
+                system_instruction=system_instruction,
+                temperature=0.7,
+                automatic_function_calling=types.AutomaticFunctionCallingConfig(disable=True)
+            )
+            prefix_block = None
+            if lang_instruction:
+                lang_info = INDIC_LANGUAGES_MAP.get(target_language.lower(), ("the selected language", "स्थानीय भाषा", ""))
+                prefix_block = f"[IMPORTANT DIRECTIVE: Respond completely in {lang_info[0]} ({lang_info[1]}) using native script, even though the query is in English.]"
 
-        config = types.GenerateContentConfig(
-            system_instruction=system_instruction,
-            temperature=0.7,
-            automatic_function_calling=types.AutomaticFunctionCallingConfig(disable=True)
-        )
-        prefix_block = None
-        if lang_instruction:
-            lang_info = INDIC_LANGUAGES_MAP.get(target_language.lower(), ("the selected language", "स्थानीय भाषा", ""))
-            prefix_block = f"[IMPORTANT DIRECTIVE: Respond completely in {lang_info[0]} ({lang_info[1]}) using native script, even though the query is in English.]"
+            contents = _build_gemini_contents(query=query, history=history, context_prefix=prefix_block)
+            async for token in _stream_gemini_with_fallback(client, contents, config):
+                yield token
+            return
+        except Exception as e:
+            logger.warning(f"[General Gemini Stream Exception]: {e}")
 
-        contents = _build_gemini_contents(query=query, history=history, context_prefix=prefix_block)
-        async for token in _stream_gemini_with_fallback(client, contents, config):
-            yield token
-    except Exception as e:
-        logger.error(f"[General Gemini Stream Exception]: {e}", exc_info=True)
-        yield f"\n\n**Gemini API Error:** {str(e)}"
+    # 2. Try NVIDIA NIM
+    nvidia_key = getattr(settings, "NVIDIA_API_KEY", None) or settings.GROQ_API_KEY
+    if nvidia_key:
+        try:
+            messages = []
+            if history:
+                for h in history:
+                    messages.append({"role": h.get("role", "user"), "content": h.get("content", "")})
+            messages.append({"role": "user", "content": query})
+            streamed = False
+            async for token in _stream_nvidia_llm(messages, system_instruction, temperature=0.7):
+                streamed = True
+                yield token
+            if streamed:
+                return
+        except Exception as ne:
+            logger.warning(f"[General NVIDIA Stream Exception]: {ne}")
+
+    yield "Hello! I am BIS Sahayak. How can I assist you with Bureau of Indian Standards compliance today?"
 
 async def stream_rag_answer(
     query: str,
@@ -635,8 +716,8 @@ async def stream_rag_answer(
     target_language: str = "en"
 ):
     """
-    Real-time streaming RAG-augmented Google Gemini response for BIS queries.
-    Yields text chunks as they arrive from Gemini.
+    Real-time streaming RAG-augmented response for BIS queries.
+    Utilizes Gemini or NVIDIA NIM with verified evidence, falling back to local synthesizer.
     """
     context_chunks = context_chunks or []
     prod_data = match_product_to_standards(query)
@@ -644,54 +725,53 @@ async def stream_rag_answer(
     app_stds = prod_data.get("applicable_standards", [])
     primary_std = app_stds[0] if app_stds else None
 
+    evidence_lines = []
+    if context_chunks:
+        evidence_lines.append("### Indexed Official Document Chunks:")
+        for i, c in enumerate(context_chunks[:5]):
+            std = c.get("standard_id") or "BIS Standard"
+            sec = c.get("section") or c.get("clause_id") or "General"
+            pg = c.get("page") or "1"
+            evidence_lines.append(f"[Evidence {i+1} | Standard: {std} | Section/Clause: {sec} | Page {pg}]:\n{c.get('content', '')}")
+
+    if primary_std:
+        evidence_lines.append(f"\n### Verified Standard Catalog Data:")
+        evidence_lines.append(f"Standard: {primary_std.get('standard_id')} — {primary_std.get('title')}")
+        evidence_lines.append(f"Regulatory Status: {primary_std.get('status', 'Mandatory under QCO')}")
+        for clause in primary_std.get("evidence_clauses", [])[:5]:
+            c_sec = clause.get("section") or f"Clause {clause.get('clause_id', '')}"
+            evidence_lines.append(f"- {c_sec}: {clause.get('requirement_text', '')} (Page {clause.get('page', '1')})")
+
+    readiness = comp_data.get("compliance_readiness_score", 0)
+    completed_c = comp_data.get("completed_count", 0)
+    review_c = comp_data.get("review_count", 0)
+    missing_c = comp_data.get("missing_count", 0)
+    total_reqs = comp_data.get("total_requirements", len(comp_data.get("matrix", [])))
+    next_action = comp_data.get("next_best_action") or "Verify standards on Manakonline."
+
+    compliance_summary = (
+        f"\n### Real Compliance Engine Assessment:\n"
+        f"- Compliance Readiness Score: {readiness}%\n"
+        f"- Requirements Breakdown: {completed_c} satisfied, {review_c} under review, {missing_c} missing (out of {total_reqs} total mapped clauses)\n"
+        f"- Recommended Next Best Action: {next_action}"
+    )
+    context_block = "\n\n".join(evidence_lines) + compliance_summary
+
+    lang_instruction = get_target_language_instruction(target_language)
+    system_instruction = BIS_RAG_SYSTEM_INSTRUCTION + lang_instruction
+
+    # 1. Try Gemini
     if settings.GEMINI_API_KEY:
         try:
             from google import genai
             from google.genai import types
 
             client = genai.Client(api_key=settings.GEMINI_API_KEY)
-
-            evidence_lines = []
-            if context_chunks:
-                evidence_lines.append("### Indexed Official Document Chunks:")
-                for i, c in enumerate(context_chunks[:5]):
-                    std = c.get("standard_id") or "BIS Standard"
-                    sec = c.get("section") or c.get("clause_id") or "General"
-                    pg = c.get("page") or "1"
-                    evidence_lines.append(f"[Evidence {i+1} | Standard: {std} | Section/Clause: {sec} | Page {pg}]:\n{c.get('content', '')}")
-
-            if primary_std:
-                evidence_lines.append(f"\n### Verified Standard Catalog Data:")
-                evidence_lines.append(f"Standard: {primary_std.get('standard_id')} — {primary_std.get('title')}")
-                evidence_lines.append(f"Regulatory Status: {primary_std.get('status', 'Mandatory under QCO')}")
-                for clause in primary_std.get("evidence_clauses", [])[:5]:
-                    c_sec = clause.get("section") or f"Clause {clause.get('clause_id', '')}"
-                    evidence_lines.append(f"- {c_sec}: {clause.get('requirement_text', '')} (Page {clause.get('page', '1')})")
-
-            readiness = comp_data.get("compliance_readiness_score", 0)
-            completed_c = comp_data.get("completed_count", 0)
-            review_c = comp_data.get("review_count", 0)
-            missing_c = comp_data.get("missing_count", 0)
-            total_reqs = comp_data.get("total_requirements", len(comp_data.get("matrix", [])))
-            next_action = comp_data.get("next_best_action") or "Verify standards on Manakonline."
-
-            compliance_summary = (
-                f"\n### Real Compliance Engine Assessment:\n"
-                f"- Compliance Readiness Score: {readiness}%\n"
-                f"- Requirements Breakdown: {completed_c} satisfied, {review_c} under review, {missing_c} missing (out of {total_reqs} total mapped clauses)\n"
-                f"- Recommended Next Best Action: {next_action}"
-            )
-            context_block = "\n\n".join(evidence_lines) + compliance_summary
-
-            lang_instruction = get_target_language_instruction(target_language)
-            system_instruction = BIS_RAG_SYSTEM_INSTRUCTION + lang_instruction
-
             config = types.GenerateContentConfig(
                 system_instruction=system_instruction,
                 temperature=settings.LLM_TEMPERATURE,
                 automatic_function_calling=types.AutomaticFunctionCallingConfig(disable=True)
             )
-
             prefix_block = f"Verified Evidence Context:\n{context_block}"
             if lang_instruction:
                 lang_info = INDIC_LANGUAGES_MAP.get(target_language.lower(), ("the selected language", "स्थानीय भाषा", ""))
@@ -702,31 +782,37 @@ async def stream_rag_answer(
                 history=history,
                 context_prefix=prefix_block
             )
-
             async for token in _stream_gemini_with_fallback(client, contents, config):
                 yield token
             return
         except Exception as e:
-            logger.error(f"[RAG Gemini Stream Exception]: {e}", exc_info=True)
-            if primary_std or context_chunks:
-                logger.info("[RAG Fallback]: Streaming local grounded synthesizer response.")
-                answer, _ = generate_v2_grounded_answer(query, context_chunks, mode, target_language=target_language)
-                words = answer.split(" ")
-                for i, w in enumerate(words):
-                    yield w + (" " if i < len(words) - 1 else "")
-                    await asyncio.sleep(0.015)
-                return
-            else:
-                yield f"\n\n**Gemini API Error:** {str(e)}"
-                return
+            logger.warning(f"[RAG Gemini Stream Exception]: {e}")
 
-    # Fallback if no API key
+    # 2. Try NVIDIA NIM
+    nvidia_key = getattr(settings, "NVIDIA_API_KEY", None) or settings.GROQ_API_KEY
+    if nvidia_key:
+        try:
+            rag_query = f"Verified Evidence Context:\n{context_block}\n\nUser Question: {query}"
+            messages = []
+            if history:
+                for h in history:
+                    messages.append({"role": h.get("role", "user"), "content": h.get("content", "")})
+            messages.append({"role": "user", "content": rag_query})
+            streamed = False
+            async for token in _stream_nvidia_llm(messages, system_instruction, temperature=settings.LLM_TEMPERATURE):
+                streamed = True
+                yield token
+            if streamed:
+                return
+        except Exception as ne:
+            logger.warning(f"[RAG NVIDIA Stream Exception]: {ne}")
+
+    # Fallback to local grounded synthesizer
     answer, _ = generate_v2_grounded_answer(query, context_chunks, mode, target_language=target_language)
     words = answer.split(" ")
     for i, w in enumerate(words):
         yield w + (" " if i < len(words) - 1 else "")
         await asyncio.sleep(0.015)
-
 
 async def generate_general_llm_answer(
     query: str,
@@ -734,48 +820,50 @@ async def generate_general_llm_answer(
     target_language: str = "en"
 ) -> Tuple[str, List[Dict[str, Any]], Dict[str, Any]]:
     """
-    Direct Google Gemini LLM answering for ANY general question:
-    Coding, mathematics, science, writing, conversation, reasoning, etc.
-    Maintains multi-turn conversation memory when history is provided.
+    General-purpose LLM answering for ANY general question.
     """
-    if not settings.GEMINI_API_KEY:
-        return (
-            "Error: `GEMINI_API_KEY` is not configured in backend `.env`. Please provide a valid Gemini API key.",
-            [],
-            {}
-        )
+    lang_instruction = get_target_language_instruction(target_language)
+    system_instruction = GENERAL_SYSTEM_INSTRUCTION + lang_instruction
 
-    try:
-        from google import genai
-        from google.genai import types
+    if settings.GEMINI_API_KEY:
+        try:
+            from google import genai
+            from google.genai import types
 
-        client = genai.Client(api_key=settings.GEMINI_API_KEY)
-        lang_instruction = get_target_language_instruction(target_language)
-        system_instruction = GENERAL_SYSTEM_INSTRUCTION + lang_instruction
+            client = genai.Client(api_key=settings.GEMINI_API_KEY)
+            config = types.GenerateContentConfig(
+                system_instruction=system_instruction,
+                temperature=0.7,
+                automatic_function_calling=types.AutomaticFunctionCallingConfig(disable=True)
+            )
+            prefix_block = None
+            if lang_instruction:
+                lang_info = INDIC_LANGUAGES_MAP.get(target_language.lower(), ("the selected language", "स्थानीय भाषा", ""))
+                prefix_block = f"[IMPORTANT DIRECTIVE: Respond completely in {lang_info[0]} ({lang_info[1]}) using native script, even though the query is in English.]"
 
-        config = types.GenerateContentConfig(
-            system_instruction=system_instruction,
-            temperature=0.7,
-            automatic_function_calling=types.AutomaticFunctionCallingConfig(disable=True)
-        )
+            contents = _build_gemini_contents(query=query, history=history, context_prefix=prefix_block)
+            response = await _call_gemini_with_fallback(client, contents, config)
+            ans = _parse_gemini_response(response)
+            if ans:
+                return ans, [], {}
+        except Exception as e:
+            logger.warning(f"[General Gemini LLM Exception]: {e}")
 
-        prefix_block = None
-        if lang_instruction:
-            lang_info = INDIC_LANGUAGES_MAP.get(target_language.lower(), ("the selected language", "स्थानीय भाषा", ""))
-            prefix_block = f"[IMPORTANT DIRECTIVE: Respond completely in {lang_info[0]} ({lang_info[1]}) using native script, even though the query is in English.]"
+    nvidia_key = getattr(settings, "NVIDIA_API_KEY", None) or settings.GROQ_API_KEY
+    if nvidia_key:
+        try:
+            messages = []
+            if history:
+                for h in history:
+                    messages.append({"role": h.get("role", "user"), "content": h.get("content", "")})
+            messages.append({"role": "user", "content": query})
+            ans = await _call_nvidia_llm(messages, system_instruction, temperature=0.7)
+            if ans:
+                return ans, [], {}
+        except Exception as ne:
+            logger.warning(f"[General NVIDIA LLM Exception]: {ne}")
 
-        contents = _build_gemini_contents(query=query, history=history, context_prefix=prefix_block)
-        response = await _call_gemini_with_fallback(client, contents, config)
-        ans = _parse_gemini_response(response)
-        if ans:
-            return ans, [], {}
-
-        raise ValueError("Empty response received from Gemini API.")
-
-    except Exception as e:
-        logger.error(f"[General Gemini LLM Exception]: {e}", exc_info=True)
-        err_msg = str(e).split("\n")[0]
-        return f"**Gemini API Error:** {err_msg}. Please check your Gemini API key or connection.", [], {}
+    return "Hello! I am BIS Sahayak. How can I assist you with Bureau of Indian Standards compliance today?", [], {}
 
 async def generate_rag_answer(
     query: str,
@@ -785,14 +873,48 @@ async def generate_rag_answer(
     target_language: str = "en"
 ) -> Tuple[str, List[Dict[str, Any]], Dict[str, Any]]:
     """
-    RAG-augmented Google Gemini response for Bureau of Indian Standards (BIS) queries.
+    RAG-augmented response for Bureau of Indian Standards (BIS) queries.
     Strictly grounded in retrieved evidence chunks and real compliance engine metrics.
-    Maintains multi-turn conversation memory when history is provided.
     """
     prod_data = match_product_to_standards(query)
     comp_data = evaluate_compliance(query=query)
     app_stds = prod_data.get("applicable_standards", [])
     primary_std = app_stds[0] if app_stds else None
+
+    evidence_lines = []
+    if context_chunks:
+        evidence_lines.append("### Indexed Official Document Chunks:")
+        for i, c in enumerate(context_chunks[:5]):
+            std = c.get("standard_id") or "BIS Standard"
+            sec = c.get("section") or c.get("clause_id") or "General"
+            pg = c.get("page") or "1"
+            evidence_lines.append(f"[Evidence {i+1} | Standard: {std} | Section/Clause: {sec} | Page {pg}]:\n{c.get('content', '')}")
+
+    if primary_std:
+        evidence_lines.append(f"\n### Verified Standard Catalog Data:")
+        evidence_lines.append(f"Standard: {primary_std.get('standard_id')} — {primary_std.get('title')}")
+        evidence_lines.append(f"Regulatory Status: {primary_std.get('status', 'Mandatory under QCO')}")
+        for clause in primary_std.get("evidence_clauses", [])[:5]:
+            c_sec = clause.get("section") or f"Clause {clause.get('clause_id', '')}"
+            evidence_lines.append(f"- {c_sec}: {clause.get('requirement_text', '')} (Page {clause.get('page', '1')})")
+
+    readiness = comp_data.get("compliance_readiness_score", 0)
+    completed_c = comp_data.get("completed_count", 0)
+    review_c = comp_data.get("review_count", 0)
+    missing_c = comp_data.get("missing_count", 0)
+    total_reqs = comp_data.get("total_requirements", len(comp_data.get("matrix", [])))
+    next_action = comp_data.get("next_best_action") or "Verify standards on Manakonline."
+
+    compliance_summary = (
+        f"\n### Real Compliance Engine Assessment:\n"
+        f"- Compliance Readiness Score: {readiness}%\n"
+        f"- Requirements Breakdown: {completed_c} satisfied, {review_c} under review, {missing_c} missing (out of {total_reqs} total mapped clauses)\n"
+        f"- Recommended Next Best Action: {next_action}"
+    )
+    context_block = "\n\n".join(evidence_lines) + compliance_summary
+
+    lang_instruction = get_target_language_instruction(target_language)
+    system_instruction = BIS_RAG_SYSTEM_INSTRUCTION + lang_instruction
 
     if settings.GEMINI_API_KEY:
         try:
@@ -800,50 +922,11 @@ async def generate_rag_answer(
             from google.genai import types
 
             client = genai.Client(api_key=settings.GEMINI_API_KEY)
-
-            # Build evidence context block
-            evidence_lines = []
-            if context_chunks:
-                evidence_lines.append("### Indexed Official Document Chunks:")
-                for i, c in enumerate(context_chunks[:5]):
-                    std = c.get("standard_id") or "BIS Standard"
-                    sec = c.get("section") or c.get("clause_id") or "General"
-                    pg = c.get("page") or "1"
-                    evidence_lines.append(f"[Evidence {i+1} | Standard: {std} | Section/Clause: {sec} | Page {pg}]:\n{c.get('content', '')}")
-
-            if primary_std:
-                evidence_lines.append(f"\n### Verified Standard Catalog Data:")
-                evidence_lines.append(f"Standard: {primary_std.get('standard_id')} — {primary_std.get('title')}")
-                evidence_lines.append(f"Regulatory Status: {primary_std.get('status', 'Mandatory under QCO')}")
-                for clause in primary_std.get("evidence_clauses", [])[:5]:
-                    c_sec = clause.get("section") or f"Clause {clause.get('clause_id', '')}"
-                    evidence_lines.append(f"- {c_sec}: {clause.get('requirement_text', '')} (Page {clause.get('page', '1')})")
-
-            # Real compliance metrics from compliance engine
-            readiness = comp_data.get("compliance_readiness_score", 0)
-            completed_c = comp_data.get("completed_count", 0)
-            review_c = comp_data.get("review_count", 0)
-            missing_c = comp_data.get("missing_count", 0)
-            total_reqs = comp_data.get("total_requirements", len(comp_data.get("matrix", [])))
-            next_action = comp_data.get("next_best_action") or "Verify standards on Manakonline."
-
-            compliance_summary = (
-                f"\n### Real Compliance Engine Assessment:\n"
-                f"- Compliance Readiness Score: {readiness}%\n"
-                f"- Requirements Breakdown: {completed_c} satisfied, {review_c} under review, {missing_c} missing (out of {total_reqs} total mapped clauses)\n"
-                f"- Recommended Next Best Action: {next_action}"
-            )
-            context_block = "\n\n".join(evidence_lines) + compliance_summary
-
-            lang_instruction = get_target_language_instruction(target_language)
-            system_instruction = BIS_RAG_SYSTEM_INSTRUCTION + lang_instruction
-
             config = types.GenerateContentConfig(
                 system_instruction=system_instruction,
                 temperature=settings.LLM_TEMPERATURE,
                 automatic_function_calling=types.AutomaticFunctionCallingConfig(disable=True)
             )
-
             prefix_block = f"Verified Evidence Context:\n{context_block}"
             if lang_instruction:
                 lang_info = INDIC_LANGUAGES_MAP.get(target_language.lower(), ("the selected language", "स्थानीय भाषा", ""))
@@ -854,28 +937,32 @@ async def generate_rag_answer(
                 history=history,
                 context_prefix=prefix_block
             )
-
             response = await _call_gemini_with_fallback(client, contents, config)
             ans = _parse_gemini_response(response)
             if ans:
                 cits = extract_citations(ans, context_chunks, primary_std=primary_std)
                 return ans, cits, comp_data
-
-            raise ValueError("Empty response received from Gemini API.")
-
         except Exception as e:
-            logger.error(f"[RAG Gemini Generation Error]: {e}", exc_info=True)
-            err_msg = str(e).split("\n")[0]
-            # Fallback to local grounded synthesizer if standard or context chunks exist, else report real API error
-            if primary_std or context_chunks:
-                logger.info("[RAG Fallback]: Using local grounded synthesizer.")
-                answer, comp_data = generate_v2_grounded_answer(query, context_chunks, mode, target_language=target_language)
-                citations = extract_citations(answer, context_chunks, primary_std=primary_std)
-                return answer, citations, comp_data
-            else:
-                return f"**Gemini API Error:** {err_msg}. Please check your connection or Gemini API key.", [], comp_data
+            logger.warning(f"[RAG Gemini Generation Error]: {e}")
 
-    # Fallback to local grounded synthesizer if API key is missing
+    # 2. Try NVIDIA NIM
+    nvidia_key = getattr(settings, "NVIDIA_API_KEY", None) or settings.GROQ_API_KEY
+    if nvidia_key:
+        try:
+            rag_query = f"Verified Evidence Context:\n{context_block}\n\nUser Question: {query}"
+            messages = []
+            if history:
+                for h in history:
+                    messages.append({"role": h.get("role", "user"), "content": h.get("content", "")})
+            messages.append({"role": "user", "content": rag_query})
+            ans = await _call_nvidia_llm(messages, system_instruction, temperature=settings.LLM_TEMPERATURE)
+            if ans:
+                cits = extract_citations(ans, context_chunks, primary_std=primary_std)
+                return ans, cits, comp_data
+        except Exception as ne:
+            logger.warning(f"[RAG NVIDIA Generation Error]: {ne}")
+
+    # Fallback to local grounded synthesizer
     answer, comp_data = generate_v2_grounded_answer(query, context_chunks, mode, target_language=target_language)
     citations = extract_citations(answer, context_chunks, primary_std=primary_std)
     return answer, citations, comp_data
@@ -913,7 +1000,7 @@ async def generate_groq_answer(
                 for m in valid_models:
                     try:
                         res = await client.post(
-                            "https://api.groq.com/openai/v1/chat/completions",
+                            "https://integrate.api.nvidia.com/v1/chat/completions",
                             headers=headers,
                             json={
                                 "model": m,

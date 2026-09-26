@@ -69,7 +69,7 @@ export default function ChatInterface({
   ];
 
   return (
-    <div className="flex-1 flex flex-col h-full min-h-0 bg-[#f8fafc] overflow-hidden">
+    <div className="flex-1 flex flex-col h-full min-h-0 apple-canvas overflow-hidden">
       
       {/* Scrollable Message List / Hero Prompt View */}
       <div className="flex-1 overflow-y-auto px-4 sm:px-8 py-6 space-y-6">
@@ -78,31 +78,31 @@ export default function ChatInterface({
             
             {/* Top Assistant Badge */}
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-orange-100 text-orange-600 flex items-center justify-center font-bold shadow-2xs">
-                <Sparkles size={20} />
+              <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#0B2545] via-[#0071E3] to-[#0A192F] text-white flex items-center justify-center font-bold shadow-sm border border-white/20">
+                <Sparkles size={20} className="text-white" />
               </div>
               <div>
-                <h2 className="text-sm font-extrabold text-[#0b2545]">
-                  BIS Sahayak AI Assistant
+                <h2 className="text-sm font-extrabold text-[#1d1d1f]">
+                  Manak AI Copilot
                 </h2>
-                <p className="text-xs text-slate-500 font-medium">
-                  Trusted. Accurate. BIS Knowledge at Your Fingertips.
+                <p className="text-xs text-[#86868b] font-medium">
+                  Authoritative. Clause-Accurate. Official BIS Intelligence.
                 </p>
               </div>
             </div>
 
             {/* Centered Heading */}
             <div className="text-center space-y-2 py-2">
-              <div className="flex items-center justify-center gap-2 text-orange-500 pb-1">
-                <span className="w-12 h-px bg-orange-200"></span>
+              <div className="flex items-center justify-center gap-2 text-[#0071e3] pb-1">
+                <span className="w-12 h-px bg-[#0071e3]/20"></span>
                 <Sparkles size={16} />
-                <span className="w-12 h-px bg-orange-200"></span>
+                <span className="w-12 h-px bg-[#0071e3]/20"></span>
               </div>
-              <h1 className="text-2xl sm:text-3xl font-extrabold text-[#0b2545] tracking-tight">
-                How can I help you with BIS compliance today?
+              <h1 className="text-2xl sm:text-3xl font-extrabold text-[#1d1d1f] tracking-tight">
+                How can I assist your standard compliance today?
               </h1>
               <p className="text-xs sm:text-sm text-slate-600 max-w-2xl mx-auto leading-relaxed">
-                Ask any question related to Indian Standards, certification, testing, documentation, lab requirements or compliance - in any Indian language.
+                Ask any question regarding 24,000+ Indian Standards, Quality Control Orders (QCOs), testing protocols, or ISI Mark certification.
               </p>
             </div>
 
@@ -170,8 +170,8 @@ export default function ChatInterface({
         {/* Live Streaming Indicator */}
         {isLoading && (
           <div className="flex gap-3.5 max-w-4xl mx-auto px-2">
-            <div className="w-8 h-8 rounded-xl bg-[#0b2545] text-white flex items-center justify-center text-xs font-black shrink-0 mt-1 shadow-xs">
-              BS
+            <div className="w-8 h-8 rounded-xl bg-[#0071E3] text-white flex items-center justify-center text-xs font-black shrink-0 mt-1 shadow-xs">
+              M·OS
             </div>
             <div className="flex-1 min-w-0">
               <div className="p-5 rounded-3xl bg-white border border-slate-200 shadow-xs space-y-2">

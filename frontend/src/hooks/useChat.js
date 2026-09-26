@@ -61,7 +61,7 @@ export function useChat() {
           const errorMessage = {
             id: `err-${Date.now()}`,
             role: 'assistant',
-            content: err?.message ? `Connection/Service Error: ${err.message}` : "Sorry, I encountered an issue connecting to the BIS Sahayak service. Please try again.",
+            content: err?.message ? `Connection/Service Error: ${err.message}` : "Sorry, I encountered an issue connecting to the ManakOS service. Please try again.",
             confidence: null,
             citations: [],
             isError: true,

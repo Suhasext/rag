@@ -368,7 +368,7 @@ export default function AuthView({ initialMode = 'login', auth, onClose, onAuthS
       {/* ========================================================================= */}
       <header className="w-full bg-white px-4 sm:px-8 lg:px-12 py-3 sm:py-3.5 flex items-center justify-between z-20 border-b border-slate-200/90 shrink-0 shadow-2xs">
 
-        {/* Left: BIS Sahayak Brand Logo */}
+        {/* Left: ManakOS Brand Logo */}
         <div
           className="flex items-center cursor-pointer transition-transform hover:scale-[1.01]"
           onClick={() => { if (onClose) onClose(); }}
@@ -376,7 +376,7 @@ export default function AuthView({ initialMode = 'login', auth, onClose, onAuthS
         >
           <img
             src="/bis-sahayak-logo.png"
-            alt="BIS Sahayak"
+            alt="ManakOS"
             className="h-8 sm:h-9 w-auto object-contain"
             onError={(e) => { e.target.onerror = null; e.target.style.display = 'none'; }}
           />
@@ -430,7 +430,7 @@ export default function AuthView({ initialMode = 'login', auth, onClose, onAuthS
                   <span>Welcome back</span>
                 </div>
                 <p className="text-xs text-blue-900 leading-relaxed font-medium">
-                  {auth.googleNotice.message || "This Google account is already registered with BIS Sahayak."}
+                  {auth.googleNotice.message || "This Google account is already registered with ManakOS."}
                 </p>
                 <button
                   type="button"
@@ -441,7 +441,7 @@ export default function AuthView({ initialMode = 'login', auth, onClose, onAuthS
                   }}
                   className="w-full py-2.5 rounded-xl bg-[#0b2545] hover:bg-[#133b68] text-white font-bold text-xs transition-colors shadow-xs flex items-center justify-center gap-1.5"
                 >
-                  <span>Continue to BIS Sahayak</span>
+                  <span>Continue to ManakOS</span>
                   <ArrowRight size={13} />
                 </button>
               </div>
@@ -452,22 +452,22 @@ export default function AuthView({ initialMode = 'login', auth, onClose, onAuthS
             {/* =================================================================== */}
             <div className="text-center space-y-1.5">
               <div className="w-11 h-11 rounded-2xl bg-orange-50 border border-orange-100 flex items-center justify-center mx-auto shadow-2xs">
-                <div className="w-7 h-7 rounded-xl bg-[#0b2545] text-white flex items-center justify-center text-xs font-black shadow-xs">
-                  BS
+                <div className="w-7 h-7 rounded-xl bg-gradient-to-br from-[#0B2545] to-[#0071E3] text-white flex items-center justify-center text-[10px] font-black shadow-xs">
+                  M·OS
                 </div>
               </div>
 
               <div className="pt-0.5">
                 <h1 className="text-2xl font-black text-[#0b2545] tracking-tight">
-                  {mode === 'login' && "Sign in to BIS Sahayak"}
+                  {mode === 'login' && "Sign in to ManakOS"}
                   {mode === 'signup' && (signupStep === 3 ? "Verify Your Account" : "Create Your Account")}
                   {mode === 'org_onboarding' && "Set Up Your Organization"}
                 </h1>
                 <p className="text-xs text-slate-500 font-medium">
                   {mode === 'login' && "National Compliance Decision Portal for MSMEs"}
-                  {mode === 'signup' && signupStep === 1 && "Join BIS Sahayak and streamline your certification"}
+                  {mode === 'signup' && signupStep === 1 && "Join ManakOS and streamline your certification"}
                   {mode === 'signup' && signupStep === 2 && "Personalize your manufacturing compliance tracking"}
-                  {mode === 'signup' && signupStep === 3 && "One final step before you enter BIS Sahayak"}
+                  {mode === 'signup' && signupStep === 3 && "One final step before you enter ManakOS"}
                   {mode === 'org_onboarding' && "Tell us about your manufacturing business to complete setup"}
                 </p>
               </div>
@@ -925,7 +925,7 @@ export default function AuthView({ initialMode = 'login', auth, onClose, onAuthS
                         <span>Set Up Your Organization</span>
                       </p>
                       <p className="text-blue-900 text-[11px] leading-relaxed">
-                        Tell us about your manufacturing business so BIS Sahayak can personalize your compliance tracking.
+                        Tell us about your manufacturing business so ManakOS can personalize your compliance tracking.
                       </p>
                     </div>
 
@@ -1038,7 +1038,7 @@ export default function AuthView({ initialMode = 'login', auth, onClose, onAuthS
                             {email || 'your email address'}
                           </p>
                           <p className="text-[11px] text-slate-500 pt-1">
-                            Please verify your email address before continuing to BIS Sahayak.
+                            Please verify your email address before continuing to ManakOS.
                           </p>
                         </div>
 
@@ -1059,7 +1059,7 @@ export default function AuthView({ initialMode = 'login', auth, onClose, onAuthS
                             ✓ Account Verified
                           </h3>
                           <p className="text-xs text-emerald-800 font-medium">
-                            Your BIS Sahayak account is ready.
+                            Your ManakOS account is ready.
                           </p>
                         </div>
                       </div>
@@ -1159,7 +1159,7 @@ export default function AuthView({ initialMode = 'login', auth, onClose, onAuthS
                           onClick={handleCompleteAndEnterDashboard}
                           className="w-full py-3 rounded-xl bg-[#0b2545] hover:bg-[#133b68] text-white font-bold text-sm transition-all shadow-md flex items-center justify-center gap-2"
                         >
-                          <span>Continue to BIS Sahayak</span>
+                          <span>Continue to ManakOS</span>
                           <ArrowRight size={15} />
                         </button>
                       </div>
@@ -1205,7 +1205,7 @@ export default function AuthView({ initialMode = 'login', auth, onClose, onAuthS
       </main>
 
       {/* ========================================================================= */}
-      {/* 3. REUSABLE BIS SAHAYAK PLATFORM FOOTER (FULL WIDTH AT BOTTOM)             */}
+      {/* 3. REUSABLE ManakOS PLATFORM FOOTER (FULL WIDTH AT BOTTOM)             */}
       {/* ========================================================================= */}
       <Footer onNavigate={onNavigate} />
 

@@ -160,7 +160,7 @@ export default function App() {
 
 
   return (
-    <div className="h-screen flex flex-col overflow-hidden bg-[#f8fafc] text-slate-900 font-sans">
+    <div className="h-screen flex flex-col overflow-hidden apple-canvas text-[#1d1d1f] font-sans">
 
       {/* Top Header Across Full Width */}
       <Header
@@ -189,7 +189,7 @@ export default function App() {
         />
 
         {/* Dynamic Workspace View */}
-        <main className="flex-1 flex flex-col min-h-0 overflow-hidden bg-[#f8fafc]">
+        <main className="flex-1 flex flex-col min-h-0 overflow-hidden apple-canvas">
           {activeTab === 'home' && (
             <HomeDashboardView
               onNavigate={setActiveTab}

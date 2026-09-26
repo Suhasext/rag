@@ -123,14 +123,25 @@ def init_db():
     """)
     cursor.execute("CREATE INDEX IF NOT EXISTS idx_chat_messages_session ON chat_messages(session_id)")
     
-    # Seed Demo User for testing
-    cursor.execute("SELECT id FROM users WHERE email = 'demo.user@example.com'")
+    # Seed Demo Users for testing
+    demo_pwd_hash = hash_password("UserPass#2026")
+    test_pwd_hash = hash_password("TestingPass123!")
+
+    cursor.execute("SELECT id FROM users WHERE email = 'demo.user@standards.local'")
     if not cursor.fetchone():
-        demo_pwd_hash = hash_password("TestingPass123!")
         cursor.execute("""
         INSERT INTO users (email, password_hash, full_name, company_name, role)
         VALUES (?, ?, ?, ?, ?)
-        """, ('demo.user@example.com', demo_pwd_hash, 'Ramesh Sharma', 'Shree Ram Industries (MSME)', 'Quality Lead'))
+        """, ('demo.user@standards.local', demo_pwd_hash, 'Anil Sharma', 'Bharat Cookware & Appliances Pvt. Ltd.', 'Manufacturer'))
+    else:
+        cursor.execute("UPDATE users SET password_hash = ? WHERE email = 'demo.user@standards.local'", (demo_pwd_hash,))
+
+    cursor.execute("SELECT id FROM users WHERE email = 'demo.user@example.com'")
+    if not cursor.fetchone():
+        cursor.execute("""
+        INSERT INTO users (email, password_hash, full_name, company_name, role)
+        VALUES (?, ?, ?, ?, ?)
+        """, ('demo.user@example.com', test_pwd_hash, 'Ramesh Sharma', 'Shree Ram Industries (MSME)', 'Quality Lead'))
     
     # Users Table Migration for status and sector
     try:

@@ -897,7 +897,7 @@ export default function DocumentAnalyzerView({ onOpenEvidence, onExportPDF, onNa
             {/* Guidance Note */}
             <div className="text-[11px] text-slate-600 leading-relaxed space-y-1">
               <p className="font-semibold text-slate-800">
-                How the BIS Sahayak Document Section works:
+                How the ManakOS Document Section works:
               </p>
               <p>
                 To complete your BIS ISI certification readiness assessment, uploaded files must be authentic laboratory test certificates (NABL ISO/IEC 17025 accredited) or raw material mill test sheets specifically for your chosen product. Generic, non-technical, or unrelated documents cannot be audited.

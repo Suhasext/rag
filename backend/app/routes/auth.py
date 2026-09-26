@@ -10,14 +10,14 @@ from app.models.database import get_db_connection, hash_password, verify_passwor
 router = APIRouter()
 
 class RegisterRequest(BaseModel):
-    email: EmailStr
+    email: str
     password: str
     full_name: str
     company_name: str
     role: Optional[str] = "MSME Manufacturer"
 
 class LoginRequest(BaseModel):
-    email: EmailStr
+    email: str
     password: str
 
 class AssessmentSaveRequest(BaseModel):

@@ -6,7 +6,7 @@ export async function checkHealth() {
     return await res.json();
   } catch (err) {
     console.error("Health check error:", err);
-    return { status: "offline", service: "BIS Sahayak V2" };
+    return { status: "offline", service: "ManakOS V2.4" };
   }
 }
 

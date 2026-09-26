@@ -1,5 +1,9 @@
 import React from 'react';
-import { Home, BookOpen, ShieldCheck, FileCheck, BadgeCheck, Sparkles, Scale, Bell, Headphones, X, Landmark } from 'lucide-react';
+import { 
+  Home, BookOpen, ShieldCheck, FileCheck, BadgeCheck, Sparkles, 
+  Scale, Bell, Headphones, X, Landmark, Compass, Award, ExternalLink,
+  Shield, Cpu, Layers
+} from 'lucide-react';
 
 export default function Sidebar({
   isOpen,
@@ -17,132 +21,158 @@ export default function Sidebar({
     (typeof window !== 'undefined' && sessionStorage.getItem('bis_officer_auth') === 'true')
   );
 
-  const navigationItems = [
-    { id: 'home', label: 'Home', icon: <Home size={18} /> },
-    { id: 'standards', label: 'Standards', icon: <BookOpen size={18} /> },
-    { id: 'compliance', label: 'Compliance', icon: <ShieldCheck size={18} /> },
-    { id: 'documents', label: 'Documents', icon: <FileCheck size={18} /> },
-    { id: 'verification', label: 'Verification', icon: <BadgeCheck size={18} /> },
-    { id: 'assistant', label: 'AI Assistant', icon: <Sparkles size={18} /> },
-    { id: 'compare', label: 'Compare', icon: <Scale size={18} /> },
-    { id: 'notifications', label: 'Notifications', icon: <Bell size={18} /> }
+  const navigationSections = [
+    {
+      title: 'Platform',
+      items: [
+        { id: 'home', label: 'Executive dashboard', icon: <Home size={17} /> },
+        { id: 'standards', label: 'Standards directory', icon: <BookOpen size={17} /> },
+        { id: 'compliance', label: 'Compliance studio', icon: <ShieldCheck size={17} /> },
+      ]
+    },
+    {
+      title: 'Intelligence and audit',
+      items: [
+        { id: 'assistant', label: 'Manak AI copilot', icon: <Sparkles size={17} />, badge: 'AI' },
+        { id: 'documents', label: 'Document analyzer', icon: <FileCheck size={17} /> },
+        { id: 'verification', label: 'Licence and lab verifier', icon: <BadgeCheck size={17} /> },
+      ]
+    },
+    {
+      title: 'Statutory and compare',
+      items: [
+        { id: 'compare', label: 'Clause comparator', icon: <Scale size={17} /> },
+        { id: 'notifications', label: 'Gazette radar and QCOs', icon: <Bell size={17} />, badge: 'Live' },
+      ]
+    }
   ];
 
   return (
     <>
-      {/* Mobile Backdrop */}
       {isOpen && (
         <div
-          className="fixed inset-0 z-40 bg-slate-950/40 backdrop-blur-xs transition-opacity lg:hidden"
+          className="fixed inset-0 z-40 bg-black/20 backdrop-blur-xs transition-opacity lg:hidden"
           onClick={onClose}
         />
       )}
 
-      {/* Main Left Sidebar */}
       <aside
-        className={`fixed lg:static top-0 bottom-0 left-0 z-40 w-60 bg-white border-r border-slate-200 flex flex-col justify-between transition-transform duration-300 ease-in-out shrink-0 ${
+        className={`fixed lg:static top-0 bottom-0 left-0 z-40 w-64 manak-sidebar flex flex-col justify-between transition-transform duration-300 ease-in-out shrink-0 select-none ${
           isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
         }`}
       >
-        <div className="flex flex-col flex-1 overflow-y-auto">
+        <div className="flex flex-col flex-1 overflow-y-auto px-3.5 py-4 space-y-6">
           
-          {/* Mobile Close Button Area */}
-          <div className="p-3 border-b border-slate-100 flex items-center justify-between lg:hidden">
-            <span className="text-xs font-bold text-slate-800">Navigation</span>
+          <div className="flex items-center justify-between lg:hidden pb-2 border-b border-slate-100">
+            <span className="text-xs font-semibold text-slate-900">Navigation</span>
             <button
               type="button"
               onClick={onClose}
-              className="p-1 text-slate-400 hover:text-slate-700 rounded-lg hover:bg-slate-100"
+              className="w-8 h-8 rounded-lg flex items-center justify-center text-slate-500 hover:text-slate-900 hover:bg-slate-100"
+              aria-label="Close sidebar"
             >
-              <X size={18} />
+              <X size={16} />
             </button>
           </div>
 
-          {/* Navigation Items (Starting with Home at top, strictly named Compliance) */}
-          <nav className="p-3 space-y-1.5 pt-4">
-            {navigationItems.map((item) => {
-              const isActive = activeTab === item.id;
-              return (
-                <button
-                  key={item.id}
-                  type="button"
-                  onClick={() => {
-                    onTabChange(item.id);
-                    if (window.innerWidth < 1024) onClose();
-                  }}
-                  className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all ${
-                    isActive
-                      ? 'bg-[#0b2545] text-white shadow-xs'
-                      : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
-                  }`}
-                >
-                  <div className="flex items-center gap-3">
-                    <span className={isActive ? 'text-white' : 'text-slate-400'}>
-                      {item.icon}
-                    </span>
-                    <span>{item.label}</span>
-                  </div>
-                  {item.badge && (
-                    <span className={`text-[9px] uppercase font-black tracking-wider px-1.5 py-0.5 rounded ${
-                      isActive ? 'bg-blue-800 text-blue-200' : 'bg-amber-100 text-amber-800 border border-amber-200'
-                    }`}>
-                      {item.badge}
-                    </span>
-                  )}
-                </button>
-              );
-            })}
-          </nav>
-        </div>
+          {navigationSections.map((sec, secIdx) => (
+            <div key={secIdx} className="space-y-1">
+              <span className="px-3 text-xs font-medium text-slate-400 block mb-1">
+                {sec.title}
+              </span>
+              <div className="space-y-0.5">
+                {sec.items.map((item) => {
+                  const isActive = activeTab === item.id;
+                  return (
+                    <button
+                      key={item.id}
+                      type="button"
+                      onClick={() => {
+                        onTabChange(item.id);
+                        if (window.innerWidth < 1024) onClose();
+                      }}
+                      className={`w-full h-9 flex items-center justify-between px-3 rounded-xl text-xs transition-all active:scale-[0.99] ${
+                        isActive
+                          ? 'bg-[#0062D2] text-white font-medium shadow-xs'
+                          : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100 font-normal'
+                      }`}
+                      aria-current={isActive ? 'page' : undefined}
+                    >
+                      <div className="flex items-center gap-2.5">
+                        <span className={isActive ? 'text-white' : 'text-slate-400'}>
+                          {item.icon}
+                        </span>
+                        <span>{item.label}</span>
+                      </div>
+                      {item.badge && (
+                        <span className={`text-[10px] font-medium px-1.5 py-0.5 rounded-full ${
+                          isActive 
+                            ? 'bg-white/20 text-white' 
+                            : item.badge === 'Live'
+                            ? 'bg-rose-50 text-rose-700'
+                            : 'bg-slate-100 text-slate-600'
+                        }`}>
+                          {item.badge}
+                        </span>
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
 
-        {/* Bottom Section: Need Help Card + BIS Authority Card */}
-        <div className="p-3 space-y-3 border-t border-slate-100 bg-white shrink-0">
-          
-          {/* Need Help? Card */}
+          {/* Need Help Card */}
           <div
             onClick={() => {
               onTabChange('assistant');
               if (window.innerWidth < 1024) onClose();
             }}
-            className="p-3 rounded-2xl bg-slate-50 border border-slate-200 hover:border-slate-300 cursor-pointer transition-all flex items-center justify-between gap-2"
+            className="p-3 rounded-xl bg-slate-50 hover:bg-slate-100/80 border border-slate-200 cursor-pointer transition-all flex items-center justify-between gap-2.5"
+            role="button"
+            tabIndex={0}
+            aria-label="Open Manak Copilot"
           >
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-xl bg-blue-100 text-[#0b2545] flex items-center justify-center shrink-0">
-                <Headphones size={16} />
+              <div className="w-8 h-8 rounded-lg bg-blue-50 text-[#0062D2] flex items-center justify-center shrink-0">
+                <Sparkles size={15} />
               </div>
               <div className="min-w-0">
-                <p className="text-xs font-bold text-slate-900 leading-tight">Need Help?</p>
-                <p className="text-[10px] text-slate-500 truncate">Ask BIS Sahayak</p>
+                <p className="text-xs font-medium text-slate-900 leading-tight">Need expert help?</p>
+                <p className="text-[11px] text-slate-500 truncate mt-0.5">Chat with Manak Copilot</p>
               </div>
-            </div>
-            <span className="text-slate-400 text-xs font-bold">›</span>
-          </div>
-
-          {/* Bureau of Indian Standards Official Authority Card with Tricolor Accent */}
-          <div className="p-3 rounded-2xl bg-slate-50/70 border border-slate-200 space-y-2">
-            <div className="flex items-start gap-2.5">
-              <div className="w-7 h-8 shrink-0 flex items-center justify-center font-serif text-slate-800 text-sm font-black border border-slate-300 rounded bg-white shadow-2xs">
-                🏛️
-              </div>
-              <div className="min-w-0 space-y-0.5">
-                <p className="text-[10px] font-bold text-slate-800 leading-tight">
-                  Empowering Compliance. Simplifying Standards.
-                </p>
-                <p className="text-[9px] text-slate-500 leading-snug">
-                  Your trusted partner for BIS compliance.
-                </p>
-              </div>
-            </div>
-
-            {/* Tricolor Accent Bar */}
-            <div className="flex h-1 w-full rounded-full overflow-hidden">
-              <div className="w-1/3 bg-orange-500"></div>
-              <div className="w-1/3 bg-white"></div>
-              <div className="w-1/3 bg-emerald-600"></div>
             </div>
           </div>
 
         </div>
+
+        {/* Bottom Section: Official Bureau of Indian Standards Authority Badge */}
+        <div className="p-3.5 border-t border-slate-100 bg-slate-50/50">
+          <div className="p-3 rounded-xl bg-white border border-slate-200 space-y-2">
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-lg bg-[#0F172A] text-white flex items-center justify-center shrink-0">
+                <Landmark size={15} />
+              </div>
+              <div className="min-w-0">
+                <p className="text-xs font-semibold text-slate-900 leading-tight">
+                  Bureau of Indian Standards
+                </p>
+                <p className="text-[10px] text-slate-500 leading-tight mt-0.5 truncate">
+                  Government of India, Manak Bhavan
+                </p>
+              </div>
+            </div>
+
+            <div className="pt-1.5 flex items-center justify-between border-t border-slate-100 text-[10px]">
+              <div className="flex items-center gap-1.5 font-medium text-emerald-700">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-600" />
+                <span>Registry synchronized</span>
+              </div>
+              <span className="text-slate-400">IS 24K+</span>
+            </div>
+          </div>
+        </div>
+
       </aside>
     </>
   );

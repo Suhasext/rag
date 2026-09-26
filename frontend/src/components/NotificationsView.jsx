@@ -405,13 +405,13 @@ export default function NotificationsView({
             <div>
               <h4 className="text-xs sm:text-sm font-black text-[#0b2545]">Automated Regulatory Watchdog</h4>
               <p className="text-[11px] text-slate-600 mt-0.5">
-                BIS Sahayak continuously monitors the Official Gazette of India and BIS Technical Committees to notify you before compliance deadlines.
+                ManakOS continuously monitors the Official Gazette of India and BIS Technical Committees to notify you before compliance deadlines.
               </p>
             </div>
           </div>
           <button
             type="button"
-            onClick={() => onAskAIAboutStandard({ id: 'Regulatory Watchdog', title: 'How does BIS Sahayak monitor Gazette changes and what are upcoming deadlines for consumer goods?' })}
+            onClick={() => onAskAIAboutStandard({ id: 'Regulatory Watchdog', title: 'How does ManakOS monitor Gazette changes and what are upcoming deadlines for consumer goods?' })}
             className="px-4 py-2 rounded-xl bg-white hover:bg-slate-50 border border-slate-300 text-slate-700 font-bold text-xs shadow-2xs transition-colors shrink-0 flex items-center gap-1.5"
           >
             <Settings size={13} className="text-slate-500" />

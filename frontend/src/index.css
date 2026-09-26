@@ -4,53 +4,93 @@
 
 @layer base {
   body {
-    @apply bg-[#f8fafc] text-slate-900 antialiased;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    @apply bg-[#f8f9fb] text-[#0f172a] antialiased selection:bg-[#0062d2]/15 selection:text-[#0062d2];
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Plus Jakarta Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    letter-spacing: -0.015em;
+  }
+
+  /* High contrast accessible focus indicator */
+  :focus-visible {
+    @apply outline-none ring-2 ring-[#0062d2] ring-offset-2 ring-offset-[#f8f9fb];
   }
 }
 
-/* Restrained Government UI Utilities */
-.gov-tricolor-bar {
-  background: linear-gradient(90deg, #ea580c 0%, #ea580c 33.33%, #ffffff 33.33%, #ffffff 66.66%, #16a34a 66.66%, #16a34a 100%);
-  height: 3px;
+/* ========================================================================= */
+/* MANAKOS DESIGN SYSTEM: RESTRAINED ARCHITECTURAL SURFACES                 */
+/* ========================================================================= */
+
+/* Architectural Clean Canvas (No decorative blur or cosmic gradients) */
+.manak-canvas {
+  background-color: #f8f9fb;
+  background-image: 
+    linear-gradient(rgba(15, 23, 42, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 23, 42, 0.02) 1px, transparent 1px);
+  background-size: 32px 32px;
 }
 
-.gov-navy-bg {
-  background-color: #0b2545;
+/* Precision Elevated Panel */
+.manak-panel {
+  background-color: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.09);
+  border-radius: 1.25rem;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03), 0 6px 16px -4px rgba(15, 23, 42, 0.03);
 }
 
-.gov-navy-text {
-  color: #0b2545;
+.manak-panel-inset {
+  background-color: #f1f4f8;
+  border: 1px solid rgba(15, 23, 42, 0.06);
+  border-radius: 0.875rem;
 }
 
-.gov-border {
-  border-color: #e2e8f0;
+/* Precision Header & Floating Toolbar */
+.manak-header {
+  background-color: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
 }
 
-/* Custom crisp scrollbar */
+.manak-sidebar {
+  background-color: #ffffff;
+  border-right: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+/* Custom crisp scrollbars */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f5f9;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 4px;
+  background: rgba(15, 23, 42, 0.16);
+  border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+  background: rgba(15, 23, 42, 0.28);
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(2px); }
-  to { opacity: 1; transform: translateY(0); }
+/* Reduced transparency fallback */
+@media (prefers-reduced-transparency: reduce) {
+  .manak-header {
+    background-color: #ffffff !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
 }
 
-.animate-fade-in {
-  animation: fadeIn 0.15s ease-out forwards;
+/* Reduced motion fallback */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

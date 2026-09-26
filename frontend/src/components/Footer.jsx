@@ -1,5 +1,5 @@
 import React from 'react';
-import { Linkedin, Twitter, Instagram, Github, Phone, Mail, MapPin } from 'lucide-react';
+import { Linkedin, Twitter, Instagram, Github, Phone, Mail, MapPin, Shield } from 'lucide-react';
 
 export default function Footer({ onNavigate, onOpenHelp, isAuthPage = false }) {
   const handleQuickLink = (targetTab) => {
@@ -13,183 +13,173 @@ export default function Footer({ onNavigate, onOpenHelp, isAuthPage = false }) {
     if (action === 'help' && onOpenHelp) {
       onOpenHelp();
     } else if (action === 'contact') {
-      window.location.href = 'mailto:bishayak.help@gmail.com';
+      window.location.href = 'mailto:support@manakos.in';
     }
   };
 
-  const footerInnerContent = (
-    <>
-      <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 text-xs">
+  return (
+    <footer className="w-full bg-[#0F172A] text-white px-4 sm:px-8 lg:px-12 py-8 z-20 shrink-0 border-t border-slate-800 font-sans select-none mt-auto">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-xs">
 
-        {/* LEFT: BIS SAHAYAK & Description */}
-        <div className="space-y-2.5">
-          <div className="flex items-center gap-2">
-            <div className="w-6 h-6 rounded bg-orange-500 text-white flex items-center justify-center font-bold text-xs shadow-xs">
-              BS
+        {/* Column 1: Identity & Role */}
+        <div className="space-y-3">
+          <div className="flex items-center gap-2.5">
+            <div className="w-7 h-7 rounded-lg bg-[#0062D2] text-white flex items-center justify-center font-bold text-xs shadow-xs">
+              <Shield size={14} className="text-white" />
             </div>
-            <span className="text-sm font-black text-white tracking-wide">
-              BIS <span className="text-orange-400">SAHAYAK</span>
+            <span className="text-base font-bold text-white tracking-tight">
+              ManakOS
             </span>
           </div>
-          <p className="text-[11px] text-slate-300 leading-relaxed font-normal max-w-xs">
-            AI-powered compliance platform built to streamline Indian standards search and decision-making for MSMEs.
+          <p className="text-[11px] text-slate-400 leading-relaxed font-normal max-w-xs">
+            National Standards and Quality Intelligence Operating System for Indian Standards specifications, statutory Quality Control Orders, laboratory testing parameters, and ISI Mark compliance.
           </p>
           <div className="flex items-center gap-2 pt-1 text-slate-400">
             <a
-              href="https://www.linkedin.com/in/bishalstha045"
+              href="https://github.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white transition-colors"
-              title="LinkedIn"
-              aria-label="LinkedIn"
+              className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-white transition-colors"
+              title="GitHub repository"
+              aria-label="GitHub"
             >
-              <Linkedin size={13} />
+              <Github size={13} />
             </a>
             <a
-              href="https://x.com/bishalstha045"
+              href="https://twitter.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white transition-colors"
-              title="Twitter / X"
+              className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-white transition-colors"
+              title="Twitter"
               aria-label="Twitter"
             >
               <Twitter size={13} />
             </a>
             <a
-              href="https://instagram.com/bishalstha045"
+              href="https://linkedin.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white transition-colors"
-              title="Instagram"
-              aria-label="Instagram"
+              className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-white transition-colors"
+              title="LinkedIn"
+              aria-label="LinkedIn"
             >
-              <Instagram size={13} />
-            </a>
-            <a
-              href="https://github.com/bishalstha045"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white transition-colors"
-              title="GitHub"
-              aria-label="GitHub"
-            >
-              <Github size={13} />
+              <Linkedin size={13} />
             </a>
           </div>
         </div>
 
-        {/* MIDDLE: QUICK LINKS */}
+        {/* Column 2: Applications */}
         <div className="space-y-2.5">
-          <h4 className="text-[11px] font-bold text-white uppercase tracking-wider text-slate-100">
-            Quick Links
+          <h4 className="text-xs font-semibold text-white">
+            Compliance tools
           </h4>
-          <ul className="space-y-1.5 text-[11px] text-slate-300">
+          <ul className="space-y-2 text-[11px] text-slate-400">
             <li>
               <button
                 type="button"
                 onClick={() => handleQuickLink('standards')}
-                className="hover:text-orange-400 transition-colors text-left"
+                className="hover:text-white transition-colors text-left"
               >
-                Standards
+                Standards directory
               </button>
             </li>
             <li>
               <button
                 type="button"
                 onClick={() => handleQuickLink('compliance')}
-                className="hover:text-orange-400 transition-colors text-left"
+                className="hover:text-white transition-colors text-left"
               >
-                Compliance
+                Compliance studio
               </button>
             </li>
             <li>
               <button
                 type="button"
                 onClick={() => handleQuickLink('verification')}
-                className="hover:text-orange-400 transition-colors text-left"
+                className="hover:text-white transition-colors text-left"
               >
-                Verify ISI
+                Licence and lab verifier
               </button>
             </li>
             <li>
               <button
                 type="button"
                 onClick={() => handleQuickLink('documents')}
-                className="hover:text-orange-400 transition-colors text-left"
+                className="hover:text-white transition-colors text-left"
               >
-                Documents
+                Document analyzer
               </button>
             </li>
           </ul>
         </div>
 
-        {/* NEXT: SUPPORT */}
+        {/* Column 3: Regulatory Resources */}
         <div className="space-y-2.5">
-          <h4 className="text-[11px] font-bold text-white uppercase tracking-wider text-slate-100">
-            Support
+          <h4 className="text-xs font-semibold text-white">
+            Regulatory resources
           </h4>
-          <ul className="space-y-1.5 text-[11px] text-slate-300">
+          <ul className="space-y-2 text-[11px] text-slate-400">
             <li>
               <button
                 type="button"
-                onClick={() => handleSupportLink('help')}
-                className="hover:text-orange-400 transition-colors text-left"
+                onClick={() => handleQuickLink('notifications')}
+                className="hover:text-white transition-colors text-left"
               >
-                Help Center
+                Gazette radar and QCOs
               </button>
             </li>
             <li>
               <button
                 type="button"
-                onClick={() => handleSupportLink('contact')}
-                className="hover:text-orange-400 transition-colors text-left"
+                onClick={() => handleQuickLink('compare')}
+                className="hover:text-white transition-colors text-left"
               >
-                Contact
+                Clause comparator
               </button>
             </li>
             <li>
               <button
                 type="button"
                 onClick={() => handleSupportLink('help')}
-                className="hover:text-orange-400 transition-colors text-left"
+                className="hover:text-white transition-colors text-left"
               >
-                Feedback
+                Platform user guide
               </button>
             </li>
             <li>
               <button
                 type="button"
                 onClick={() => handleQuickLink('home')}
-                className="hover:text-orange-400 transition-colors text-left"
+                className="hover:text-white transition-colors text-left"
               >
-                Sitemap
+                Executive dashboard
               </button>
             </li>
           </ul>
         </div>
 
-        {/* RIGHT: CONTACT US */}
+        {/* Column 4: Authority Information */}
         <div className="space-y-2.5">
-          <h4 className="text-[11px] font-bold text-white uppercase tracking-wider text-slate-100">
-            Contact Us
+          <h4 className="text-xs font-semibold text-white">
+            Authority reference
           </h4>
-          <div className="text-[11px] text-slate-300 space-y-1.5 leading-relaxed">
-            <p className="font-semibold text-white">BIS Sahayak Innovation Hub</p>
-            <p className="flex items-start gap-1.5 text-slate-300">
-              <MapPin size={13} className="text-orange-400 shrink-0 mt-0.5" />
-              <span>Koramangala 4th Block, Bengaluru - 560034</span>
+          <div className="text-[11px] text-slate-400 space-y-1.5 leading-relaxed">
+            <p className="font-semibold text-slate-200">Bureau of Indian Standards</p>
+            <p className="flex items-start gap-1.5 text-slate-400">
+              <MapPin size={13} className="text-[#0062D2] shrink-0 mt-0.5" />
+              <span>Manak Bhavan, 9 Bahadur Shah Zafar Marg, New Delhi 110002</span>
             </p>
-            <p className="flex items-center gap-1.5 text-slate-300">
-              <Phone size={13} className="text-orange-400 shrink-0" />
-              <span>+91 80 2553 1234</span>
+            <p className="flex items-center gap-1.5 text-slate-400">
+              <Phone size={13} className="text-[#0062D2] shrink-0" />
+              <span>National Toll-Free: 1800 11 4000</span>
             </p>
             <p className="flex items-center gap-1.5">
-              <Mail size={13} className="text-orange-400 shrink-0" />
+              <Mail size={13} className="text-[#0062D2] shrink-0" />
               <a
-                href="mailto:bishayak.help@gmail.com"
-                className="text-orange-300 hover:text-orange-200 hover:underline"
+                href="mailto:support@manakos.in"
+                className="text-slate-300 hover:text-white transition-colors hover:underline"
               >
-                bishayak.help@gmail.com
+                support@manakos.in
               </a>
             </p>
           </div>
@@ -197,16 +187,10 @@ export default function Footer({ onNavigate, onOpenHelp, isAuthPage = false }) {
 
       </div>
 
-      {/* BOTTOM CENTER: COPYRIGHT ONLY */}
-      <div className="max-w-7xl mx-auto border-t border-blue-900/50 mt-5 pt-3.5 flex items-center justify-center text-[10px] text-slate-400 text-center">
-        <p>© 2026 BIS Sahayak. All rights reserved.</p>
+      <div className="max-w-7xl mx-auto border-t border-slate-800 mt-6 pt-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-slate-500">
+        <p>© 2026 ManakOS. Developed for Bureau of Indian Standards and Indian manufacturing compliance.</p>
+        <p className="text-slate-400">Official BIS Gazette synchronization active</p>
       </div>
-    </>
-  );
-
-  return (
-    <footer className="w-full bg-[#071c36] text-white px-4 sm:px-8 lg:px-12 py-6 sm:py-7 z-20 shrink-0 border-t border-blue-950 font-sans select-none mt-auto">
-      {footerInnerContent}
     </footer>
   );
 }

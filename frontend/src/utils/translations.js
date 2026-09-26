@@ -12,13 +12,13 @@ export const UI_TRANSLATIONS = {
     compare: "Compare",
     notifications: "Notifications",
     admin_portal: "Admin Portal",
-    official_portal: "BIS Sahayak V2 (बीआईएस सहायक)",
-    portal_subtitle: "AI-Powered BIS Compliance Navigator & Standards Decision Platform",
+    official_portal: "ManakOS V2.4 (मानकOS)",
+    portal_subtitle: "National Standards & Quality Intelligence Operating System",
     standards_guide: "Standards Guide the Nation",
     standards_tagline: "सही मानक, सुरक्षित भारत",
 
     // Home Dashboard Hero
-    welcome_title: "Welcome to BIS Sahayak",
+    welcome_title: "Welcome to ManakOS",
     hero_headline: "Understand. Comply. Grow.",
     hero_subheadline: "Your AI assistant for BIS standards, compliance guidance, and evidence-based recommendations.",
     search_placeholder: "Describe your product, requirement or ask a BIS question...",

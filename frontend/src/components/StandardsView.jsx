@@ -211,17 +211,17 @@ export default function StandardsView({
   const displayedStandards = filteredStandards.slice(startIndex, startIndex + itemsPerPage);
 
   return (
-    <div className="flex-1 overflow-y-auto bg-[#f8fafc] flex flex-col justify-between animate-fade-in font-sans">
+    <div className="flex-1 overflow-y-auto apple-canvas flex flex-col justify-between animate-fade-in font-sans">
       <div className="p-6 sm:p-8 space-y-6">
         <div className="max-w-7xl mx-auto space-y-6">
 
           {/* 1. Header Title & Subtitle */}
           <div className="space-y-1">
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-[#0b2545] tracking-tight">
-              Standards
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-[#1d1d1f] tracking-tight">
+              Indian Standards Directory
             </h1>
-            <p className="text-xs sm:text-sm text-slate-500 font-medium">
-              Search and explore Indian Standards
+            <p className="text-xs sm:text-sm text-[#86868b] font-medium">
+              Explore 24,000+ official Indian Standards, statutory QCO mandates, and testing scopes.
             </p>
           </div>
 
@@ -235,14 +235,14 @@ export default function StandardsView({
                   value={searchQuery}
                   onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }}
                   placeholder="Enter HS Code (e.g. 0101.29.10, 8432) or standard keyword..."
-                  className="w-full pl-11 pr-4 py-2.5 rounded-xl border border-slate-300 bg-white text-xs sm:text-sm font-medium outline-none focus:border-[#0b2545] focus:ring-1 focus:ring-[#0b2545] transition-all placeholder:text-slate-400 shadow-2xs"
+                  className="w-full pl-11 pr-4 py-2.5 rounded-2xl border border-black/[0.08] bg-white text-xs sm:text-sm font-medium outline-none focus:border-[#0071e3] focus:ring-2 focus:ring-[#0071e3]/20 transition-all placeholder:text-slate-400 shadow-2xs"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={hsState.loading}
-                className="flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl bg-[#0b2545] hover:bg-[#133b68] text-white text-xs font-bold transition-colors shadow-xs shrink-0 disabled:opacity-50 cursor-pointer"
+                className="flex items-center justify-center gap-2 px-6 py-2.5 rounded-2xl bg-[#0071E3] hover:bg-[#0077ED] text-white text-xs font-bold transition-all shadow-sm shrink-0 disabled:opacity-50 cursor-pointer active:scale-95"
               >
                 {hsState.loading ? (
                   <>
@@ -687,15 +687,15 @@ export default function StandardsView({
                 i
               </div>
               <span>
-                Can't find the standard you're looking for? Ask BIS Sahayak to help you.
+                Can't find the standard you're looking for? Ask Manak AI Copilot to help you.
               </span>
             </div>
             <button
               type="button"
               onClick={() => onAskAIAboutStandard && onAskAIAboutStandard({ id: 'Custom Query', title: 'Find Standard' })}
-              className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white hover:bg-slate-50 border border-slate-300 text-[#0b2545] font-bold text-xs shadow-2xs transition-colors shrink-0"
+              className="flex items-center gap-1.5 px-4 py-2 rounded-2xl bg-[#0071E3] hover:bg-[#0077ED] text-white font-bold text-xs shadow-2xs transition-all shrink-0 active:scale-95"
             >
-              <Sparkles size={13} className="text-orange-500" />
+              <Sparkles size={13} className="text-white" />
               <span>Ask Now</span>
             </button>
           </div>

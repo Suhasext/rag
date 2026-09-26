@@ -125,7 +125,7 @@ export default function ISIVerifierModal({ isOpen, onClose, isStandalone = false
 
           {/* Authenticity Disclaimer */}
           <div className="p-3.5 bg-slate-50 dark:bg-slate-800/60 rounded-2xl border border-slate-200 dark:border-slate-700 text-[11px] text-slate-500 leading-relaxed">
-            <b>Important Regulatory Disclaimer:</b> BIS Sahayak validates licence status against verified BIS gazette registry entries. This confirms regulatory registration and does not solely certify physical goods authenticity.
+            <b>Important Regulatory Disclaimer:</b> ManakOS validates licence status against verified BIS gazette registry entries. This confirms regulatory registration and does not solely certify physical goods authenticity.
           </div>
         </div>
       )}

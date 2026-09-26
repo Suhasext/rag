@@ -20,7 +20,7 @@ class Settings(BaseSettings):
     JWT_ALGORITHM: str = "HS256"
     JWT_EXPIRE_MINUTES: int = 60 * 24 * 7  # 7 days
     
-    # LLM Configuration (Google Gemini, Groq, NVIDIA NIM)
+    # LLM Configuration (Google Gemini, Groq)
     GEMINI_API_KEY: str = os.getenv("GEMINI_API_KEY", "")
     LLM_MODEL: str = os.getenv("LLM_MODEL", "gemini-3.6-flash")
     LLM_TEMPERATURE: float = 0.2
@@ -29,10 +29,6 @@ class Settings(BaseSettings):
     GROQ_API_KEY: str = os.getenv("GROQ_API_KEY", "")
     GROQ_MODEL: str = os.getenv("GROQ_MODEL", "meta/llama-3.2-11b-vision-instruct")
 
-    NVIDIA_API_KEY: str = os.getenv("NVIDIA_API_KEY", "")
-    NVIDIA_MODEL: str = os.getenv("NVIDIA_MODEL", "meta/llama-3.2-11b-vision-instruct")
-
-    
     # Bhashini Indic Translation Configuration
     BHASHINI_API_KEY: str = os.getenv("BHASHINI_API_KEY", "")
     BHASHINI_USER_ID: str = os.getenv("BHASHINI_USER_ID", "")

@@ -588,10 +588,10 @@ async def _stream_gemini_with_fallback(client, contents, config):
     logger.error(f"[Gemini Stream All Models Failed] Last Error: {last_err}", exc_info=True)
     raise last_err
 
-async def _stream_nvidia_llm(messages: List[Dict[str, str]], system_msg: str, temperature: float = 0.5):
-    """Stream response tokens from NVIDIA NIM."""
-    nvidia_key = getattr(settings, "NVIDIA_API_KEY", None) or settings.GROQ_API_KEY or os.getenv("NVIDIA_API_KEY")
-    if not nvidia_key:
+async def _stream_groq_llm(messages: List[Dict[str, str]], system_msg: str, temperature: float = 0.5):
+    """Stream response tokens from Groq."""
+    groq_key = settings.GROQ_API_KEY or os.getenv("GROQ_API_KEY")
+    if not groq_key:
         return
     import httpx
     headers = {
@@ -600,7 +600,7 @@ async def _stream_nvidia_llm(messages: List[Dict[str, str]], system_msg: str, te
     }
     all_msgs = [{"role": "system", "content": system_msg}] + messages
     payload = {
-        "model": getattr(settings, "NVIDIA_MODEL", "meta/llama-3.2-11b-vision-instruct"),
+        "model": settings.GROQ_MODEL,
         "messages": all_msgs,
         "temperature": temperature,
         "max_tokens": 1024,
@@ -608,7 +608,7 @@ async def _stream_nvidia_llm(messages: List[Dict[str, str]], system_msg: str, te
     }
     try:
         async with httpx.AsyncClient(timeout=30.0) as client:
-            async with client.stream("POST", "https://integrate.api.nvidia.com/v1/chat/completions", headers=headers, json=payload) as res:
+            async with client.stream("POST", "https://api.groq.com/openai/v1/chat/completions", headers=headers, json=payload) as res:
                 if res.status_code == 200:
                     async for line in res.aiter_lines():
                         if line.startswith("data: ") and line != "data: [DONE]":
@@ -621,12 +621,12 @@ async def _stream_nvidia_llm(messages: List[Dict[str, str]], system_msg: str, te
                             except Exception:
                                 pass
     except Exception as e:
-        logger.warning(f"[_stream_nvidia_llm exception]: {e}")
+        logger.warning(f"[_stream_groq_llm exception]: {e}")
 
-async def _call_nvidia_llm(messages: List[Dict[str, str]], system_msg: str, temperature: float = 0.3) -> Optional[str]:
-    """Non-streaming request to NVIDIA NIM."""
-    nvidia_key = getattr(settings, "NVIDIA_API_KEY", None) or settings.GROQ_API_KEY or os.getenv("NVIDIA_API_KEY")
-    if not nvidia_key:
+async def _call_groq_llm(messages: List[Dict[str, str]], system_msg: str, temperature: float = 0.3) -> Optional[str]:
+    """Non-streaming request to Groq."""
+    groq_key = settings.GROQ_API_KEY or os.getenv("GROQ_API_KEY")
+    if not groq_key:
         return None
     import httpx
     headers = {
@@ -635,21 +635,21 @@ async def _call_nvidia_llm(messages: List[Dict[str, str]], system_msg: str, temp
     }
     all_msgs = [{"role": "system", "content": system_msg}] + messages
     payload = {
-        "model": getattr(settings, "NVIDIA_MODEL", "meta/llama-3.2-11b-vision-instruct"),
+        "model": settings.GROQ_MODEL,
         "messages": all_msgs,
         "temperature": temperature,
         "max_tokens": 1024
     }
     try:
         async with httpx.AsyncClient(timeout=25.0) as client:
-            res = await client.post("https://integrate.api.nvidia.com/v1/chat/completions", headers=headers, json=payload)
+            res = await client.post("https://api.groq.com/openai/v1/chat/completions", headers=headers, json=payload)
             if res.status_code == 200:
                 data = res.json()
                 raw_content = data["choices"][0]["message"]["content"]
                 clean_ans = re.sub(r'<think>[\s\S]*?</think>', '', raw_content).strip()
                 return clean_ans
     except Exception as e:
-        logger.warning(f"[_call_nvidia_llm exception]: {e}")
+        logger.warning(f"[_call_groq_llm exception]: {e}")
     return None
 
 async def stream_general_llm_answer(
@@ -659,7 +659,7 @@ async def stream_general_llm_answer(
 ):
     """
     Real-time streaming LLM answering for ANY general question.
-    Prioritizes Gemini if configured, otherwise falls back smoothly to NVIDIA NIM.
+    Prioritizes Gemini if configured, otherwise falls back smoothly to Groq.
     """
     lang_instruction = get_target_language_instruction(target_language)
     system_instruction = GENERAL_SYSTEM_INSTRUCTION + lang_instruction
@@ -688,9 +688,9 @@ async def stream_general_llm_answer(
         except Exception as e:
             logger.warning(f"[General Gemini Stream Exception]: {e}")
 
-    # 2. Try NVIDIA NIM
-    nvidia_key = getattr(settings, "NVIDIA_API_KEY", None) or settings.GROQ_API_KEY
-    if nvidia_key:
+    # 2. Try Groq
+    groq_key = settings.GROQ_API_KEY or os.getenv("GROQ_API_KEY")
+    if groq_key:
         try:
             messages = []
             if history:
@@ -698,13 +698,13 @@ async def stream_general_llm_answer(
                     messages.append({"role": h.get("role", "user"), "content": h.get("content", "")})
             messages.append({"role": "user", "content": query})
             streamed = False
-            async for token in _stream_nvidia_llm(messages, system_instruction, temperature=0.7):
+            async for token in _stream_groq_llm(messages, system_instruction, temperature=0.7):
                 streamed = True
                 yield token
             if streamed:
                 return
         except Exception as ne:
-            logger.warning(f"[General NVIDIA Stream Exception]: {ne}")
+            logger.warning(f"[General Groq Stream Exception]: {ne}")
 
     yield "Hello! I am BIS Sahayak. How can I assist you with Bureau of Indian Standards compliance today?"
 
@@ -717,7 +717,7 @@ async def stream_rag_answer(
 ):
     """
     Real-time streaming RAG-augmented response for BIS queries.
-    Utilizes Gemini or NVIDIA NIM with verified evidence, falling back to local synthesizer.
+    Utilizes Gemini or Groq with verified evidence, falling back to local synthesizer.
     """
     context_chunks = context_chunks or []
     prod_data = match_product_to_standards(query)
@@ -788,9 +788,9 @@ async def stream_rag_answer(
         except Exception as e:
             logger.warning(f"[RAG Gemini Stream Exception]: {e}")
 
-    # 2. Try NVIDIA NIM
-    nvidia_key = getattr(settings, "NVIDIA_API_KEY", None) or settings.GROQ_API_KEY
-    if nvidia_key:
+    # 2. Try Groq
+    groq_key = settings.GROQ_API_KEY or os.getenv("GROQ_API_KEY")
+    if groq_key:
         try:
             rag_query = f"Verified Evidence Context:\n{context_block}\n\nUser Question: {query}"
             messages = []
@@ -799,13 +799,13 @@ async def stream_rag_answer(
                     messages.append({"role": h.get("role", "user"), "content": h.get("content", "")})
             messages.append({"role": "user", "content": rag_query})
             streamed = False
-            async for token in _stream_nvidia_llm(messages, system_instruction, temperature=settings.LLM_TEMPERATURE):
+            async for token in _stream_groq_llm(messages, system_instruction, temperature=settings.LLM_TEMPERATURE):
                 streamed = True
                 yield token
             if streamed:
                 return
         except Exception as ne:
-            logger.warning(f"[RAG NVIDIA Stream Exception]: {ne}")
+            logger.warning(f"[RAG Groq Stream Exception]: {ne}")
 
     # Fallback to local grounded synthesizer
     answer, _ = generate_v2_grounded_answer(query, context_chunks, mode, target_language=target_language)
@@ -849,19 +849,19 @@ async def generate_general_llm_answer(
         except Exception as e:
             logger.warning(f"[General Gemini LLM Exception]: {e}")
 
-    nvidia_key = getattr(settings, "NVIDIA_API_KEY", None) or settings.GROQ_API_KEY
-    if nvidia_key:
+    groq_key = settings.GROQ_API_KEY or os.getenv("GROQ_API_KEY")
+    if groq_key:
         try:
             messages = []
             if history:
                 for h in history:
                     messages.append({"role": h.get("role", "user"), "content": h.get("content", "")})
             messages.append({"role": "user", "content": query})
-            ans = await _call_nvidia_llm(messages, system_instruction, temperature=0.7)
+            ans = await _call_groq_llm(messages, system_instruction, temperature=0.7)
             if ans:
                 return ans, [], {}
         except Exception as ne:
-            logger.warning(f"[General NVIDIA LLM Exception]: {ne}")
+            logger.warning(f"[General Groq LLM Exception]: {ne}")
 
     return "Hello! I am BIS Sahayak. How can I assist you with Bureau of Indian Standards compliance today?", [], {}
 
@@ -945,9 +945,9 @@ async def generate_rag_answer(
         except Exception as e:
             logger.warning(f"[RAG Gemini Generation Error]: {e}")
 
-    # 2. Try NVIDIA NIM
-    nvidia_key = getattr(settings, "NVIDIA_API_KEY", None) or settings.GROQ_API_KEY
-    if nvidia_key:
+    # 2. Try Groq
+    groq_key = settings.GROQ_API_KEY or os.getenv("GROQ_API_KEY")
+    if groq_key:
         try:
             rag_query = f"Verified Evidence Context:\n{context_block}\n\nUser Question: {query}"
             messages = []
@@ -955,12 +955,12 @@ async def generate_rag_answer(
                 for h in history:
                     messages.append({"role": h.get("role", "user"), "content": h.get("content", "")})
             messages.append({"role": "user", "content": rag_query})
-            ans = await _call_nvidia_llm(messages, system_instruction, temperature=settings.LLM_TEMPERATURE)
+            ans = await _call_groq_llm(messages, system_instruction, temperature=settings.LLM_TEMPERATURE)
             if ans:
                 cits = extract_citations(ans, context_chunks, primary_std=primary_std)
                 return ans, cits, comp_data
         except Exception as ne:
-            logger.warning(f"[RAG NVIDIA Generation Error]: {ne}")
+            logger.warning(f"[RAG Groq Generation Error]: {ne}")
 
     # Fallback to local grounded synthesizer
     answer, comp_data = generate_v2_grounded_answer(query, context_chunks, mode, target_language=target_language)
@@ -1000,7 +1000,7 @@ async def generate_groq_answer(
                 for m in valid_models:
                     try:
                         res = await client.post(
-                            "https://integrate.api.nvidia.com/v1/chat/completions",
+                            "https://api.groq.com/openai/v1/chat/completions",
                             headers=headers,
                             json={
                                 "model": m,

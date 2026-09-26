@@ -15,7 +15,7 @@
 [![TailwindCSS](https://img.shields.io/badge/Styling-Tailwind_CSS-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 [![ChromaDB](https://img.shields.io/badge/Vector_DB-ChromaDB-FF6600?style=flat-square)](https://www.trychroma.com/)
 [![Gemini](https://img.shields.io/badge/LLM-Gemini_Flash-4285F4?style=flat-square&logo=google&logoColor=white)](https://ai.google.dev/)
-[![NVIDIA NIM](https://img.shields.io/badge/LLM_Fallback-NVIDIA_NIM-76B900?style=flat-square&logo=nvidia&logoColor=white)](https://build.nvidia.com/)
+[![Groq](https://img.shields.io/badge/LLM_Fallback-Groq-1E90FF?style=flat-square)](https://groq.com/)
 [![Bhashini](https://img.shields.io/badge/Indic_NLP-Bhashini_AI-FF9933?style=flat-square)](https://bhashini.gov.in/)
 [![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
 
@@ -178,7 +178,7 @@ bis-sahayak/
 │   │   │   ├── standard_comparator.py  # Dual HSN / IS standard comparator
 │   │   │   ├── hsn_catalog.py          # HSN code knowledge catalog
 │   │   │   ├── retriever.py            # Hybrid dense vector + BM25 token retriever
-│   │   │   ├── generator.py            # Grounded synthesizer (Gemini Flash + NVIDIA NIM fallback)
+│   │   │   ├── generator.py            # Grounded synthesizer (Gemini Flash + Groq fallback)
 │   │   │   ├── confidence.py           # Multi-factor confidence calculator
 │   │   │   └── audit.py                # SQLite query & audit logging
 │   │   └── models/
@@ -311,7 +311,7 @@ For local review and evaluation, use the pre-seeded demo accounts:
 - 🏢 **Multi-Tenant Data Isolation:** Verification dossiers, deficiency notes, and licence notifications are isolated by applicant enterprise email.
 - 🚫 **Prompt Injection Defense:** Ingested test documents undergo sanitization and instruction stripping to neutralize injection threats.
 - ⚠️ **Document Relevance Guard:** Flags cross-product mismatched documents before semantic parsing (e.g. uploading footwear certificates for kitchenware).
-- 🔐 **Zero Hardcoded Secrets:** Multi-provider LLM credentials (Gemini, NVIDIA NIM, Groq, Bhashini) are strictly loaded via environment variables.
+- 🔐 **Zero Hardcoded Secrets:** Multi-provider LLM credentials (Gemini, Groq, Bhashini) are strictly loaded via environment variables.
 
 ---
 
